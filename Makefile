@@ -51,13 +51,11 @@ ifeq ($(OS),Windows_NT)
 	RM = del /Q /S
 	RM_DIR = rmdir /Q /S
 	MKDIR = mkdir
-	OBJ_EXT = obj
 	PROGRAM = $(BIN_DIR)\$(MAIN_EXEC).exe
 else
 	RM = rm -f
 	RM_DIR = rm -rf
 	MKDIR = mkdir -p
-	OBJ_EXT = o
 	PROGRAM = $(BIN_DIR)/$(MAIN_EXEC)
 endif
 
@@ -81,19 +79,19 @@ MKDIR_OBJ = $(if $(filter Windows_NT, $(OS)), if not exist $(dir $@) mkdir $(sub
 ############################### OBJECT FILES ##############################
 ###########################################################################
 
-SRC_OBJ_FILES = $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.$(OBJ_EXT), $(filter-out $(SRC_DIR)/main.cpp, $(SRC_FILES)))
+SRC_OBJ_FILES = $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(filter-out $(SRC_DIR)/main.cpp, $(SRC_FILES)))
 
 ###########################################################################
 ################################## RULES ##################################
 ###########################################################################
 
 # Compile the source files
-$(OBJ_DIR)/%.$(OBJ_EXT): $(SRC_DIR)/%.cpp
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@$(MKDIR_OBJ)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 # Link the object files
-$(PROGRAM): $(SRC_OBJ_FILES) $(OBJ_DIR)/main.$(OBJ_EXT)
+$(PROGRAM): $(SRC_OBJ_FILES) $(OBJ_DIR)/main.o
 	@$(MKDIR_BIN)
 	$(CXX) $^ -o $@
 
