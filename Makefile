@@ -28,6 +28,7 @@ BIN_DIR = bin
 # Source files
 SRC_FILES = \
 	$(SRC_DIR)/main.cpp \
+	$(SRC_DIR)/Vecteur2D.cpp \
 
 ###########################################################################
 ############################### EXECUTABLES ###############################
@@ -105,7 +106,7 @@ $(PROGRAM): $(SRC_OBJ_FILES) $(OBJ_DIR)/main.o
 all: clean delete $(PROGRAM)
 
 # Command to run the program
-run: $(PROGRAM)
+run: clean $(PROGRAM)
 	$(PROGRAM) $(MAIN_ARGS)
 
 # Command to run the memory check on the program
