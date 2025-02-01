@@ -2,7 +2,7 @@ package src.model;
 
 import java.awt.*;
 
-public class Cercle implements Forme {
+public class Cercle extends Forme {
 	private int x, y, rayon;
 	private Color color;
 
