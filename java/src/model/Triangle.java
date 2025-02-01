@@ -6,9 +6,9 @@ public class Triangle extends Forme {
 	private int[] xPoints;
 	private int[] yPoints;
 
-	public Triangle(int[] x, int[] y) {
-		this.xPoints = x;
-		this.yPoints = y;
+	public Triangle(int[] xPoints, int[] yPoints) {
+		this.xPoints = xPoints;
+		this.yPoints = yPoints;
 	}
 
 	@Override

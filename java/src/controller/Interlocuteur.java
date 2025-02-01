@@ -1,5 +1,7 @@
 package src.controller;
 
+import src.model.Forme;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
@@ -34,6 +36,16 @@ public class Interlocuteur extends Thread {
 			String input = requete;
 
 			//Gestion de la lecture et du COR
+
+			String id;
+			ParserFormeCOR Parser = null;
+			Parser = new ParserFormeCORTriangle(Parser, id);
+
+			Forme f = Parser.toParse(texte);
+			if (f != null) {
+				//ajouter la forme à la liste des formes
+			}
+
 		}
 	}
 }
