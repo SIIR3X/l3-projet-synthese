@@ -29,6 +29,7 @@ BIN_DIR = bin
 SRC_FILES = \
 	$(SRC_DIR)/main.cpp \
 	$(SRC_DIR)/Vecteur2D.cpp \
+	$(SRC_DIR)/Client.cpp \
 
 ###########################################################################
 ############################### EXECUTABLES ###############################
@@ -94,7 +95,12 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 # Link the object files
 $(PROGRAM): $(SRC_OBJ_FILES) $(OBJ_DIR)/main.o
 	@$(MKDIR_BIN)
+ifeq ($(OS), Windows_NT)
+	@chcp 65001 >nul 2>&1
+	$(CXX) $^ -o $@ -lws2_32
+else
 	$(CXX) $^ -o $@
+endif
 
 ###########################################################################
 ################################ COMMANDS #################################
