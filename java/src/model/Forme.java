@@ -3,5 +3,5 @@ package src.model;
 import java.awt.*;
 
 public abstract class Forme {
-	abstract void dessiner(Graphics G);
+	abstract void dessiner(Graphics g);
 }

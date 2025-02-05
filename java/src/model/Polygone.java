@@ -11,7 +11,7 @@ public class Polygone extends Forme {
 	}
 
 	@Override
-	public void dessiner(Graphics G) {
-		Polygon polygone = new Polygon(xPoints, yPoints, xPoints.length);
+	public void dessiner(Graphics g) {
+		g.fillPolygon(xPoints, yPoints, xPoints.length);
 	}
 }
