@@ -18,7 +18,7 @@ public class serverManager {
 			}
 		}
 		catch (IOException e) {
-
+			e.printStackTrace();
 		}
 	}
 

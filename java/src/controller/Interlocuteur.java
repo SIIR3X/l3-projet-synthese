@@ -36,7 +36,7 @@ public class Interlocuteur extends Thread {
 				requete = this.fluxEntrant.readLine();
 			}
 			catch (IOException e) {
-
+				e.printStackTrace();
 			}
 			System.out.println("le client n°"+ noClient + "a envoye " + requete);
 
@@ -50,9 +50,9 @@ public class Interlocuteur extends Thread {
 			Parser = new ParserFormeCORTriangle(Parser);
 			Parser = new ParserFormeCORCercle(Parser);
 
-			Forme f = Parser.toParse(texte);
+			Forme f = Parser.toParse(requete);
 			if (f != null) {
-				//ajouter la forme à la liste des formes
+				formes.add(f);
 			}
 
 		}
