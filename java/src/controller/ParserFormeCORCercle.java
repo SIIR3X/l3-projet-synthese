@@ -15,9 +15,9 @@ public class ParserFormeCORCercle extends ParserFormeCOR {
 	}
 
 	/**
-	 * un composant forme Polygone si l'id correspond à l'id Polygone, sinon renvoie null
+	 *
 	 * @param texte
-	 * @return
+	 * @return un composant forme Cercle si l'id correspond à l'id Cercle, sinon renvoie null
 	 */
 	@Override
 	Forme toParse1(String texte) {
