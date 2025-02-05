@@ -1,14 +1,17 @@
 package src.controller;
 
 import src.model.Forme;
+import src.model.Triangle;
 
 public class ParserFormeCORTriangle extends ParserFormeCOR {
 
-	private char id;
+	/**
+	 * Un Triangle est identifié par l'id 3
+	 */
+	private char id = '3';
 
-	public ParserFormeCORTriangle(ParserFormeCOR next, char id) {
+	public ParserFormeCORTriangle(ParserFormeCOR next) {
 		super(next);
-		this.id = id;
 	}
 
 	/**
@@ -18,15 +21,14 @@ public class ParserFormeCORTriangle extends ParserFormeCOR {
 	 */
 	@Override
 	Forme toParse1(String texte) {
-		try {
-			char c = texte.charAt(0);
+		char c = texte.charAt(0);
 
-			if (c != id) return null;
+		if (c != id) return null;
 
-			int[] xPoints;
-			int[] yPoints;
+		int[] xPoints;
+		int[] yPoints;
 
-			return Triangle(xPoints, yPoints);
-		}
+		return new Triangle(xPoints, yPoints);
+
 	}
 }

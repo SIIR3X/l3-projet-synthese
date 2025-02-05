@@ -7,12 +7,19 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Interlocuteur extends Thread {
 	PrintStream fluxSortant;
 	BufferedReader fluxEntrant;
 	int noClient;
 
+	/**
+	 *
+	 * @param client
+	 * @param noClient
+	 * @throws IOException
+	 */
 	public Interlocuteur(Socket client, int noClient) throws IOException {
 		this.fluxSortant = new PrintStream(client.getOutputStream());
 		this.fluxEntrant = new BufferedReader(new InputStreamReader(client.getInputStream()));
@@ -22,7 +29,7 @@ public class Interlocuteur extends Thread {
 	@Override
 	public void run() {
 		System.out.println("interlocuteur pret pour le n"+ this.noClient);
-
+		ArrayList<Forme> formes = new ArrayList<>();
 		while(!this.isInterrupted()) {
 			String requete = null;
 			try {
@@ -39,7 +46,9 @@ public class Interlocuteur extends Thread {
 
 			String id;
 			ParserFormeCOR Parser = null;
-			Parser = new ParserFormeCORTriangle(Parser, id);
+			Parser = new ParserFormeCORPolygone(Parser);
+			Parser = new ParserFormeCORTriangle(Parser);
+			Parser = new ParserFormeCORCercle(Parser);
 
 			Forme f = Parser.toParse(texte);
 			if (f != null) {

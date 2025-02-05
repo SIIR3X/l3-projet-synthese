@@ -3,8 +3,7 @@ package src.model;
 import java.awt.*;
 
 public class Triangle extends Forme {
-	private int[] xPoints;
-	private int[] yPoints;
+	private int[] xPoints, yPoints;
 
 	public Triangle(int[] xPoints, int[] yPoints) {
 		this.xPoints = xPoints;
