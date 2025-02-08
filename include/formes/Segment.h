@@ -11,7 +11,7 @@ private:
 	Vecteur2D _p1, _p2;
 
 public:
-	Segment(Couleur couleur, const Vecteur2D& p1, const Vecteur2D& p2)
+	Segment(const Vecteur2D& p1, const Vecteur2D& p2, Couleur couleur = COULEUR_PAR_DEFAUT)
 		: Forme(couleur), _p1(p1), _p2(p2) {}
 
 	Segment* clone() const override { return new Segment(*this); }
@@ -23,12 +23,14 @@ public:
 	const Vecteur2D& getP2() const { return _p2; }
 
 	operator string() const override;
+
+	void accepter(VisiteurForme* visiteur) override { visiteur->visiter(this); }
 }; // class Segment
 
 inline Segment::operator string() const
 {
 	ostringstream oss;
-	oss << "Segment [Couleur : " + to_string(static_cast<int>(_couleur)) + ", Point 1 : " + string(_p1) + ", Point 2 : " + string(_p2) + "]";
+	oss << "2 " << _p1 << " " << _p2;
 	return oss.str();
 }
 

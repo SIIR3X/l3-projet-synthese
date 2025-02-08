@@ -13,7 +13,7 @@ private:
 	vector<Vecteur2D> _points;
 
 public:
-	Polygone(Couleur couleur, const vector<Vecteur2D>& points)
+	Polygone(const vector<Vecteur2D>& points, Couleur couleur = COULEUR_PAR_DEFAUT)
 		: Forme(couleur), _points(points) 
 	{
 		if (points.size() < 3)
@@ -26,11 +26,15 @@ public:
 
 	size_t getNbPoints() const { return _points.size(); }
 
+	const vector<Vecteur2D>& getPoints() const { return _points; }
+
 	const Vecteur2D& getPoint(size_t index) const;
 
 	const Vecteur2D& operator[](size_t index) const { return _points[index]; }
 
 	operator string() const override;
+
+	void accepter(VisiteurForme* visiteur) override { visiteur->visiter(this); }
 }; // class Polygone
 
 inline double Polygone::aire() const
@@ -60,9 +64,9 @@ inline Polygone::operator string() const
 {
 	ostringstream oss;
 
-	oss << "Polygone [Couleur : " + to_string(static_cast<int>(_couleur)) + ", Points : ";
+	oss << _points.size();
 	for (const Vecteur2D& point : _points)
-		oss << string(point) + ", ";
+		oss << " " << point;
 
 	return oss.str();
 }

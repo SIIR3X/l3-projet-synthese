@@ -15,7 +15,7 @@ private:
 	double _rayon;
 
 public:
-	Cercle(Couleur couleur, const Vecteur2D& centre, double rayon)
+	Cercle(const Vecteur2D& centre, double rayon, Couleur couleur = COULEUR_PAR_DEFAUT)
 		: Forme(couleur), _centre(centre), _rayon(rayon) 
 	{
 		if (_rayon <= 0)
@@ -31,12 +31,14 @@ public:
 	double getRayon() const { return _rayon; }
 
 	operator string() const override;
+
+	void accepter(VisiteurForme* visiteur) override { visiteur->visiter(this); }
 }; // class Cercle
 
 inline Cercle::operator string() const
 {
 	ostringstream oss;
-	oss << "Cercle [Couleur : " + to_string(static_cast<int>(_couleur)) + ", Centre : " + string(_centre) + ", Rayon : " + to_string(_rayon) + "]";
+	oss << "1 " << _centre << " " << _rayon;
 	return oss.str();
 }
 

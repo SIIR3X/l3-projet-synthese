@@ -12,8 +12,8 @@ private:
 	vector<Forme*> _formes;
 
 public:
-	Groupe(Couleur couleur)
-		: Forme(couleur) {}
+	Groupe(const vector<Forme*>& formes, Couleur couleur = COULEUR_PAR_DEFAUT)
+		: Forme(couleur), _formes(formes) {}
 
 	~Groupe();
 
@@ -22,6 +22,8 @@ public:
 	double aire() const override;
 
 	size_t getNbFormes() const { return _formes.size(); }
+
+	const vector<Forme*>& getFormes() const { return _formes; }
 
 	const Forme* getForme(size_t index) const;
 
@@ -33,12 +35,13 @@ public:
 
 	operator string() const override;
 
+	void accepter(VisiteurForme* visiteur) override { visiteur->visiter(this); }
 }; // class Groupe
 
 inline Groupe::~Groupe()
 {
-	for (vector<Forme*>::iterator it = _formes.begin(); it != _formes.end(); ++it)
-		delete *it;
+	for (Forme* forme : _formes)
+		delete forme;
 
 	_formes.clear();
 }
@@ -47,8 +50,8 @@ inline double Groupe::aire() const
 {
 	double aireTotale = 0.0;
 	
-	for (vector<Forme*>::const_iterator it = _formes.begin(); it != _formes.end(); ++it)
-		aireTotale += (*it)->aire();
+	for (const Forme* forme : _formes)
+		aireTotale += forme->aire();
 
 	return aireTotale;
 }
@@ -76,9 +79,9 @@ inline Groupe::operator string() const
 {
 	ostringstream oss;
 
-	oss << "Groupe [Couleur : " + to_string(static_cast<int>(_couleur)) + "] :\n";
-	for (vector<Forme*>::const_iterator it = _formes.begin(); it != _formes.end(); ++it)
-		oss << "  " << **it << "\n";
+	oss << getNbFormes() << endl;
+	for (const Forme* forme : _formes)
+		oss << string(*forme) << endl;
 
 	return oss.str();
 }
