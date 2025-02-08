@@ -9,8 +9,8 @@ public class Controleur {
 	private Fenetre fenetre;
 
 
-	public Controleur(int width, int height, ArrayList<Forme> formes) {
-		fenetre = new Fenetre(width, height, formes);
+	public Controleur(int width, int height, Forme forme) {
+		fenetre = new Fenetre(width, height, forme);
 		fenetre.afficher();
 	}
 }

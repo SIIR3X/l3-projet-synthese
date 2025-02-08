@@ -9,10 +9,10 @@ import java.util.ArrayList;
 
 public class affichageDessins extends Canvas {
 
-	private ArrayList<Forme> formes;
+	private Forme forme;
 
-	public affichageDessins(ArrayList<Forme> formes) {
-		this.formes = formes;
+	public affichageDessins(Forme forme) {
+		this.forme = forme;
 
 		setBackground(Color.WHITE);
 		setIgnoreRepaint(true);
@@ -37,10 +37,7 @@ public class affichageDessins extends Canvas {
 
 
 
-			for (Forme f : formes) {
-				f.dessiner(graphics);
-
-			}
+			forme.dessiner(graphics);
 
 
 			strategie.show();

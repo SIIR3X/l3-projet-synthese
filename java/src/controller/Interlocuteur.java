@@ -44,6 +44,9 @@ public class Interlocuteur extends Thread {
 
 			//Gestion de la lecture et du COR
 
+			//Si groupe -> création d'un groupe et ajout des formes dedans
+			//Sinon rien
+
 			String id;
 			ParserFormeCOR Parser = null;
 			Parser = new ParserFormeCORPolygone(Parser);
@@ -55,7 +58,7 @@ public class Interlocuteur extends Thread {
 				formes.add(f);
 			}
 
-			Controleur controleur = new Controleur(600, 400, formes);
+			Controleur controleur = new Controleur(600, 400, f);
 
 
 		}
