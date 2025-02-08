@@ -25,9 +25,9 @@ public class ParserFormeCORCercle extends ParserFormeCOR {
 
 		if (c != id) return null;
 
-		int x;
-		int y;
-		int rayon;
+		int x = 2;
+		int y = 3;
+		int rayon = 10;
 
 		return new Cercle(x, y, rayon);
 

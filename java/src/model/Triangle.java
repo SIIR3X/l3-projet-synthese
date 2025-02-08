@@ -12,7 +12,6 @@ public class Triangle extends Forme {
 
 	@Override
 	public void dessiner(Graphics g) {
-		Polygon triangle = new Polygon(xPoints, yPoints, 3);
-		g.fillPolygon(triangle);
+		g.fillPolygon(xPoints, yPoints, 3);
 	}
 }

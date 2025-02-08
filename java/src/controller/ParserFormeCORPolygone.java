@@ -25,8 +25,8 @@ public class ParserFormeCORPolygone extends ParserFormeCOR {
 
 		if (c != id) return null;
 
-		int xPoints;
-		int yPoints;
+		int[] xPoints = {2, 3};
+		int[] yPoints = {2, 5};
 
 		return new Polygone(xPoints, yPoints);
 	}

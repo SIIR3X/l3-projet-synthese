@@ -14,7 +14,7 @@ public class Segment extends Forme {
 	}
 
 	@Override
-	void dessiner(Graphics g) {
+	public void dessiner(Graphics g) {
 		g.drawLine(x1, y1, x2, y2);
 	}
 }

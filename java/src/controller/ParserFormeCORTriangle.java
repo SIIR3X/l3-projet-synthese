@@ -25,8 +25,8 @@ public class ParserFormeCORTriangle extends ParserFormeCOR {
 
 		if (c != id) return null;
 
-		int[] xPoints;
-		int[] yPoints;
+		int[] xPoints  = {2, 3};
+		int[] yPoints  = {2, 3};
 
 		return new Triangle(xPoints, yPoints);
 
