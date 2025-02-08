@@ -3,7 +3,7 @@
 #include "formes/Polygone.h"
 #include "formes/Cercle.h"
 #include "formes/Groupe.h"
-#include "visiteurs/VisiteurDessinerTCP.h"
+#include "design_patterns/visiteur/VisiteurDessinerTCP.h"
 #include <iostream>
 
 void VisiteurDessinerTCP::visiter(Segment* /*s*/)

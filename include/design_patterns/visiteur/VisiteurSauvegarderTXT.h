@@ -1,7 +1,7 @@
 #ifndef VISITEUR_SAUVEGARDER_TXT_H
 #define VISITEUR_SAUVEGARDER_TXT_H
 
-#include "VisiteurForme.h"
+#include "design_patterns/visiteur/VisiteurForme.h"
 #include <fstream>
 
 class VisiteurSauvegarderTXT : public VisiteurForme
@@ -27,6 +27,6 @@ public:
 	virtual void visiter(Polygone* p) override;
 	virtual void visiter(Cercle* c) override;
 	virtual void visiter(Groupe* g) override;
-};
+}; // class VisiteurSauvegarderTXT
 
 #endif // VISITEUR_SAUVEGARDER_TXT_H

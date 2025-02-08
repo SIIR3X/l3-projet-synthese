@@ -1,0 +1,1 @@
+#include "design_patterns/visiteur/VisiteurForme.h"

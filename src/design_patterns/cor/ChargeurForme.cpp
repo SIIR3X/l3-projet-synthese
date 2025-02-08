@@ -1,0 +1,1 @@
+#include "design_patterns/cor/ChargeurForme.h"

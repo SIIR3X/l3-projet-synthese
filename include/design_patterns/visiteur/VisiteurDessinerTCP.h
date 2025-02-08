@@ -1,7 +1,7 @@
 #ifndef VISITEUR_DESSINER_TCP_H
 #define VISITEUR_DESSINER_TCP_H
 
-#include "visiteurs/VisiteurForme.h"
+#include "design_patterns/visiteur/VisiteurForme.h"
 
 class VisiteurDessinerTCP : public VisiteurForme
 {

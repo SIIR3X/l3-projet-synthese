@@ -1,7 +1,7 @@
 #ifndef FORME_H
 #define FORME_H
 
-#include "visiteurs/VisiteurForme.h"
+#include "design_patterns/visiteur/VisiteurForme.h"
 #include <string>
 #include <ostream>
 

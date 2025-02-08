@@ -35,9 +35,15 @@ SRC_FILES = \
 	$(SRC_DIR)/formes/Cercle.cpp \
 	$(SRC_DIR)/formes/Polygone.cpp \
 	$(SRC_DIR)/formes/Groupe.cpp \
-	$(SRC_DIR)/visiteurs/VisiteurForme.cpp \
-	$(SRC_DIR)/visiteurs/VisiteurDessinerTCP.cpp \
-	$(SRC_DIR)/visiteurs/VisiteurSauvegarderTXT.cpp \
+	$(SRC_DIR)/design_patterns/visiteur/VisiteurForme.cpp \
+	$(SRC_DIR)/design_patterns/visiteur/VisiteurDessinerTCP.cpp \
+	$(SRC_DIR)/design_patterns/visiteur/VisiteurSauvegarderTXT.cpp \
+	$(SRC_DIR)/design_patterns/cor/ChargeurForme.cpp \
+	$(SRC_DIR)/design_patterns/cor/ChargeurFormeCOR.cpp \
+	$(SRC_DIR)/design_patterns/cor/ChargeurFormeCORSegment.cpp \
+	$(SRC_DIR)/design_patterns/cor/ChargeurFormeCORTriangle.cpp \
+	$(SRC_DIR)/design_patterns/cor/ChargeurFormeCORCercle.cpp \
+	$(SRC_DIR)/design_patterns/cor/ChargeurFormeCORPolygone.cpp \
 
 ###########################################################################
 ############################### EXECUTABLES ###############################

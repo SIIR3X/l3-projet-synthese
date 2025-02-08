@@ -3,7 +3,7 @@
 #include "formes/Polygone.h"
 #include "formes/Cercle.h"
 #include "formes/Groupe.h"
-#include "visiteurs/VisiteurSauvegarderTXT.h"
+#include "design_patterns/visiteur/VisiteurSauvegarderTXT.h"
 
 void VisiteurSauvegarderTXT::visiter(Segment* s)
 {
