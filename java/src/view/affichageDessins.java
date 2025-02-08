@@ -34,13 +34,14 @@ public class affichageDessins extends Canvas {
 			BufferStrategy strategie = getBufferStrategy();
 
 			Graphics graphics = strategie.getDrawGraphics();
-			graphics.setColor(Color.WHITE);
-			graphics.fillRect(0, 0, getWidth(), getHeight());
+
 
 
 			for (Forme f : formes) {
 				f.dessiner(graphics);
+
 			}
+
 
 			strategie.show();
 

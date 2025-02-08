@@ -57,7 +57,6 @@ public class Interlocuteur extends Thread {
 
 			Controleur controleur = new Controleur(600, 400, formes);
 
-			controleur.afficher();
 
 		}
 	}

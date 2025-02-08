@@ -19,8 +19,6 @@ public class Fenetre extends JFrame {
 
 		getContentPane().add(affichage, BorderLayout.CENTER);
 		setVisible(true);
-
-		//affichage.afficher();
 	}
 
 	public void afficher () {
