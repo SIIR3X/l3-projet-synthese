@@ -1,0 +1,1 @@
+#include "formes/Triangle.h"

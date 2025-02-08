@@ -28,8 +28,13 @@ BIN_DIR = bin
 # Source files
 SRC_FILES = \
 	$(SRC_DIR)/main.cpp \
-	$(SRC_DIR)/Vecteur2D.cpp \
-	$(SRC_DIR)/Client.cpp \
+	$(SRC_DIR)/geometrie/Vecteur2D.cpp \
+	$(SRC_DIR)/formes/Forme.cpp \
+	$(SRC_DIR)/formes/Segment.cpp \
+	$(SRC_DIR)/formes/Triangle.cpp \
+	$(SRC_DIR)/formes/Cercle.cpp \
+	$(SRC_DIR)/formes/Polygone.cpp \
+	$(SRC_DIR)/formes/Groupe.cpp \
 
 ###########################################################################
 ############################### EXECUTABLES ###############################
