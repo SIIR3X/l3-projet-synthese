@@ -2,7 +2,6 @@
 #define SEGMENT_H
 
 #include "formes/Forme.h"
-#include "geometrie/Vecteur2D.h"
 #include <sstream>
 
 class Segment : public Forme

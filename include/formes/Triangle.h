@@ -2,7 +2,6 @@
 #define TRIANGLE_H
 
 #include "formes/Forme.h"
-#include "geometrie/Vecteur2D.h"
 #include <sstream>
 
 class Triangle : public Forme

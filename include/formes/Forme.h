@@ -1,6 +1,7 @@
 #ifndef FORME_H
 #define FORME_H
 
+#include "geometrie/Vecteur2D.h"
 #include "design_patterns/visiteur/VisiteurForme.h"
 #include <string>
 #include <ostream>
@@ -16,8 +17,8 @@ const Couleur COULEUR_PAR_DEFAUT = Couleur::BLACK;
 class Forme
 {
 private:
-	Groupe* _groupe;
 	Couleur _couleur;
+	Groupe* _groupe;
 
 public:
 	Forme(Couleur couleur = COULEUR_PAR_DEFAUT)

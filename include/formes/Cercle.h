@@ -2,7 +2,6 @@
 #define CERCLE_H
 
 #include "formes/Forme.h"
-#include "geometrie/Vecteur2D.h"
 #include <sstream>
 #include <stdexcept>
 

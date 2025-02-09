@@ -2,7 +2,6 @@
 #define POLYGONE_H
 
 #include "formes/Forme.h"
-#include "geometrie/Vecteur2D.h"
 #include <vector>
 #include <sstream>
 #include <stdexcept>
