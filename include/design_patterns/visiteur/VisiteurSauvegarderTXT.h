@@ -3,9 +3,12 @@
 
 #include "design_patterns/visiteur/VisiteurForme.h"
 #include <string>
+#include <sstream>
 #include <fstream>
 
 using namespace std;
+
+#define TAILLE_BUFFER 4096
 
 /**
  * @brief Classe VisiteurSauvegarderTXT permettant de sauvegarder des formes dans un fichier texte.
@@ -13,13 +16,7 @@ using namespace std;
 class VisiteurSauvegarderTXT : public VisiteurForme
 {
 private:
-	ofstream _fichier; /**< Fichier de sauvegarde. */
-
-	/**
-	 * @brief Sauvegarde le nombre de points d'une forme.
-	 * @param nbPoints Nombre de points à sauvegarder.
-	 */
-	void sauvegarderNbPoints(int nbPoints);
+	ofstream* _fichier; /**< Fichier de sauvegarde. */
 
 	/**
 	 * @brief Sauvegarde une forme simple.
@@ -29,14 +26,12 @@ private:
 
 public:
 	/**
-	 * @brief Constructeur de la classe VisiteurSauvegarderTXT.
-	 * @param nomFichier Nom du fichier de sauvegarde.
+	 * @brief Constructeur de VisiteurSauvegarderTXT.
+	 * @param fichier Fichier de sauvegarde.
 	 */
-	VisiteurSauvegarderTXT(const string& nomFichier);
+	VisiteurSauvegarderTXT(ofstream* fichier);
 
-	~VisiteurSauvegarderTXT();
-
-	void setFichier(const string& nomFichier);
+	void setFichier(ofstream* fichier);
 
 	virtual void visiter(Cercle* c) override;
 	virtual void visiter(Segment* s) override;
@@ -45,32 +40,31 @@ public:
 	virtual void visiter(Groupe* g) override;
 }; // class VisiteurSauvegarderTXT
 
-inline void VisiteurSauvegarderTXT::sauvegarderNbPoints(int nbPoints)
+inline VisiteurSauvegarderTXT::VisiteurSauvegarderTXT(ofstream* fichier)
+	: _fichier(fichier)
 {
-	_fichier << nbPoints << endl;
+	// Si le fichier de sauvegarde n'est pas ouvert, on lance une exception
+	if (!fichier || !fichier->is_open())
+		throw invalid_argument("Le fichier de sauvegarde n'est pas ouvert.");
+}
+
+inline void VisiteurSauvegarderTXT::setFichier(ofstream* fichier)
+{
+	_fichier = fichier;
 }
 
 inline void VisiteurSauvegarderTXT::sauvegarderFormeSimple(const Forme* fs)
 {
-	string str = string(*fs);
+	// Buffer pour la conversion de la forme simple en chaîne de caractères
+    char buffer[TAILLE_BUFFER];
+
+	// Conversion de la forme simple en chaîne de caractères
+    string str = string(*fs);
+    int length = snprintf(buffer, sizeof(buffer), "%zu %s\n", str.length(), str.c_str());
 	
-	_fichier << str.length() << " " << str << endl;
-}
-
-inline VisiteurSauvegarderTXT::VisiteurSauvegarderTXT(const string& nomFichier)
-{
-	_fichier.open(nomFichier);
-}
-
-inline VisiteurSauvegarderTXT::~VisiteurSauvegarderTXT()
-{
-	_fichier.close();
-}
-
-inline void VisiteurSauvegarderTXT::setFichier(const string& nomFichier)
-{
-	_fichier.close();
-	_fichier.open(nomFichier);
+	// Si la longueur est supérieure à 0, on écrit dans le fichier
+    if (length > 0)
+    	_fichier->write(buffer, length);
 }
 
 #endif // VISITEUR_SAUVEGARDER_TXT_H

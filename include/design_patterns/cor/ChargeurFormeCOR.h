@@ -27,6 +27,14 @@ public:
 	 */
 	ChargeurFormeCOR(ChargeurFormeCOR* _suivant);
 
+	/**
+	 * @brief Destructeur de ChargeurFormeCOR.
+	 */
+	virtual ~ChargeurFormeCOR()
+	{
+		delete _suivant;
+	}
+
 	Forme* charger(const char* ligne) const override;
 
 	/**

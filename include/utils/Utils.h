@@ -2,6 +2,10 @@
 #define UTILS_H
 
 #include "geometrie/Vecteur2D.h"
+#include "design_patterns/cor/ChargeurFormeCOR.h"
+#include "design_patterns/visiteur/VisiteurForme.h"
+#include <vector>
+#include <ostream>
 
 using namespace std;
 
@@ -43,6 +47,22 @@ public:
 	 * @return La nouvelle coordonnée Y du point après la rotation.
 	 */
 	static double calculerRotationY(double centreX, double centreY, double pointX, double pointY, double cosA, double sinA);
+
+	/**
+	 * @brief Charge les formes à partir d'un fichier.
+	 * @param nomFichier Le nom du fichier à charger.
+	 * @param chargeurFormeCOR Le chargeur de formes.
+	 * @return Le vecteur de formes chargées.
+	 */
+	static vector<Forme*> chargerFormes(const string& nomFichier, ChargeurFormeCOR* chargeurFormeCOR);
+
+	/**
+	 * @brief Sauvegarde les formes dans un fichier.
+	 * @param nomFichier Le nom du fichier de sauvegarde.
+	 * @param visiteurForme Le visiteur de formes.
+	 * @param formes Le vecteur de formes à sauvegarder.
+	 */
+	static void sauvegarderFormes(ofstream* fichier, VisiteurForme* visiteurForme, const vector<Forme*>& formes);
 }; // class Utils
 
 inline double Utils::calculerHomothetie(double centre, double point, double k)

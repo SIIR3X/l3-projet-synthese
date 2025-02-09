@@ -173,19 +173,19 @@ $(TEST_PROGRAM): $(SRC_OBJ_FILES) $(TEST_OBJ_FILES)
 all: clean delete $(PROGRAM)
 
 # Command to run the program
-run: $(PROGRAM)
+run: clean $(PROGRAM)
 	$(PROGRAM) $(MAIN_ARGS)
 
 # Command to run the tests
-test: $(TEST_PROGRAM)
+test: clean $(TEST_PROGRAM)
 	$(TEST_PROGRAM) $(TEST_ARGS)
 
 # Command to run the memory check on the program
-memorycheck: $(PROGRAM)
+memorycheck: clean $(PROGRAM)
 	$(MEMORYCHECK_CMD) $(MAIN_ARGS)
 
 # Command to run the memory check on the tests
-memorychecktest: $(TEST_PROGRAM)
+memorychecktest: clean $(TEST_PROGRAM)
 	$(MEMORYCHECK_TEST_CMD) $(TEST_ARGS)
 
 # Command to compile the Java files
