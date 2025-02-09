@@ -45,6 +45,8 @@ public:
 
 	const Vecteur2D operator * (const Vecteur2D &u) const;
 
+	bool operator == (const Vecteur2D &u) const { return x == u.x && y == u.y; }
+
 	operator string() const;
 
 }; // class Vecteur2D
