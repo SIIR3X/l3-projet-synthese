@@ -110,13 +110,13 @@ endif
 ifeq ($(OS),Windows_NT)
 	MEMORYCHECK_CMD = @echo Memory check is not supported on Windows.
 	MEMORYCHECK_TEST_CMD = @echo Memory check is not supported on Windows.
-	CLEAN_CMD = if exist "$(OBJ_DIR)" ($(RM) "$(OBJ_DIR)\*" > NUL 2>&1) && FOR /D %%p IN ("$(OBJ_DIR)\*") DO $(RM_DIR) %%p > NUL 2>&1
+	CLEAN_CMD = if exist "$(OBJ_DIR)" ($(RM) "$(OBJ_DIR)\*" > NUL 2>&1) && FOR /D %%p IN ("$(OBJ_DIR)\*") DO $(RM_DIR) %%p > NUL 2>&1 && if exist "$(JAVA_BIN_DIR)" $(RM) "$(JAVA_BIN_DIR)\*" > NUL 2>&1
 	DELETE_CMD = if exist "$(PROGRAM)" $(RM) "$(PROGRAM)" > NUL 2>&1
 	CLEANALL_CMD = if exist "$(OBJ_DIR)" $(RM_DIR) "$(OBJ_DIR)" > NUL 2>&1 && if exist "$(BIN_DIR)" $(RM_DIR) "$(BIN_DIR)" > NUL 2>&1 && if exist "$(JAVA_BIN_DIR)" $(RM_DIR) "$(JAVA_BIN_DIR)" > NUL 2>&1
 else
 	MEMORYCHECK_CMD = valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes $(PROGRAM)
 	MEMORYCHECK_TEST_CMD = valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes $(TEST_PROGRAM)
-	CLEAN_CMD = $(RM_DIR) $(OBJ_DIR)/*
+	CLEAN_CMD = $(RM_DIR) $(OBJ_DIR)/* $(JAVA_BIN_DIR)/*
 	DELETE_CMD = $(RM) $(PROGRAM)
 	CLEANALL_CMD = $(RM_DIR) $(OBJ_DIR) $(BIN_DIR) $(JAVA_BIN_DIR)
 endif
@@ -167,25 +167,25 @@ $(TEST_PROGRAM): $(SRC_OBJ_FILES) $(TEST_OBJ_FILES)
 ################################ COMMANDS #################################
 ###########################################################################
 
-.PHONY: all run memorycheck javac run-java clean delete cleanall docs
+.PHONY: all run memorycheck test memorychecktest javac run-java clean delete cleanall doc help
 
 # Default rule
 all: clean delete $(PROGRAM)
 
 # Command to run the program
-run: clean $(PROGRAM)
+run: $(PROGRAM)
 	$(PROGRAM) $(MAIN_ARGS)
 
 # Command to run the tests
-test: clean $(TEST_PROGRAM)
+test: $(TEST_PROGRAM)
 	$(TEST_PROGRAM) $(TEST_ARGS)
 
 # Command to run the memory check on the program
-memorycheck: clean $(PROGRAM)
+memorycheck: $(PROGRAM)
 	$(MEMORYCHECK_CMD) $(MAIN_ARGS)
 
 # Command to run the memory check on the tests
-memorycheck-test: clean $(TEST_PROGRAM)
+memorychecktest: $(TEST_PROGRAM)
 	$(MEMORYCHECK_TEST_CMD) $(TEST_ARGS)
 
 # Command to compile the Java files
@@ -210,7 +210,7 @@ cleanall:
 	$(CLEANALL_CMD)
 
 # Command to generate the documentation
-docs:
+doc:
 	doxygen Doxyfile
 
 # Command to display the help
@@ -222,7 +222,7 @@ help:
 	@echo "  run              Run the program"
 	@echo "  test             Run the tests"
 	@echo "  memorycheck      Run the memory check on the program"
-	@echo "  memorycheck-test Run the memory check on the tests"
+	@echo "  memorychecktest  Run the memory check on the tests"
 	@echo "  javac            Compile the Java files"
 	@echo "  run-java         Run the Java program"
 	@echo "  clean            Clean the object files"
