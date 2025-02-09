@@ -18,7 +18,7 @@ private:
 public:
 	Viewport(const Vecteur2D& coinMin, const Vecteur2D& coinMax, int largeurEcran, int hauteurEcran);
 
-	void formeVersEcran(Forme* forme) const;
+	Forme* formeVersEcran(const Forme& forme) const;
 
 	Vecteur2D coinMin() const { return _coinMin; }
 
@@ -42,7 +42,7 @@ public:
 	{
 		return os << string(viewport);
 	}
-};
+}; // class Viewport
 
 inline Viewport::Viewport(const Vecteur2D& coinMin, const Vecteur2D& coinMax, int largeurEcran, int hauteurEcran)
 	: _coinMin(coinMin), _coinMax(coinMax), _largeurEcran(largeurEcran), _hauteurEcran(hauteurEcran)
@@ -56,10 +56,17 @@ inline Viewport::Viewport(const Vecteur2D& coinMin, const Vecteur2D& coinMax, in
 	_facteurZoom = min(_echelleX, _echelleY);
 }
 
-inline void Viewport::formeVersEcran(Forme* forme) const
+inline Forme* Viewport::formeVersEcran(const Forme& forme) const
 {
-	forme->homothetie(_centreMonde, _facteurZoom);
-	forme->translation(Vecteur2D(-_coinMin.x * _facteurZoom, -_coinMin.y * _facteurZoom));
+	Forme* copie = forme.clone();
+
+	copie->translation(-_centreMonde);
+
+	copie->homothetie(Vecteur2D(0, 0), _facteurZoom);
+
+	copie->translation(Vecteur2D(_largeurEcran / 2, _hauteurEcran / 2));
+
+	return copie;
 }
 
 inline Viewport::operator string() const
