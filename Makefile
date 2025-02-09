@@ -61,6 +61,7 @@ SRC_FILES = \
 TEST_SRC_FILES = \
 	$(TEST_DIR)/geometrie/Vecteur2DTest.cpp \
 	$(TEST_DIR)/formes/SegmentTest.cpp \
+	$(TEST_DIR)/formes/TriangleTest.cpp \
 
 ###########################################################################
 ############################### EXECUTABLES ###############################

@@ -58,6 +58,7 @@ TEST(Segment, Rotation) {
 	// Assert
 	EXPECT_NEAR(0, s.p1().x, tolerance);
 	EXPECT_NEAR(1, s.p1().y, tolerance);
+	
 	EXPECT_NEAR(-1, s.p2().x, tolerance);
 	EXPECT_NEAR(0, s.p2().y, tolerance);
 }
