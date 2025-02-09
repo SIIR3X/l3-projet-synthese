@@ -48,7 +48,6 @@ public:
 	bool operator == (const Vecteur2D &u) const { return x == u.x && y == u.y; }
 
 	operator string() const;
-
 }; // class Vecteur2D
 
 inline const Vecteur2D Vecteur2D::operator + (const double &a) const
