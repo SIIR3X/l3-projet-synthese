@@ -5,9 +5,9 @@ digraph "Graphical Class Hierarchy"
   edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
   node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
   rankdir="LR";
-  Node0 [id="Node000000",label="ChargeurForme",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classChargeurForme.html",tooltip=" "];
+  Node0 [id="Node000000",label="ChargeurForme",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classChargeurForme.html",tooltip="Classe abstraite ChargeurForme permettant de charger une forme à partir d'une chaîne de caractères."];
   Node0 -> Node1 [id="edge1_Node000000_Node000001",dir="back",color="steelblue1",style="solid",tooltip=" "];
-  Node1 [id="Node000001",label="ChargeurFormeCOR",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classChargeurFormeCOR.html",tooltip=" "];
+  Node1 [id="Node000001",label="ChargeurFormeCOR",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classChargeurFormeCOR.html",tooltip="Classe abstraite ChargeurFormeCOR permettant de charger une forme à partir d'une chaîne de caractères..."];
   Node1 -> Node2 [id="edge2_Node000001_Node000002",dir="back",color="steelblue1",style="solid",tooltip=" "];
   Node2 [id="Node000002",label="ChargeurFormeCORCercle",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classChargeurFormeCORCercle.html",tooltip=" "];
   Node1 -> Node3 [id="edge3_Node000001_Node000003",dir="back",color="steelblue1",style="solid",tooltip=" "];

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['_7egroupe_0',['~Groupe',['../classGroupe.html#a99dd414922635dcc0585aabb2a330f63',1,'Groupe']]]
+  ['viewport_0',['Viewport',['../classViewport.html#ab8527a6742d3b6cd760223bc852e8cc6',1,'Viewport']]],
+  ['visiteursauvegardertxt_1',['VisiteurSauvegarderTXT',['../classVisiteurSauvegarderTXT.html#ac60d6fe1655309f3452a1134e1c43e3d',1,'VisiteurSauvegarderTXT']]]
 ];

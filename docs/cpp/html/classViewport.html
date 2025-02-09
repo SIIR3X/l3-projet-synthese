@@ -76,14 +76,19 @@ $(function() {
   <div class="headertitle"><div class="title">Viewport Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Classe <a class="el" href="classViewport.html" title="Classe Viewport permettant de convertir des formes du monde en formes de l&#39;écran.">Viewport</a> permettant de convertir des formes du monde en formes de l'écran.  
+ <a href="classViewport.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="Viewport_8h_source.html">Viewport.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ab8527a6742d3b6cd760223bc852e8cc6" id="r_ab8527a6742d3b6cd760223bc852e8cc6"><td class="memItemLeft" align="right" valign="top"><a id="ab8527a6742d3b6cd760223bc852e8cc6" name="ab8527a6742d3b6cd760223bc852e8cc6"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Viewport</b> (const <a class="el" href="classVecteur2D.html">Vecteur2D</a> &amp;coinMin, const <a class="el" href="classVecteur2D.html">Vecteur2D</a> &amp;coinMax, int largeurEcran, int hauteurEcran)</td></tr>
+<tr class="memitem:ab8527a6742d3b6cd760223bc852e8cc6" id="r_ab8527a6742d3b6cd760223bc852e8cc6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classViewport.html#ab8527a6742d3b6cd760223bc852e8cc6">Viewport</a> (const <a class="el" href="classVecteur2D.html">Vecteur2D</a> &amp;coinMin, const <a class="el" href="classVecteur2D.html">Vecteur2D</a> &amp;coinMax, int largeurEcran, int hauteurEcran)</td></tr>
+<tr class="memdesc:ab8527a6742d3b6cd760223bc852e8cc6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructeur de la classe <a class="el" href="classViewport.html" title="Classe Viewport permettant de convertir des formes du monde en formes de l&#39;écran.">Viewport</a>.  <br /></td></tr>
 <tr class="separator:ab8527a6742d3b6cd760223bc852e8cc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a57c3395e0f7e714d077339e0dc9b88ac" id="r_a57c3395e0f7e714d077339e0dc9b88ac"><td class="memItemLeft" align="right" valign="top"><a id="a57c3395e0f7e714d077339e0dc9b88ac" name="a57c3395e0f7e714d077339e0dc9b88ac"></a>
-<a class="el" href="classForme.html">Forme</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>formeVersEcran</b> (const <a class="el" href="classForme.html">Forme</a> &amp;forme) const</td></tr>
+<tr class="memitem:a57c3395e0f7e714d077339e0dc9b88ac" id="r_a57c3395e0f7e714d077339e0dc9b88ac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classForme.html">Forme</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classViewport.html#a57c3395e0f7e714d077339e0dc9b88ac">formeVersEcran</a> (const <a class="el" href="classForme.html">Forme</a> &amp;forme) const</td></tr>
+<tr class="memdesc:a57c3395e0f7e714d077339e0dc9b88ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convertit une forme du monde en une forme de l'écran.  <br /></td></tr>
 <tr class="separator:a57c3395e0f7e714d077339e0dc9b88ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad7faa88bfbe275710a82bdaa5648c924" id="r_ad7faa88bfbe275710a82bdaa5648c924"><td class="memItemLeft" align="right" valign="top"><a id="ad7faa88bfbe275710a82bdaa5648c924" name="ad7faa88bfbe275710a82bdaa5648c924"></a>
 <a class="el" href="classVecteur2D.html">Vecteur2D</a>&#160;</td><td class="memItemRight" valign="bottom"><b>coinMin</b> () const</td></tr>
@@ -119,6 +124,104 @@ Friends</h2></td></tr>
 ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;&lt;</b> (ostream &amp;os, const <a class="el" href="classViewport.html">Viewport</a> &amp;viewport)</td></tr>
 <tr class="separator:a6a04568ec72581b25a2083b7249da474"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Classe <a class="el" href="classViewport.html" title="Classe Viewport permettant de convertir des formes du monde en formes de l&#39;écran.">Viewport</a> permettant de convertir des formes du monde en formes de l'écran. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="ab8527a6742d3b6cd760223bc852e8cc6" name="ab8527a6742d3b6cd760223bc852e8cc6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab8527a6742d3b6cd760223bc852e8cc6">&#9670;&#160;</a></span>Viewport()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Viewport::Viewport </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classVecteur2D.html">Vecteur2D</a> &amp;&#160;</td>
+          <td class="paramname"><em>coinMin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classVecteur2D.html">Vecteur2D</a> &amp;&#160;</td>
+          <td class="paramname"><em>coinMax</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>largeurEcran</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>hauteurEcran</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructeur de la classe <a class="el" href="classViewport.html" title="Classe Viewport permettant de convertir des formes du monde en formes de l&#39;écran.">Viewport</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">coinMin</td><td>Coin minimal du monde. </td></tr>
+    <tr><td class="paramname">coinMax</td><td>Coin maximal du monde. </td></tr>
+    <tr><td class="paramname">largeurEcran</td><td>Largeur de l'écran. </td></tr>
+    <tr><td class="paramname">hauteurEcran</td><td>Hauteur de l'écran. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a57c3395e0f7e714d077339e0dc9b88ac" name="a57c3395e0f7e714d077339e0dc9b88ac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a57c3395e0f7e714d077339e0dc9b88ac">&#9670;&#160;</a></span>formeVersEcran()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classForme.html">Forme</a> * Viewport::formeVersEcran </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classForme.html">Forme</a> &amp;&#160;</td>
+          <td class="paramname"><em>forme</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Convertit une forme du monde en une forme de l'écran. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">forme</td><td><a class="el" href="classForme.html" title="Classe abstraite représentant une forme géométrique.">Forme</a> à convertir. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointeur vers la forme convertie. </dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>include/graphique/<a class="el" href="Viewport_8h_source.html">Viewport.h</a></li>
 </ul>

@@ -86,107 +86,103 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;geometrie/Vecteur2D.h&quot;</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;design_patterns/visiteur/VisiteurForme.h&quot;</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;ostream&gt;</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">using namespace </span>std;</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">class </span><a class="code hl_class" href="classGroupe.html">Groupe</a>;</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keyword">enum class</span> Couleur { BLACK, BLUE, RED, GREEN, YELLOW, CYAN };</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="keyword">const</span> Couleur COULEUR_PAR_DEFAUT = Couleur::BLACK;</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
-<div class="foldopen" id="foldopen00026" data-start="{" data-end="};">
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="classForme.html">   26</a></span><span class="keyword">class </span><a class="code hl_class" href="classForme.html">Forme</a></div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>{</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    Couleur _couleur; </div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    <a class="code hl_class" href="classGroupe.html">Groupe</a>* _groupe; </div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <span class="keywordtype">double</span> calculerHomothetie(<span class="keywordtype">double</span> centre, <span class="keywordtype">double</span> point, <span class="keywordtype">double</span> k) <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="keywordtype">double</span> calculerRotation(<span class="keywordtype">double</span> centre, <span class="keywordtype">double</span> point, <span class="keywordtype">double</span> cosA, <span class="keywordtype">double</span> sinA) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;utils/Utils.h&quot;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;ostream&gt;</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">using namespace </span>std;</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">class </span><a class="code hl_class" href="classGroupe.html">Groupe</a>;</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keyword">enum class</span> Couleur { BLACK, BLUE, RED, GREEN, YELLOW, CYAN };</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="keyword">const</span> Couleur COULEUR_PAR_DEFAUT = Couleur::BLACK;</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="foldopen" id="foldopen00027" data-start="{" data-end="};">
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="classForme.html">   27</a></span><span class="keyword">class </span><a class="code hl_class" href="classForme.html">Forme</a></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>{</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    Couleur _couleur; </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    <a class="code hl_class" href="classGroupe.html">Groupe</a>* _groupe; </div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="keyword">protected</span>:</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classForme.html#aafef1dba6c1079883bfaaf45f510ad7f">appliquerHomothetie</a>(<a class="code hl_class" href="classVecteur2D.html">Vecteur2D</a>&amp; point, <span class="keyword">const</span> <a class="code hl_class" href="classVecteur2D.html">Vecteur2D</a>&amp; centre, <span class="keywordtype">double</span> k) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classForme.html#a26593612fe7cfca06ad2a7f515131f2a">appliquerRotation</a>(<a class="code hl_class" href="classVecteur2D.html">Vecteur2D</a>&amp; point, <span class="keyword">const</span> <a class="code hl_class" href="classVecteur2D.html">Vecteur2D</a>&amp; centre, <span class="keywordtype">double</span> cosA, <span class="keywordtype">double</span> sinA) <span class="keyword">const</span>;</div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="keyword">protected</span>:</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classForme.html#aafef1dba6c1079883bfaaf45f510ad7f">appliquerHomothetie</a>(<a class="code hl_class" href="classVecteur2D.html">Vecteur2D</a>&amp; point, <span class="keyword">const</span> <a class="code hl_class" href="classVecteur2D.html">Vecteur2D</a>&amp; centre, <span class="keywordtype">double</span> k) <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classForme.html#a26593612fe7cfca06ad2a7f515131f2a">appliquerRotation</a>(<a class="code hl_class" href="classVecteur2D.html">Vecteur2D</a>&amp; point, <span class="keyword">const</span> <a class="code hl_class" href="classVecteur2D.html">Vecteur2D</a>&amp; centre, <span class="keywordtype">double</span> cosA, <span class="keywordtype">double</span> sinA) <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span><span class="keyword">public</span>:</div>
-<div class="foldopen" id="foldopen00074" data-start="{" data-end="}">
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno"><a class="line" href="classForme.html#a830018220239dd3c1383b24713946448">   74</a></span>    <a class="code hl_function" href="classForme.html#a830018220239dd3c1383b24713946448">Forme</a>(Couleur couleur = COULEUR_PAR_DEFAUT)</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        : _couleur(couleur), _groupe(nullptr) {}</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="keyword">public</span>:</div>
+<div class="foldopen" id="foldopen00056" data-start="{" data-end="}">
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="classForme.html#a830018220239dd3c1383b24713946448">   56</a></span>    <a class="code hl_function" href="classForme.html#a830018220239dd3c1383b24713946448">Forme</a>(Couleur couleur = COULEUR_PAR_DEFAUT)</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        : _couleur(couleur), _groupe(nullptr) {}</div>
 </div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    <span class="keyword">virtual</span> <a class="code hl_class" href="classForme.html">~Forme</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    <span class="keyword">virtual</span> <a class="code hl_class" href="classForme.html">~Forme</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno"><a class="line" href="classForme.html#aa846673739124ed44293ceaf515f3fa8">   65</a></span>    <span class="keyword">virtual</span> <a class="code hl_class" href="classForme.html">Forme</a>* <a class="code hl_function" href="classForme.html#aa846673739124ed44293ceaf515f3fa8">clone</a>() <span class="keyword">const</span> = 0;</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno"><a class="line" href="classForme.html#a9798e2b37f40063ddf4a9ff4fc1863af">   71</a></span>    <span class="keyword">virtual</span> <span class="keywordtype">double</span> <a class="code hl_function" href="classForme.html#a9798e2b37f40063ddf4a9ff4fc1863af">aire</a>() <span class="keyword">const</span> = 0;</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> </div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno"><a class="line" href="classForme.html#afcea04aa236bd6d603881628b3cd90c1">   77</a></span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classForme.html#afcea04aa236bd6d603881628b3cd90c1">translation</a>(<span class="keyword">const</span> <a class="code hl_class" href="classVecteur2D.html">Vecteur2D</a>&amp; vt) = 0;</div>
 <div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno"><a class="line" href="classForme.html#aa846673739124ed44293ceaf515f3fa8">   83</a></span>    <span class="keyword">virtual</span> <a class="code hl_class" href="classForme.html">Forme</a>* <a class="code hl_function" href="classForme.html#aa846673739124ed44293ceaf515f3fa8">clone</a>() <span class="keyword">const</span> = 0;</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno"><a class="line" href="classForme.html#a9798e2b37f40063ddf4a9ff4fc1863af">   89</a></span>    <span class="keyword">virtual</span> <span class="keywordtype">double</span> <a class="code hl_function" href="classForme.html#a9798e2b37f40063ddf4a9ff4fc1863af">aire</a>() <span class="keyword">const</span> = 0;</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno"><a class="line" href="classForme.html#afcea04aa236bd6d603881628b3cd90c1">   95</a></span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classForme.html#afcea04aa236bd6d603881628b3cd90c1">translation</a>(<span class="keyword">const</span> <a class="code hl_class" href="classVecteur2D.html">Vecteur2D</a>&amp; vt) = 0;</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno"><a class="line" href="classForme.html#a8ef4ebda0bd4099f24c0d407abb3e322">   84</a></span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classForme.html#a8ef4ebda0bd4099f24c0d407abb3e322">homothetie</a>(<span class="keyword">const</span> <a class="code hl_class" href="classVecteur2D.html">Vecteur2D</a>&amp; centre, <span class="keywordtype">double</span> k) = 0;</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno"><a class="line" href="classForme.html#a01ec85ad7095fbd6e0cbb1b9001083e5">   91</a></span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classForme.html#a01ec85ad7095fbd6e0cbb1b9001083e5">rotation</a>(<span class="keyword">const</span> <a class="code hl_class" href="classVecteur2D.html">Vecteur2D</a>&amp; centre, <span class="keywordtype">double</span> angle) = 0;</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span> </div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    <a class="code hl_class" href="classGroupe.html">Groupe</a>* groupe()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> _groupe; }</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    <span class="keywordtype">void</span> setGroupe(<a class="code hl_class" href="classGroupe.html">Groupe</a>* groupe) { _groupe = groupe; }</div>
 <div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span> </div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno"><a class="line" href="classForme.html#a8ef4ebda0bd4099f24c0d407abb3e322">  102</a></span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classForme.html#a8ef4ebda0bd4099f24c0d407abb3e322">homothetie</a>(<span class="keyword">const</span> <a class="code hl_class" href="classVecteur2D.html">Vecteur2D</a>&amp; centre, <span class="keywordtype">double</span> k) = 0;</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span> </div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno"><a class="line" href="classForme.html#a01ec85ad7095fbd6e0cbb1b9001083e5">  109</a></span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classForme.html#a01ec85ad7095fbd6e0cbb1b9001083e5">rotation</a>(<span class="keyword">const</span> <a class="code hl_class" href="classVecteur2D.html">Vecteur2D</a>&amp; centre, <span class="keywordtype">double</span> angle) = 0;</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span> </div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    <a class="code hl_class" href="classGroupe.html">Groupe</a>* groupe()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> _groupe; }</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    Couleur couleur()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> _couleur; }</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> </div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>    <span class="keyword">virtual</span> <span class="keyword">operator</span> string() <span class="keyword">const</span> = 0;</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> </div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>    <span class="keyword">friend</span> ostream&amp; operator&lt;&lt;(ostream&amp; os, <span class="keyword">const</span> <a class="code hl_class" href="classForme.html">Forme</a>&amp; forme)</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    {</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>        <span class="keywordflow">return</span> os &lt;&lt; string(forme);</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>    }</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span> </div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno"><a class="line" href="classForme.html#ae74739b137130f72099516254a442e32">  110</a></span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classForme.html#ae74739b137130f72099516254a442e32">accepter</a>(<a class="code hl_class" href="classVisiteurForme.html">VisiteurForme</a>* visiteur) = 0;</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>}; <span class="comment">// class Forme</span></div>
+</div>
 <div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span> </div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>    <span class="keywordtype">void</span> setGroupe(<a class="code hl_class" href="classGroupe.html">Groupe</a>* groupe) { _groupe = groupe; }</div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    Couleur couleur()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> _couleur; }</div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span> </div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>    <span class="keyword">virtual</span> <span class="keyword">operator</span> string() <span class="keyword">const</span> = 0;</div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span> </div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>    <span class="keyword">friend</span> ostream&amp; operator&lt;&lt;(ostream&amp; os, <span class="keyword">const</span> <a class="code hl_class" href="classForme.html">Forme</a>&amp; forme)</div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    {</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>        <span class="keywordflow">return</span> os &lt;&lt; string(forme);</div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    }</div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span> </div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno"><a class="line" href="classForme.html#ae74739b137130f72099516254a442e32">  128</a></span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classForme.html#ae74739b137130f72099516254a442e32">accepter</a>(<a class="code hl_class" href="classVisiteurForme.html">VisiteurForme</a>* visiteur) = 0;</div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>}; <span class="comment">// class Forme</span></div>
+<div class="foldopen" id="foldopen00113" data-start="{" data-end="}">
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno"><a class="line" href="classForme.html#aafef1dba6c1079883bfaaf45f510ad7f">  113</a></span><span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classForme.html#aafef1dba6c1079883bfaaf45f510ad7f">Forme::appliquerHomothetie</a>(<a class="code hl_class" href="classVecteur2D.html">Vecteur2D</a>&amp; point, <span class="keyword">const</span> <a class="code hl_class" href="classVecteur2D.html">Vecteur2D</a>&amp; centre, <span class="keywordtype">double</span> k)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    <span class="comment">// Calcul des nouvelles coordonnées</span></div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>    point.x = <a class="code hl_function" href="classUtils.html#a9eb3d2f2708f5c370688b4a6fdbdc5fa">Utils::calculerHomothetie</a>(centre.x, point.x, k);</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>    point.y = <a class="code hl_function" href="classUtils.html#a9eb3d2f2708f5c370688b4a6fdbdc5fa">Utils::calculerHomothetie</a>(centre.y, point.y, k);</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>}</div>
+</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span> </div>
+<div class="foldopen" id="foldopen00120" data-start="{" data-end="}">
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno"><a class="line" href="classForme.html#a26593612fe7cfca06ad2a7f515131f2a">  120</a></span><span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classForme.html#a26593612fe7cfca06ad2a7f515131f2a">Forme::appliquerRotation</a>(<a class="code hl_class" href="classVecteur2D.html">Vecteur2D</a>&amp; point, <span class="keyword">const</span> <a class="code hl_class" href="classVecteur2D.html">Vecteur2D</a>&amp; centre, <span class="keywordtype">double</span> cosA, <span class="keywordtype">double</span> sinA)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    <span class="comment">// On sauvegarde les coordonnées originales du point</span></div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>    <span class="keywordtype">double</span> originalX = point.x;</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    <span class="keywordtype">double</span> originalY = point.y;</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span> </div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>    <span class="comment">// Calcul des nouvelles coordonnées</span></div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>    point.x = <a class="code hl_function" href="classUtils.html#a8c70512da6e03670980458bf534b35a1">Utils::calculerRotationX</a>(centre.x, centre.y, originalX, originalY, cosA, sinA);</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>    point.y = <a class="code hl_function" href="classUtils.html#a9d59900704c74f396c92dc5e3ddaae6c">Utils::calculerRotationY</a>(centre.x, centre.y, originalX, originalY, cosA, sinA);</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>}</div>
 </div>
 <div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span> </div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span><span class="keyword">inline</span> <span class="keywordtype">double</span> Forme::calculerHomothetie(<span class="keywordtype">double</span> centre, <span class="keywordtype">double</span> point, <span class="keywordtype">double</span> k)<span class="keyword"> const</span></div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>    <span class="keywordflow">return</span> centre + k * (point - centre);</div>
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>}</div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span> </div>
-<div class="foldopen" id="foldopen00136" data-start="{" data-end="}">
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno"><a class="line" href="classForme.html#aafef1dba6c1079883bfaaf45f510ad7f">  136</a></span><span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classForme.html#aafef1dba6c1079883bfaaf45f510ad7f">Forme::appliquerHomothetie</a>(<a class="code hl_class" href="classVecteur2D.html">Vecteur2D</a>&amp; point, <span class="keyword">const</span> <a class="code hl_class" href="classVecteur2D.html">Vecteur2D</a>&amp; centre, <span class="keywordtype">double</span> k)<span class="keyword"> const</span></div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>    point.x = calculerHomothetie(centre.x, point.x, k);</div>
-<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>    point.y = calculerHomothetie(centre.y, point.y, k);</div>
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>}</div>
-</div>
-<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span> </div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span><span class="keyword">inline</span> <span class="keywordtype">double</span> Forme::calculerRotation(<span class="keywordtype">double</span> centre, <span class="keywordtype">double</span> point, <span class="keywordtype">double</span> cosA, <span class="keywordtype">double</span> sinA)<span class="keyword"> const</span></div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>    <span class="keywordflow">return</span> centre + (point - centre) * cosA - (point - centre) * sinA;</div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>}</div>
-<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span> </div>
-<div class="foldopen" id="foldopen00147" data-start="{" data-end="}">
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno"><a class="line" href="classForme.html#a26593612fe7cfca06ad2a7f515131f2a">  147</a></span><span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classForme.html#a26593612fe7cfca06ad2a7f515131f2a">Forme::appliquerRotation</a>(<a class="code hl_class" href="classVecteur2D.html">Vecteur2D</a>&amp; point, <span class="keyword">const</span> <a class="code hl_class" href="classVecteur2D.html">Vecteur2D</a>&amp; centre, <span class="keywordtype">double</span> cosA, <span class="keywordtype">double</span> sinA)<span class="keyword"> const</span></div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>    point.x = calculerRotation(centre.x, point.x, cosA, sinA);</div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>    point.y = calculerRotation(centre.y, point.y, cosA, sinA);</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>}</div>
-</div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span> </div>
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span><span class="preprocessor">#endif </span><span class="comment">// FORME_H</span></div>
-<div class="ttc" id="aclassForme_html"><div class="ttname"><a href="classForme.html">Forme</a></div><div class="ttdoc">Classe abstraite représentant une forme géométrique.</div><div class="ttdef"><b>Definition</b> Forme.h:27</div></div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span><span class="preprocessor">#endif </span><span class="comment">// FORME_H</span></div>
+<div class="ttc" id="aclassForme_html"><div class="ttname"><a href="classForme.html">Forme</a></div><div class="ttdoc">Classe abstraite représentant une forme géométrique.</div><div class="ttdef"><b>Definition</b> Forme.h:28</div></div>
 <div class="ttc" id="aclassForme_html_a01ec85ad7095fbd6e0cbb1b9001083e5"><div class="ttname"><a href="classForme.html#a01ec85ad7095fbd6e0cbb1b9001083e5">Forme::rotation</a></div><div class="ttdeci">virtual void rotation(const Vecteur2D &amp;centre, double angle)=0</div><div class="ttdoc">Réalise une rotation de la forme.</div></div>
-<div class="ttc" id="aclassForme_html_a26593612fe7cfca06ad2a7f515131f2a"><div class="ttname"><a href="classForme.html#a26593612fe7cfca06ad2a7f515131f2a">Forme::appliquerRotation</a></div><div class="ttdeci">void appliquerRotation(Vecteur2D &amp;point, const Vecteur2D &amp;centre, double cosA, double sinA) const</div><div class="ttdoc">Applique une rotation à un point.</div><div class="ttdef"><b>Definition</b> Forme.h:147</div></div>
-<div class="ttc" id="aclassForme_html_a830018220239dd3c1383b24713946448"><div class="ttname"><a href="classForme.html#a830018220239dd3c1383b24713946448">Forme::Forme</a></div><div class="ttdeci">Forme(Couleur couleur=COULEUR_PAR_DEFAUT)</div><div class="ttdoc">Constructeur de la classe Forme.</div><div class="ttdef"><b>Definition</b> Forme.h:74</div></div>
+<div class="ttc" id="aclassForme_html_a26593612fe7cfca06ad2a7f515131f2a"><div class="ttname"><a href="classForme.html#a26593612fe7cfca06ad2a7f515131f2a">Forme::appliquerRotation</a></div><div class="ttdeci">void appliquerRotation(Vecteur2D &amp;point, const Vecteur2D &amp;centre, double cosA, double sinA) const</div><div class="ttdoc">Applique une rotation à un point.</div><div class="ttdef"><b>Definition</b> Forme.h:120</div></div>
+<div class="ttc" id="aclassForme_html_a830018220239dd3c1383b24713946448"><div class="ttname"><a href="classForme.html#a830018220239dd3c1383b24713946448">Forme::Forme</a></div><div class="ttdeci">Forme(Couleur couleur=COULEUR_PAR_DEFAUT)</div><div class="ttdoc">Constructeur de la classe Forme.</div><div class="ttdef"><b>Definition</b> Forme.h:56</div></div>
 <div class="ttc" id="aclassForme_html_a8ef4ebda0bd4099f24c0d407abb3e322"><div class="ttname"><a href="classForme.html#a8ef4ebda0bd4099f24c0d407abb3e322">Forme::homothetie</a></div><div class="ttdeci">virtual void homothetie(const Vecteur2D &amp;centre, double k)=0</div><div class="ttdoc">Réalise une homothétie de la forme.</div></div>
 <div class="ttc" id="aclassForme_html_a9798e2b37f40063ddf4a9ff4fc1863af"><div class="ttname"><a href="classForme.html#a9798e2b37f40063ddf4a9ff4fc1863af">Forme::aire</a></div><div class="ttdeci">virtual double aire() const =0</div><div class="ttdoc">Calcule l'aire de la forme.</div></div>
 <div class="ttc" id="aclassForme_html_aa846673739124ed44293ceaf515f3fa8"><div class="ttname"><a href="classForme.html#aa846673739124ed44293ceaf515f3fa8">Forme::clone</a></div><div class="ttdeci">virtual Forme * clone() const =0</div><div class="ttdoc">Retourne une copie de la forme.</div></div>
-<div class="ttc" id="aclassForme_html_aafef1dba6c1079883bfaaf45f510ad7f"><div class="ttname"><a href="classForme.html#aafef1dba6c1079883bfaaf45f510ad7f">Forme::appliquerHomothetie</a></div><div class="ttdeci">void appliquerHomothetie(Vecteur2D &amp;point, const Vecteur2D &amp;centre, double k) const</div><div class="ttdoc">Applique une homothétie à un point.</div><div class="ttdef"><b>Definition</b> Forme.h:136</div></div>
+<div class="ttc" id="aclassForme_html_aafef1dba6c1079883bfaaf45f510ad7f"><div class="ttname"><a href="classForme.html#aafef1dba6c1079883bfaaf45f510ad7f">Forme::appliquerHomothetie</a></div><div class="ttdeci">void appliquerHomothetie(Vecteur2D &amp;point, const Vecteur2D &amp;centre, double k) const</div><div class="ttdoc">Applique une homothétie à un point.</div><div class="ttdef"><b>Definition</b> Forme.h:113</div></div>
 <div class="ttc" id="aclassForme_html_ae74739b137130f72099516254a442e32"><div class="ttname"><a href="classForme.html#ae74739b137130f72099516254a442e32">Forme::accepter</a></div><div class="ttdeci">virtual void accepter(VisiteurForme *visiteur)=0</div><div class="ttdoc">Accepte un visiteur pour la forme.</div></div>
 <div class="ttc" id="aclassForme_html_afcea04aa236bd6d603881628b3cd90c1"><div class="ttname"><a href="classForme.html#afcea04aa236bd6d603881628b3cd90c1">Forme::translation</a></div><div class="ttdeci">virtual void translation(const Vecteur2D &amp;vt)=0</div><div class="ttdoc">Réalise une translation de la forme.</div></div>
 <div class="ttc" id="aclassGroupe_html"><div class="ttname"><a href="classGroupe.html">Groupe</a></div><div class="ttdoc">Classe représentant un groupe de formes.</div><div class="ttdef"><b>Definition</b> Groupe.h:16</div></div>
+<div class="ttc" id="aclassUtils_html_a8c70512da6e03670980458bf534b35a1"><div class="ttname"><a href="classUtils.html#a8c70512da6e03670980458bf534b35a1">Utils::calculerRotationX</a></div><div class="ttdeci">static double calculerRotationX(double centreX, double centreY, double pointX, double pointY, double cosA, double sinA)</div><div class="ttdoc">Calcule la rotation d'un point autour d'un centre selon l'axe des abscisses.</div><div class="ttdef"><b>Definition</b> Utils.h:53</div></div>
+<div class="ttc" id="aclassUtils_html_a9d59900704c74f396c92dc5e3ddaae6c"><div class="ttname"><a href="classUtils.html#a9d59900704c74f396c92dc5e3ddaae6c">Utils::calculerRotationY</a></div><div class="ttdeci">static double calculerRotationY(double centreX, double centreY, double pointX, double pointY, double cosA, double sinA)</div><div class="ttdoc">Calcule la rotation d'un point autour d'un centre selon l'axe des ordonnées.</div><div class="ttdef"><b>Definition</b> Utils.h:58</div></div>
+<div class="ttc" id="aclassUtils_html_a9eb3d2f2708f5c370688b4a6fdbdc5fa"><div class="ttname"><a href="classUtils.html#a9eb3d2f2708f5c370688b4a6fdbdc5fa">Utils::calculerHomothetie</a></div><div class="ttdeci">static double calculerHomothetie(double centre, double point, double k)</div><div class="ttdoc">Calcule l'homothétie d'un point par rapport à un centre.</div><div class="ttdef"><b>Definition</b> Utils.h:48</div></div>
 <div class="ttc" id="aclassVecteur2D_html"><div class="ttname"><a href="classVecteur2D.html">Vecteur2D</a></div><div class="ttdef"><b>Definition</b> Vecteur2D.h:11</div></div>
-<div class="ttc" id="aclassVisiteurForme_html"><div class="ttname"><a href="classVisiteurForme.html">VisiteurForme</a></div><div class="ttdef"><b>Definition</b> VisiteurForme.h:11</div></div>
+<div class="ttc" id="aclassVisiteurForme_html"><div class="ttname"><a href="classVisiteurForme.html">VisiteurForme</a></div><div class="ttdoc">Classe abstraite VisiteurForme permettant de visiter des formes.</div><div class="ttdef"><b>Definition</b> VisiteurForme.h:14</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
