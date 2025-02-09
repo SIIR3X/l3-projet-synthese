@@ -40,8 +40,6 @@ public class Interlocuteur extends Thread {
 			}
 			System.out.println("le client n°"+ noClient + " a envoyé " + requete);
 
-			String input = requete;
-
 			//Gestion de la lecture et du COR
 
 			//Si groupe -> création d'un groupe et ajout des formes dedans
@@ -59,7 +57,6 @@ public class Interlocuteur extends Thread {
 			}
 
 			Controleur controleur = new Controleur(1024, 768, f);
-
 		}
 	}
 }

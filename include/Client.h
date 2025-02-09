@@ -93,24 +93,36 @@ public:
 		}
 	}
 
-	void send_message(const char* m)
+	void send_request(const char* src)
 	{
-		int request;
-		char message[L];
-		strncpy_s(message, m, L);
-		strcat_s(message, "\r\n"); // terminaison standard pour serveur
+		if (!src)
+		{
+			error("\nLa requête a envoyé est vide !\n");
+		}
 
-		int l = strlen(message);
-		if ((request = send(sock, message, l, 0)) == SOCKET_ERROR)
+		size_t src_len = strlen(src);
+		char* request = new char[src_len + 1];
+		
+		if (strncpy_s(request, src_len + 1, src, src_len))
+		{
+			error("\nLa copie de la requête dans le buffer local a échoué !\n");
+		}
+		strcat_s(request, src_len + 2, "\r\n"); // terminaison standard pour serveur
+		
+		int x;
+		size_t l = strlen(request);
+		if ((x = send(sock, request, l, 0)) == SOCKET_ERROR)
 		{
 			error("\nL'envoi de la requête a échoué !\n");
 		}
+
+		delete[] request;
 	}
 
-	void receive_message()
+	void receive_request()
 	{
-		int request;
-		if ((request = recv(sock, buffer, L - 1, 0)) == SOCKET_ERROR)
+		int x;
+		if ((x = recv(sock, buffer, L - 1, 0)) == SOCKET_ERROR)
 		{
 			error("\nLa récéption de la requête a échoué !\n");
 		}

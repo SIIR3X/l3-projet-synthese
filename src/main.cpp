@@ -13,18 +13,18 @@ int main(void)
 
 	// do
 	// {
-	// 	// Send message
+	// 	// Send request
 	// 	char request[L];
-	// 	std::cout << "Ecrire votre message ou \"quitter\" : ";
+	// 	std::cout << "Ecrire votre requête ou \"quitter\" : ";
 	// 	std::cin.getline(request, L);
 	// 	continuer = strcmp(request, "quitter") != 0;
 
 	// 	if (continuer)
 	// 	{
-	// 		client.send_message(request);
+	// 		client.send_request(request);
 
-	// 		// Receive message
-	// 		client.receive_message();
+	// 		// Receive request
+	// 		client.receive_request();
 	// 		std::cout << client.get_buffer() << "\n";
 	// 	}
 	// } while (continuer);
