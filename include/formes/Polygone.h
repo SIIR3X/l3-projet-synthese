@@ -29,11 +29,11 @@ public:
 
 	void rotation(const Vecteur2D& centre, double angle) override;
 
-	size_t getNbPoints() const { return _points.size(); }
+	size_t nbPoints() const { return _points.size(); }
 
-	const vector<Vecteur2D>& getPoints() const { return _points; }
+	const vector<Vecteur2D>& points() const { return _points; }
 
-	const Vecteur2D& getPoint(size_t index) const;
+	const Vecteur2D& point(size_t index) const;
 
 	const Vecteur2D& operator[](size_t index) const { return _points[index]; }
 
@@ -63,7 +63,7 @@ inline void Polygone::translation(const Vecteur2D& vt)
 		point += vt;
 }
 
-inline const Vecteur2D& Polygone::getPoint(size_t index) const
+inline const Vecteur2D& Polygone::point(size_t index) const
 {
 	if (index < _points.size())
 		return _points[index];

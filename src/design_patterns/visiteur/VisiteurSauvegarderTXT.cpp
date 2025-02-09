@@ -27,9 +27,9 @@ void VisiteurSauvegarderTXT::visiter(Cercle* c)
 
 void VisiteurSauvegarderTXT::visiter(Groupe* g)
 {
-	_fichier << g->getNbFormes() << endl;
+	_fichier << g->nbFormes() << endl;
 
-	for (const Forme* f : g->getFormes())
+	for (const Forme* f : g->formes())
 		sauvegarderFormeSimple(f);
 }
 

@@ -27,11 +27,11 @@ public:
 
 	void rotation(const Vecteur2D& centre, double angle) override;
 
-	size_t getNbFormes() const { return _formes.size(); }
+	size_t nbFormes() const { return _formes.size(); }
 
-	const vector<Forme*>& getFormes() const { return _formes; }
+	const vector<Forme*>& formes() const { return _formes; }
 
-	const Forme* getForme(size_t index) const;
+	const Forme* forme(size_t index) const;
 
 	const Forme* operator[](size_t index) const { return _formes[index]; }
 
@@ -80,7 +80,7 @@ inline void Groupe::rotation(const Vecteur2D& centre, double angle)
 		forme->rotation(centre, angle);
 }
 
-inline const Forme* Groupe::getForme(size_t index) const
+inline const Forme* Groupe::forme(size_t index) const
 {
 	if (index < _formes.size())
 		return _formes[index];
@@ -90,7 +90,7 @@ inline const Forme* Groupe::getForme(size_t index) const
 
 inline void Groupe::ajouterForme(const Forme& forme)
 {
-	if (forme.getGroupe() != nullptr)
+	if (forme.groupe() != nullptr)
 		throw invalid_argument("La forme appartient déjà à un groupe.");
 	
 	_formes.push_back(forme.clone());
@@ -112,7 +112,7 @@ inline Groupe::operator string() const
 {
 	ostringstream oss;
 
-	oss << getNbFormes() << endl;
+	oss << nbFormes() << endl;
 	for (const Forme* forme : _formes)
 		oss << string(*forme) << endl;
 

@@ -31,9 +31,9 @@ public:
 
 	void rotation(const Vecteur2D& centre, double angle) override;
 
-	const Vecteur2D& getCentre() const { return _centre; }
+	const Vecteur2D& centre() const { return _centre; }
 
-	double getRayon() const { return _rayon; }
+	double rayon() const { return _rayon; }
 
 	operator string() const override;
 

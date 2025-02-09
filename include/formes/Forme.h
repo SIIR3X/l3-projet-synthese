@@ -36,7 +36,7 @@ public:
 
 	virtual void rotation(const Vecteur2D& centre, double angle) = 0;
 
-	Groupe* getGroupe() const { return _groupe; }
+	Groupe* groupe() const { return _groupe; }
 
 	void setGroupe(Groupe* groupe) { _groupe = groupe; }
 

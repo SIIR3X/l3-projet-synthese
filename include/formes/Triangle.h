@@ -23,11 +23,11 @@ public:
 
 	void rotation(const Vecteur2D& centre, double angle) override;
 
-	const Vecteur2D& getP1() const { return _p1; }
+	const Vecteur2D& p1() const { return _p1; }
 
-	const Vecteur2D& getP2() const { return _p2; }
+	const Vecteur2D& p2() const { return _p2; }
 
-	const Vecteur2D& getP3() const { return _p3; }
+	const Vecteur2D& p3() const { return _p3; }
 
 	operator string() const override;
 
