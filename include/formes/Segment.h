@@ -18,6 +18,8 @@ public:
 
 	double aire() const override { return 0.0; }
 
+	void translation(const Vecteur2D& v) override;
+
 	const Vecteur2D& getP1() const { return _p1; }
 
 	const Vecteur2D& getP2() const { return _p2; }
@@ -26,6 +28,12 @@ public:
 
 	void accepter(VisiteurForme* visiteur) override { visiteur->visiter(this); }
 }; // class Segment
+
+inline void Segment::translation(const Vecteur2D& v)
+{
+	_p1 += v;
+	_p2 += v;
+}
 
 inline Segment::operator string() const
 {

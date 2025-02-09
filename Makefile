@@ -83,12 +83,12 @@ ifeq ($(OS),Windows_NT)
 	MEMOCHECK_CMD = @echo Memory check is not supported on Windows.
 	CLEAN_CMD = if exist "$(OBJ_DIR)" ($(RM) "$(OBJ_DIR)\*" > NUL 2>&1) && FOR /D %%p IN ("$(OBJ_DIR)\*") DO $(RM_DIR) %%p > NUL 2>&1
 	DELETE_CMD = if exist "$(PROGRAM)" $(RM) "$(PROGRAM)" > NUL 2>&1
-	CLEANALL_CMD = if exist "$(OBJ_DIR)" (if exist "$(BIN_DIR)" ($(RM_DIR) "$(OBJ_DIR)" & $(RM_DIR) "$(BIN_DIR)") else ($(RM_DIR) "$(OBJ_DIR)")) else (if exist "$(BIN_DIR)" ($(RM_DIR) "$(BIN_DIR)"))
+	CLEANALL_CMD = if exist "$(OBJ_DIR)" $(RM_DIR) "$(OBJ_DIR)" > NUL 2>&1 && if exist "$(BIN_DIR)" $(RM_DIR) "$(BIN_DIR)" > NUL 2>&1 && if exist "$(JAVA_BIN_DIR)" $(RM_DIR) "$(JAVA_BIN_DIR)" > NUL 2>&1
 else
 	MEMOCHECK_CMD = valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes $(PROGRAM)
 	CLEAN_CMD = $(RM_DIR) $(OBJ_DIR)/*
 	DELETE_CMD = $(RM) $(PROGRAM)
-	CLEANALL_CMD = $(RM_DIR) $(OBJ_DIR) $(BIN_DIR)
+	CLEANALL_CMD = $(RM_DIR) $(OBJ_DIR) $(BIN_DIR) $(JAVA_BIN_DIR)
 endif
 
 MKDIR_BIN = $(if $(filter Windows_NT, $(OS)), if not exist $(BIN_DIR) mkdir $(subst /,\\,$(BIN_DIR)), mkdir -p $(BIN_DIR))

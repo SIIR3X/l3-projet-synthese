@@ -24,6 +24,8 @@ public:
 
 	double aire() const override;
 
+	void translation(const Vecteur2D& v) override;
+
 	size_t getNbPoints() const { return _points.size(); }
 
 	const vector<Vecteur2D>& getPoints() const { return _points; }
@@ -50,6 +52,12 @@ inline double Polygone::aire() const
 	}
 
 	return abs(aire) / 2.0;
+}
+
+inline void Polygone::translation(const Vecteur2D& v)
+{
+	for (Vecteur2D& point : _points)
+		point += v;
 }
 
 inline const Vecteur2D& Polygone::getPoint(size_t index) const

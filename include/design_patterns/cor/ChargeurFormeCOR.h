@@ -6,9 +6,10 @@
 
 class ChargeurFormeCOR : public ChargeurForme
 {
-protected:
+private:
 	ChargeurForme* suivant;
 
+protected:
 	int recupererNbPoints(const char* ligne) const;
 
 public:

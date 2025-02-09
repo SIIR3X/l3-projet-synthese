@@ -21,6 +21,8 @@ public:
 
 	double aire() const override;
 
+	void translation(const Vecteur2D& v) override;
+
 	size_t getNbFormes() const { return _formes.size(); }
 
 	const vector<Forme*>& getFormes() const { return _formes; }
@@ -29,7 +31,7 @@ public:
 
 	const Forme* operator[](size_t index) const { return _formes[index]; }
 
-	void ajouterForme(const Forme& forme) { _formes.push_back(forme.clone()); }
+	void ajouterForme(const Forme& forme);
 
 	void retirerForme(size_t index);
 
@@ -56,12 +58,27 @@ inline double Groupe::aire() const
 	return aireTotale;
 }
 
+inline void Groupe::translation(const Vecteur2D& v)
+{
+	for (Forme* forme : _formes)
+		forme->translation(v);
+}
+
 inline const Forme* Groupe::getForme(size_t index) const
 {
 	if (index < _formes.size())
 		return _formes[index];
 	
 	throw out_of_range("Index hors limites.");
+}
+
+inline void Groupe::ajouterForme(const Forme& forme)
+{
+	if (forme.getGroupe() != nullptr)
+		throw invalid_argument("La forme appartient déjà à un groupe.");
+	
+	_formes.push_back(forme.clone());
+	_formes.back()->setGroupe(this);
 }
 
 inline void Groupe::retirerForme(size_t index)

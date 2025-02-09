@@ -18,6 +18,8 @@ public:
 
 	double aire() const override;
 
+	void translation(const Vecteur2D& v) override;
+
 	const Vecteur2D& getP1() const { return _p1; }
 
 	const Vecteur2D& getP2() const { return _p2; }
@@ -32,6 +34,13 @@ public:
 inline double Triangle::aire() const
 {
 	return abs((_p1 - _p3).determinant(_p2 - _p3)) / 2.0;
+}
+
+inline void Triangle::translation(const Vecteur2D& v)
+{
+	_p1 += v;
+	_p2 += v;
+	_p3 += v;
 }
 
 inline Triangle::operator string() const
