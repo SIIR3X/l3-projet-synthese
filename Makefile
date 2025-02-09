@@ -129,12 +129,15 @@ MKDIR_JAVA_BIN = $(if $(filter Windows_NT, $(OS)), if not exist $(JAVA_BIN_DIR) 
 ############################### OBJECT FILES ##############################
 ###########################################################################
 
+# Object files
 SRC_OBJ_FILES = $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(filter-out $(SRC_DIR)/main.cpp, $(SRC_FILES)))
 
+# Test object files
+TEST_OBJ_FILES = $(patsubst $(TEST_DIR)/%.cpp, $(OBJ_DIR)/$(TEST_DIR)/%.o, $(TEST_SRC_FILES))
+
+# Java source files
 rwildcard = $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2)) $(wildcard $1$2)
 JAVA_SOURCES := $(filter %.java, $(call rwildcard, $(JAVA_SRC_DIR)/, *.java))
-
-TEST_OBJ_FILES = $(patsubst $(TEST_DIR)/%.cpp, $(OBJ_DIR)/$(TEST_DIR)/%.o, $(TEST_SRC_FILES))
 
 ###########################################################################
 ################################## RULES ##################################
@@ -153,12 +156,7 @@ $(OBJ_DIR)/$(TEST_DIR)/%.o: $(TEST_DIR)/%.cpp
 # Link the object files
 $(PROGRAM): $(SRC_OBJ_FILES) $(OBJ_DIR)/main.o
 	@$(MKDIR_BIN)
-ifeq ($(OS), Windows_NT)
-	@chcp 65001 >nul 2>&1
-	$(CXX) $^ -o $@ -lws2_32
-else
-	$(CXX) $^ -o $@
-endif
+	$(CXX) $^ -o $@ $(CXXFLAGS)
 
 # Link the test object files
 $(TEST_PROGRAM): $(SRC_OBJ_FILES) $(TEST_OBJ_FILES)
@@ -214,3 +212,21 @@ cleanall:
 # Command to generate the documentation
 docs:
 	doxygen Doxyfile
+
+# Command to display the help
+help:
+	@echo "Usage: make [command]"
+	@echo ""
+	@echo "Commands:"
+	@echo "  all              Compile the program"
+	@echo "  run              Run the program"
+	@echo "  test             Run the tests"
+	@echo "  memorycheck      Run the memory check on the program"
+	@echo "  memorycheck-test Run the memory check on the tests"
+	@echo "  javac            Compile the Java files"
+	@echo "  run-java         Run the Java program"
+	@echo "  clean            Clean the object files"
+	@echo "  delete           Delete the program executable"
+	@echo "  cleanall         Clean all files"
+	@echo "  docs             Generate the documentation"
+	@echo "  help             Display this help message"
