@@ -21,7 +21,9 @@ public:
 
 	double aire() const override;
 
-	void translation(const Vecteur2D& v) override;
+	void translation(const Vecteur2D& vt) override;
+
+	void homothetie(const Vecteur2D& centre, double k) override;
 
 	void rotation(const Vecteur2D& centre, double angle) override;
 
@@ -60,10 +62,16 @@ inline double Groupe::aire() const
 	return aireTotale;
 }
 
-inline void Groupe::translation(const Vecteur2D& v)
+inline void Groupe::translation(const Vecteur2D& vt)
 {
 	for (Forme* forme : _formes)
-		forme->translation(v);
+		forme->translation(vt);
+}
+
+inline void Groupe::homothetie(const Vecteur2D& centre, double k)
+{
+	for (Forme* forme : _formes)
+		forme->homothetie(centre, k);
 }
 
 inline void Groupe::rotation(const Vecteur2D& centre, double angle)

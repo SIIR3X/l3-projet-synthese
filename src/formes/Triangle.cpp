@@ -1,6 +1,18 @@
 #include "formes/Triangle.h"
 #include <cmath>
 
+void Triangle::homothetie(const Vecteur2D& centre, double k)
+{
+	_p1.x = centre.x + k * (_p1.x - centre.x);
+	_p1.y = centre.y + k * (_p1.y - centre.y);
+
+	_p2.x = centre.x + k * (_p2.x - centre.x);
+	_p2.y = centre.y + k * (_p2.y - centre.y);
+
+	_p3.x = centre.x + k * (_p3.x - centre.x);
+	_p3.y = centre.y + k * (_p3.y - centre.y);
+}
+
 void Triangle::rotation(const Vecteur2D& centre, double angle)
 {
 	double cosA = cos(angle);

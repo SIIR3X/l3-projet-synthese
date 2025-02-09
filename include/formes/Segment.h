@@ -18,7 +18,9 @@ public:
 
 	double aire() const override { return 0.0; }
 
-	void translation(const Vecteur2D& v) override;
+	void translation(const Vecteur2D& vt) override;
+
+	void homothetie(const Vecteur2D& centre, double k) override;
 
 	void rotation(const Vecteur2D& centre, double angle) override; 
 
@@ -31,10 +33,10 @@ public:
 	void accepter(VisiteurForme* visiteur) override { visiteur->visiter(this); }
 }; // class Segment
 
-inline void Segment::translation(const Vecteur2D& v)
+inline void Segment::translation(const Vecteur2D& vt)
 {
-	_p1 += v;
-	_p2 += v;
+	_p1 += vt;
+	_p2 += vt;
 }
 
 inline Segment::operator string() const

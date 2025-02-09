@@ -29,7 +29,9 @@ public:
 
 	virtual double aire() const = 0;
 
-	virtual void translation(const Vecteur2D& v) = 0;
+	virtual void translation(const Vecteur2D& vt) = 0;
+
+	virtual void homothetie(const Vecteur2D& centre, double k) = 0;
 
 	virtual void rotation(const Vecteur2D& centre, double angle) = 0;
 

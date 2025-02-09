@@ -26,7 +26,9 @@ public:
 
 	double aire() const override { return PI * _rayon * _rayon; }
 
-	void translation(const Vecteur2D& v) override;
+	void translation(const Vecteur2D& vt) override;
+
+	void homothetie(const Vecteur2D& centre, double k) override;
 
 	void rotation(const Vecteur2D& centre, double angle) override;
 
@@ -39,9 +41,9 @@ public:
 	void accepter(VisiteurForme* visiteur) override { visiteur->visiter(this); }
 }; // class Cercle
 
-inline void Cercle::translation(const Vecteur2D& v)
+inline void Cercle::translation(const Vecteur2D& vt)
 {
-	_centre += v;
+	_centre += vt;
 }
 
 inline Cercle::operator string() const

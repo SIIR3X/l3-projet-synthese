@@ -24,7 +24,9 @@ public:
 
 	double aire() const override;
 
-	void translation(const Vecteur2D& v) override;
+	void translation(const Vecteur2D& vt) override;
+
+	void homothetie(const Vecteur2D& centre, double k) override;
 
 	void rotation(const Vecteur2D& centre, double angle) override;
 
@@ -56,10 +58,10 @@ inline double Polygone::aire() const
 	return abs(aire) / 2.0;
 }
 
-inline void Polygone::translation(const Vecteur2D& v)
+inline void Polygone::translation(const Vecteur2D& vt)
 {
 	for (Vecteur2D& point : _points)
-		point += v;
+		point += vt;
 }
 
 inline const Vecteur2D& Polygone::getPoint(size_t index) const

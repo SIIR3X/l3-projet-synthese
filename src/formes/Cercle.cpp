@@ -1,6 +1,13 @@
 #include "formes/Cercle.h"
 #include <cmath>
 
+void Cercle::homothetie(const Vecteur2D& centre, double k)
+{
+	_centre.x = centre.x + k * (_centre.x - centre.x);
+	_centre.y = centre.y + k * (_centre.y - centre.y);
+	_rayon *= abs(k);
+}
+
 void Cercle::rotation(const Vecteur2D& centre, double angle)
 {
 	double cosA = cos(angle);
