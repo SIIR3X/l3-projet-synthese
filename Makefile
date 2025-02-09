@@ -20,6 +20,8 @@ INCLUDE_DIR = include
 SRC_DIR = src
 OBJ_DIR = obj
 BIN_DIR = bin
+JAVA_SRC_DIR = java/src
+JAVA_BIN_DIR = java/bin
 
 ###########################################################################
 ################################## FILES ##################################
@@ -50,6 +52,7 @@ SRC_FILES = \
 ###########################################################################
 
 MAIN_EXEC = projet-synthese
+JAVA_EXEC = src.controller.serverManager
 
 ###########################################################################
 ############################ COMPILER AND FLAGS ###########################
@@ -90,12 +93,15 @@ endif
 
 MKDIR_BIN = $(if $(filter Windows_NT, $(OS)), if not exist $(BIN_DIR) mkdir $(subst /,\\,$(BIN_DIR)), mkdir -p $(BIN_DIR))
 MKDIR_OBJ = $(if $(filter Windows_NT, $(OS)), if not exist $(dir $@) mkdir $(subst /,\\,$(dir $@)), mkdir -p $(dir $@))
+MKDIR_JAVA_BIN = $(if $(filter Windows_NT, $(OS)), if not exist $(JAVA_BIN_DIR) mkdir $(subst /,\\\\,$(JAVA_BIN_DIR)), mkdir -p $(JAVA_BIN_DIR))
 
 ###########################################################################
 ############################### OBJECT FILES ##############################
 ###########################################################################
 
 SRC_OBJ_FILES = $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(filter-out $(SRC_DIR)/main.cpp, $(SRC_FILES)))
+rwildcard = $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2)) $(wildcard $1$2)
+JAVA_SOURCES := $(filter %.java, $(call rwildcard, $(JAVA_SRC_DIR)/, *.java))
 
 ###########################################################################
 ################################## RULES ##################################
@@ -120,7 +126,7 @@ endif
 ################################ COMMANDS #################################
 ###########################################################################
 
-.PHONY: all clean delete cleanall docs
+.PHONY: all run memorycheck clean delete cleanall docs
 
 # Default rule
 all: clean delete $(PROGRAM)
@@ -132,6 +138,15 @@ run: clean $(PROGRAM)
 # Command to run the memory check on the program
 memorycheck: clean $(PROGRAM)
 	$(MEMOCHECK_CMD) $(MAIN_ARGS)
+
+# Command to compile the Java files
+javac:
+	@$(MKDIR_JAVA_BIN)
+	javac -d $(JAVA_BIN_DIR) $(JAVA_SOURCES)
+
+# Command to run the Java program
+run-java: javac
+	java -cp $(JAVA_BIN_DIR) $(JAVA_EXEC)
 
 # Command to clean the object files
 clean:
