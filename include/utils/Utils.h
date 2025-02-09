@@ -4,6 +4,7 @@
 #include "geometrie/Vecteur2D.h"
 #include "design_patterns/cor/ChargeurFormeCOR.h"
 #include "design_patterns/visiteur/VisiteurForme.h"
+#include "graphique/Viewport.h"
 #include <vector>
 #include <ostream>
 
@@ -63,6 +64,14 @@ public:
 	 * @param formes Le vecteur de formes à sauvegarder.
 	 */
 	static void sauvegarderFormes(ofstream* fichier, VisiteurForme* visiteurForme, const vector<Forme*>& formes);
+
+	/**
+	 * @brief Transforme les formes du monde vers l'écran.
+	 * @param viewport Le viewport de la fenêtre.
+	 * @param formes Le vecteur de formes à transformer.
+	 * @return Le vecteur de formes transformées.
+	 */
+	static vector<Forme*> transformerFormesVersEcran(const Viewport& viewport, const vector<Forme*>& formes);
 }; // class Utils
 
 inline double Utils::calculerHomothetie(double centre, double point, double k)

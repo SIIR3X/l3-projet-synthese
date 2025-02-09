@@ -45,3 +45,15 @@ void Utils::sauvegarderFormes(ofstream* fichier, VisiteurForme* visiteurForme, c
 	for (Forme* forme : formes)
 		forme->accepter(visiteurForme);
 }
+
+vector<Forme*> Utils::transformerFormesVersEcran(const Viewport& viewport, const vector<Forme*>& formes)
+{
+	// On crée un vecteur de formes transformées
+	vector<Forme*> formesTransformees;
+
+	// On transforme chaque forme du monde vers l'écran
+	for (Forme* forme : formes)
+		formesTransformees.push_back(viewport.formeVersEcran(*forme));
+
+	return formesTransformees;
+}

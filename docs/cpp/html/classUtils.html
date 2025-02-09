@@ -92,6 +92,15 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a9d59900704c74f396c92dc5e3ddaae6c" id="r_a9d59900704c74f396c92dc5e3ddaae6c"><td class="memItemLeft" align="right" valign="top">static double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtils.html#a9d59900704c74f396c92dc5e3ddaae6c">calculerRotationY</a> (double centreX, double centreY, double pointX, double pointY, double cosA, double sinA)</td></tr>
 <tr class="memdesc:a9d59900704c74f396c92dc5e3ddaae6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calcule la rotation d'un point autour d'un centre selon l'axe des ordonnées.  <br /></td></tr>
 <tr class="separator:a9d59900704c74f396c92dc5e3ddaae6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac8b66758417feb7bd8d89682f3414c1" id="r_aac8b66758417feb7bd8d89682f3414c1"><td class="memItemLeft" align="right" valign="top">static vector&lt; <a class="el" href="classForme.html">Forme</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtils.html#aac8b66758417feb7bd8d89682f3414c1">chargerFormes</a> (const string &amp;nomFichier, <a class="el" href="classChargeurFormeCOR.html">ChargeurFormeCOR</a> *chargeurFormeCOR)</td></tr>
+<tr class="memdesc:aac8b66758417feb7bd8d89682f3414c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Charge les formes à partir d'un fichier.  <br /></td></tr>
+<tr class="separator:aac8b66758417feb7bd8d89682f3414c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b2403dcc4f808853c5e1498d63b7715" id="r_a7b2403dcc4f808853c5e1498d63b7715"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtils.html#a7b2403dcc4f808853c5e1498d63b7715">sauvegarderFormes</a> (ofstream *fichier, <a class="el" href="classVisiteurForme.html">VisiteurForme</a> *visiteurForme, const vector&lt; <a class="el" href="classForme.html">Forme</a> * &gt; &amp;formes)</td></tr>
+<tr class="memdesc:a7b2403dcc4f808853c5e1498d63b7715"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sauvegarde les formes dans un fichier.  <br /></td></tr>
+<tr class="separator:a7b2403dcc4f808853c5e1498d63b7715"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44018aa1285fb11b87998a33c11430c1" id="r_a44018aa1285fb11b87998a33c11430c1"><td class="memItemLeft" align="right" valign="top">static vector&lt; <a class="el" href="classForme.html">Forme</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtils.html#a44018aa1285fb11b87998a33c11430c1">transformerFormesVersEcran</a> (const <a class="el" href="classViewport.html">Viewport</a> &amp;viewport, const vector&lt; <a class="el" href="classForme.html">Forme</a> * &gt; &amp;formes)</td></tr>
+<tr class="memdesc:a44018aa1285fb11b87998a33c11430c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transforme les formes du monde vers l'écran.  <br /></td></tr>
+<tr class="separator:a44018aa1285fb11b87998a33c11430c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Classe utilitaire contenant des méthodes statiques. </p>
@@ -297,8 +306,153 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following file:<ul>
+<a id="aac8b66758417feb7bd8d89682f3414c1" name="aac8b66758417feb7bd8d89682f3414c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aac8b66758417feb7bd8d89682f3414c1">&#9670;&#160;</a></span>chargerFormes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">vector&lt; <a class="el" href="classForme.html">Forme</a> * &gt; Utils::chargerFormes </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramname"><em>nomFichier</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classChargeurFormeCOR.html">ChargeurFormeCOR</a> *&#160;</td>
+          <td class="paramname"><em>chargeurFormeCOR</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Charge les formes à partir d'un fichier. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">nomFichier</td><td>Le nom du fichier à charger. </td></tr>
+    <tr><td class="paramname">chargeurFormeCOR</td><td>Le chargeur de formes. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Le vecteur de formes chargées. </dd></dl>
+
+</div>
+</div>
+<a id="a7b2403dcc4f808853c5e1498d63b7715" name="a7b2403dcc4f808853c5e1498d63b7715"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7b2403dcc4f808853c5e1498d63b7715">&#9670;&#160;</a></span>sauvegarderFormes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Utils::sauvegarderFormes </td>
+          <td>(</td>
+          <td class="paramtype">ofstream *&#160;</td>
+          <td class="paramname"><em>fichier</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classVisiteurForme.html">VisiteurForme</a> *&#160;</td>
+          <td class="paramname"><em>visiteurForme</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const vector&lt; <a class="el" href="classForme.html">Forme</a> * &gt; &amp;&#160;</td>
+          <td class="paramname"><em>formes</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sauvegarde les formes dans un fichier. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">nomFichier</td><td>Le nom du fichier de sauvegarde. </td></tr>
+    <tr><td class="paramname">visiteurForme</td><td>Le visiteur de formes. </td></tr>
+    <tr><td class="paramname">formes</td><td>Le vecteur de formes à sauvegarder. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a44018aa1285fb11b87998a33c11430c1" name="a44018aa1285fb11b87998a33c11430c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a44018aa1285fb11b87998a33c11430c1">&#9670;&#160;</a></span>transformerFormesVersEcran()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">vector&lt; <a class="el" href="classForme.html">Forme</a> * &gt; Utils::transformerFormesVersEcran </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classViewport.html">Viewport</a> &amp;&#160;</td>
+          <td class="paramname"><em>viewport</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const vector&lt; <a class="el" href="classForme.html">Forme</a> * &gt; &amp;&#160;</td>
+          <td class="paramname"><em>formes</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Transforme les formes du monde vers l'écran. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">viewport</td><td>Le viewport de la fenêtre. </td></tr>
+    <tr><td class="paramname">formes</td><td>Le vecteur de formes à transformer. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Le vecteur de formes transformées. </dd></dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>include/utils/<a class="el" href="Utils_8h_source.html">Utils.h</a></li>
+<li>src/utils/<b>Utils.cpp</b></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
