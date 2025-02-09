@@ -17,8 +17,6 @@ private:
 	SOCKET sock;
 	char buffer[L];
 
-	static Client& instance;
-
 	void error(const char* msg)
 	{
 		if (msg)
@@ -81,7 +79,7 @@ public:
 	// Singleton
 	static Client& getInstance()
 	{
-		// objet 'static' : créée une seule fois
+		// objet 'static' local : créée une seule fois
 		static Client instance;
 		return instance;
 	}
