@@ -32,6 +32,6 @@ void VisiteurSauvegarderTXT::visiter(Polygone* p)
 void VisiteurSauvegarderTXT::visiter(Groupe* g)
 {
 	// Sauvegarde des formes du groupe
-	for (const Forme* f : g->formes())
-		sauvegarderFormeSimple(f);
+	for (Forme* f : g->formes())
+		f->accepter(this);
 }

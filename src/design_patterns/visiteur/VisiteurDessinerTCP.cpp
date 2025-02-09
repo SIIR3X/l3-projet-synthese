@@ -6,27 +6,54 @@
 #include "design_patterns/visiteur/VisiteurDessinerTCP.h"
 #include <iostream>
 
-void VisiteurDessinerTCP::visiter(Cercle* /*c*/)
+void VisiteurDessinerTCP::visiter(Cercle* c)
 {
-	cout << "Dessiner un cercle" << endl;
+	_buffer << string(*c) << endl;
+
+	// Si on n'est pas dans un groupe, on envoie les données (évite les envois multiples)
+	if (!_dansGroupe)
+		envoyerDonnees();
 }
 
-void VisiteurDessinerTCP::visiter(Segment* /*s*/)
+void VisiteurDessinerTCP::visiter(Segment* s)
 {
-	cout << "Dessiner un segment" << endl;
+	_buffer << string(*s) << endl;
+
+	// Si on n'est pas dans un groupe, on envoie les données (évite les envois multiples)
+	if (!_dansGroupe)
+		envoyerDonnees();
 }
 
-void VisiteurDessinerTCP::visiter(Triangle* /*t*/)
+void VisiteurDessinerTCP::visiter(Triangle* t)
 {
-	cout << "Dessiner un triangle" << endl;
+	_buffer << string(*t) << endl;
+
+	// Si on n'est pas dans un groupe, on envoie les données (évite les envois multiples)
+	if (!_dansGroupe)
+		envoyerDonnees();
 }
 
-void VisiteurDessinerTCP::visiter(Polygone* /*p*/)
+void VisiteurDessinerTCP::visiter(Polygone* p)
 {
-	cout << "Dessiner un polygone" << endl;
+	_buffer << string(*p) << endl;
+
+	// Si on n'est pas dans un groupe, on envoie les données (évite les envois multiples)
+	if (!_dansGroupe)
+		envoyerDonnees();
 }
 
-void VisiteurDessinerTCP::visiter(Groupe* /*g*/)
+void VisiteurDessinerTCP::visiter(Groupe* g)
 {
-	cout << "Dessiner un groupe" << endl;
+	// On met le flag à true pour ne pas envoyer les données à chaque forme (évite les envois multiples)
+	_dansGroupe = true;
+
+	// On visite chaque forme du groupe
+	for (Forme* f : g->formes())
+		f->accepter(this);
+
+	// On remet le flag à false pour pouvoir envoyer les données
+	_dansGroupe = false;
+
+	// On envoie les données
+	envoyerDonnees();
 }
