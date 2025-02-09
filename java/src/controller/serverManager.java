@@ -5,7 +5,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class serverManager {
-	private static final int portServeur = 900;
+	private static final int portServeur = 9119;
 	private static int noClient = -1;
 
 	public static void main(String[] args) {
@@ -21,5 +21,4 @@ public class serverManager {
 			e.printStackTrace();
 		}
 	}
-
 }

@@ -5,7 +5,7 @@
 #include <cstdint>
 #include <Ws2tcpip.h>
 
-#define L 100
+#define L 256
 
 class Client
 {
@@ -16,6 +16,8 @@ private:
 	uint16_t server_port;
 	SOCKET sock;
 	char buffer[L];
+
+	static Client& instance;
 
 	void error(const char* msg)
 	{
@@ -55,7 +57,6 @@ private:
 		sockaddr.sin_port = htons(server_port); // convertie l'octet dans l'ordre réseau
 	}
 
-public:
 	Client(const char* address = "127.0.0.1", const uint16_t port = 9119)
 		: server_address(address), server_port(port), sock(INVALID_SOCKET)
 	{
@@ -71,6 +72,18 @@ public:
 			closesocket(sock);
 		}
 		WSACleanup();
+	}
+
+	// Suppression du constructeur par copie et de l'assignement par l'opérateur =
+	Client(const Client&) = delete;
+	Client& operator =(const Client&) = delete;
+public:
+	// Singleton
+	static Client& getInstance()
+	{
+		// objet 'static' : créée une seule fois
+		static Client instance;
+		return instance;
 	}
 
 	void connect_to_server()
@@ -92,7 +105,7 @@ public:
 		int l = strlen(message);
 		if ((request = send(sock, message, l, 0)) == SOCKET_ERROR)
 		{
-			error("Failed sending request!\n");
+			error("\nL'envoi de la requête a échoué !\n");
 		}
 	}
 
@@ -101,7 +114,7 @@ public:
 		int request;
 		if ((request = recv(sock, buffer, L - 1, 0)) == SOCKET_ERROR)
 		{
-			error("Failed receiving request!\n");
+			error("\nLa récéption de la requête a échoué !\n");
 		}
 
 		char* ptr = strchr(buffer, '\n'); // Renvoie un pointeur sur '\n'
@@ -113,7 +126,7 @@ public:
 		int x;
 		if ((x = shutdown(sock, SD_BOTH)) == SOCKET_ERROR)
 		{
-			error("Connection shutdown failed!\n");
+			error("\nL'arrêt de la connexion a échoué !\n");
 		}
 	}
 

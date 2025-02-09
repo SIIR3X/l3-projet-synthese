@@ -28,7 +28,7 @@ public class Interlocuteur extends Thread {
 
 	@Override
 	public void run() {
-		System.out.println("interlocuteur pret pour le n"+ this.noClient);
+		System.out.println("Interlocuteur prêt pour le client n°"+ this.noClient);
 		ArrayList<Forme> formes = new ArrayList<>();
 		while(!this.isInterrupted()) {
 			String requete = null;
@@ -38,7 +38,7 @@ public class Interlocuteur extends Thread {
 			catch (IOException e) {
 				e.printStackTrace();
 			}
-			System.out.println("le client n°"+ noClient + "a envoye " + requete);
+			System.out.println("le client n°"+ noClient + " a envoyé " + requete);
 
 			String input = requete;
 
@@ -58,8 +58,7 @@ public class Interlocuteur extends Thread {
 				formes.add(f);
 			}
 
-			Controleur controleur = new Controleur(600, 400, f);
-
+			Controleur controleur = new Controleur(1024, 768, f);
 
 		}
 	}
