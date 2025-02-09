@@ -20,6 +20,8 @@ public:
 
 	void translation(const Vecteur2D& v) override;
 
+	void rotation(const Vecteur2D& centre, double angle) override;
+
 	const Vecteur2D& getP1() const { return _p1; }
 
 	const Vecteur2D& getP2() const { return _p2; }

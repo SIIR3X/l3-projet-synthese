@@ -23,6 +23,8 @@ public:
 
 	void translation(const Vecteur2D& v) override;
 
+	void rotation(const Vecteur2D& centre, double angle) override;
+
 	size_t getNbFormes() const { return _formes.size(); }
 
 	const vector<Forme*>& getFormes() const { return _formes; }
@@ -62,6 +64,12 @@ inline void Groupe::translation(const Vecteur2D& v)
 {
 	for (Forme* forme : _formes)
 		forme->translation(v);
+}
+
+inline void Groupe::rotation(const Vecteur2D& centre, double angle)
+{
+	for (Forme* forme : _formes)
+		forme->rotation(centre, angle);
 }
 
 inline const Forme* Groupe::getForme(size_t index) const

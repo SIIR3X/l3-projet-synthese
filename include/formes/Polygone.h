@@ -26,6 +26,8 @@ public:
 
 	void translation(const Vecteur2D& v) override;
 
+	void rotation(const Vecteur2D& centre, double angle) override;
+
 	size_t getNbPoints() const { return _points.size(); }
 
 	const vector<Vecteur2D>& getPoints() const { return _points; }

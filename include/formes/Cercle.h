@@ -28,6 +28,8 @@ public:
 
 	void translation(const Vecteur2D& v) override;
 
+	void rotation(const Vecteur2D& centre, double angle) override;
+
 	const Vecteur2D& getCentre() const { return _centre; }
 
 	double getRayon() const { return _rayon; }
