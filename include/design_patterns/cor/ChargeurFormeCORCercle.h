@@ -6,7 +6,7 @@
 class ChargeurFormeCORCercle : public ChargeurFormeCOR
 {
 public:
-	ChargeurFormeCORCercle(ChargeurForme* suivant)
+	ChargeurFormeCORCercle(ChargeurFormeCOR* suivant)
 		: ChargeurFormeCOR(suivant) {}
 
 	Forme* chargerTXT(const char* ligne) const override;

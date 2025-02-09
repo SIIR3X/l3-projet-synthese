@@ -7,15 +7,15 @@
 class ChargeurFormeCOR : public ChargeurForme
 {
 private:
-	ChargeurForme* suivant;
+	ChargeurFormeCOR* _suivant;
 
 protected:
 	int recupererNbPoints(const char* ligne) const;
 
 public:
-	ChargeurFormeCOR(ChargeurForme* suivant)
+	ChargeurFormeCOR(ChargeurFormeCOR* _suivant)
 	{
-		this->suivant = suivant;
+		this->_suivant = _suivant;
 	}
 
 	Forme* charger(const char* ligne) const override;
@@ -27,8 +27,8 @@ inline Forme* ChargeurFormeCOR::charger(const char* ligne) const
 {
 	Forme* forme = chargerTXT(ligne);
 
-	if (forme == nullptr && suivant != nullptr)
-		forme = suivant->charger(ligne);
+	if (forme == nullptr && _suivant != nullptr)
+		forme = _suivant->charger(ligne);
 
 	return forme;
 }
