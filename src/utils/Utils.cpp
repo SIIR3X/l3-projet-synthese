@@ -15,6 +15,10 @@ vector<Forme*> Utils::chargerFormes(const string& nomFichier, ChargeurFormeCOR* 
 
 	string ligne;
 
+	// On lit le nombre de formes dans le fichier (ignore la première ligne)
+	if (!getline(fichier, ligne))
+		throw runtime_error("Impossible de lire le nombre de formes dans le fichier " + nomFichier);
+
 	// On lit le fichier ligne par ligne
 	while (getline(fichier, ligne))
 	{
