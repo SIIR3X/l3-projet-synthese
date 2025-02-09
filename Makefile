@@ -11,6 +11,15 @@
 ###########################################################################
 
 MAIN_ARGS = 
+TEST_ARGS =
+
+###########################################################################
+################################ LIBRARIES ################################
+###########################################################################
+
+# Google Test
+GTEST_INCLUDE_DIR = "C:\Program Files\googletest\googletest\include"
+GTEST_LIB_DIR = "C:\Program Files\googletest\build\lib"
 
 ###########################################################################
 ############################### DIRECTORIES ###############################
@@ -22,6 +31,7 @@ OBJ_DIR = obj
 BIN_DIR = bin
 JAVA_SRC_DIR = java/src
 JAVA_BIN_DIR = java/bin
+TEST_DIR = tests
 
 ###########################################################################
 ################################## FILES ##################################
@@ -47,12 +57,17 @@ SRC_FILES = \
 	$(SRC_DIR)/design_patterns/cor/ChargeurFormeCORCercle.cpp \
 	$(SRC_DIR)/design_patterns/cor/ChargeurFormeCORPolygone.cpp \
 
+# Test files
+TEST_SRC_FILES = \
+	$(TEST_DIR)/geometrie/Vecteur2DTest.cpp \
+
 ###########################################################################
 ############################### EXECUTABLES ###############################
 ###########################################################################
 
 MAIN_EXEC = projet-synthese
 JAVA_EXEC = src.controller.serverManager
+TEST_EXEC = test-projet-synthese
 
 ###########################################################################
 ############################ COMPILER AND FLAGS ###########################
@@ -60,6 +75,9 @@ JAVA_EXEC = src.controller.serverManager
 
 CXX = g++
 CXXFLAGS = -Wall -Wextra -std=c++11 -I$(INCLUDE_DIR)
+
+TEST_CXXFLAGS = -Wall -Wextra -std=c++14 -I$(GTEST_INCLUDE_DIR) -I$(INCLUDE_DIR)
+TEST_LDFLAGS = -L$(GTEST_LIB_DIR) -lgtest_main -lgtest -lpthread
 
 ###########################################################################
 ####################### OS DETECTION AND VARIABLES ########################
@@ -71,21 +89,25 @@ ifeq ($(OS),Windows_NT)
 	RM_DIR = rmdir /Q /S
 	MKDIR = mkdir
 	PROGRAM = $(BIN_DIR)\$(MAIN_EXEC).exe
+	TEST_PROGRAM = $(BIN_DIR)\$(TEST_EXEC).exe
 else
 	RM = rm -f
 	RM_DIR = rm -rf
 	MKDIR = mkdir -p
 	PROGRAM = $(BIN_DIR)/$(MAIN_EXEC)
+	TEST_PROGRAM = $(BIN_DIR)/$(TEST_EXEC)
 endif
 
 # Commands
 ifeq ($(OS),Windows_NT)
-	MEMOCHECK_CMD = @echo Memory check is not supported on Windows.
+	MEMORYCHECK_CMD = @echo Memory check is not supported on Windows.
+	MEMORYCHECK_TEST_CMD = @echo Memory check is not supported on Windows.
 	CLEAN_CMD = if exist "$(OBJ_DIR)" ($(RM) "$(OBJ_DIR)\*" > NUL 2>&1) && FOR /D %%p IN ("$(OBJ_DIR)\*") DO $(RM_DIR) %%p > NUL 2>&1
 	DELETE_CMD = if exist "$(PROGRAM)" $(RM) "$(PROGRAM)" > NUL 2>&1
 	CLEANALL_CMD = if exist "$(OBJ_DIR)" $(RM_DIR) "$(OBJ_DIR)" > NUL 2>&1 && if exist "$(BIN_DIR)" $(RM_DIR) "$(BIN_DIR)" > NUL 2>&1 && if exist "$(JAVA_BIN_DIR)" $(RM_DIR) "$(JAVA_BIN_DIR)" > NUL 2>&1
 else
-	MEMOCHECK_CMD = valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes $(PROGRAM)
+	MEMORYCHECK_CMD = valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes $(PROGRAM)
+	MEMORYCHECK_TEST_CMD = valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes $(TEST_PROGRAM)
 	CLEAN_CMD = $(RM_DIR) $(OBJ_DIR)/*
 	DELETE_CMD = $(RM) $(PROGRAM)
 	CLEANALL_CMD = $(RM_DIR) $(OBJ_DIR) $(BIN_DIR) $(JAVA_BIN_DIR)
@@ -100,8 +122,11 @@ MKDIR_JAVA_BIN = $(if $(filter Windows_NT, $(OS)), if not exist $(JAVA_BIN_DIR) 
 ###########################################################################
 
 SRC_OBJ_FILES = $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(filter-out $(SRC_DIR)/main.cpp, $(SRC_FILES)))
+
 rwildcard = $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2)) $(wildcard $1$2)
 JAVA_SOURCES := $(filter %.java, $(call rwildcard, $(JAVA_SRC_DIR)/, *.java))
+
+TEST_OBJ_FILES = $(patsubst $(TEST_DIR)/%.cpp, $(OBJ_DIR)/$(TEST_DIR)/%.o, $(TEST_SRC_FILES))
 
 ###########################################################################
 ################################## RULES ##################################
@@ -111,6 +136,11 @@ JAVA_SOURCES := $(filter %.java, $(call rwildcard, $(JAVA_SRC_DIR)/, *.java))
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@$(MKDIR_OBJ)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+# Compile the test files
+$(OBJ_DIR)/$(TEST_DIR)/%.o: $(TEST_DIR)/%.cpp
+	@$(MKDIR_OBJ)
+	$(CXX) $(TEST_CXXFLAGS) -c $< -o $@
 
 # Link the object files
 $(PROGRAM): $(SRC_OBJ_FILES) $(OBJ_DIR)/main.o
@@ -122,11 +152,16 @@ else
 	$(CXX) $^ -o $@
 endif
 
+# Link the test object files
+$(TEST_PROGRAM): $(SRC_OBJ_FILES) $(TEST_OBJ_FILES)
+	@$(MKDIR_BIN)
+	$(CXX) $^ -o $@ $(TEST_LDFLAGS)
+
 ###########################################################################
 ################################ COMMANDS #################################
 ###########################################################################
 
-.PHONY: all run memorycheck clean delete cleanall docs
+.PHONY: all run memorycheck javac run-java clean delete cleanall docs
 
 # Default rule
 all: clean delete $(PROGRAM)
@@ -135,9 +170,17 @@ all: clean delete $(PROGRAM)
 run: clean $(PROGRAM)
 	$(PROGRAM) $(MAIN_ARGS)
 
+# Command to run the tests
+test: clean $(TEST_PROGRAM)
+	$(TEST_PROGRAM) $(TEST_ARGS)
+
 # Command to run the memory check on the program
 memorycheck: clean $(PROGRAM)
-	$(MEMOCHECK_CMD) $(MAIN_ARGS)
+	$(MEMORYCHECK_CMD) $(MAIN_ARGS)
+
+# Command to run the memory check on the tests
+memorycheck-test: clean $(TEST_PROGRAM)
+	$(MEMORYCHECK_TEST_CMD) $(TEST_ARGS)
 
 # Command to compile the Java files
 javac:
