@@ -63,6 +63,7 @@ TEST_SRC_FILES = \
 	$(TEST_DIR)/formes/CercleTest.cpp \
 	$(TEST_DIR)/formes/SegmentTest.cpp \
 	$(TEST_DIR)/formes/TriangleTest.cpp \
+	$(TEST_DIR)/formes/PolygoneTest.cpp \
 
 ###########################################################################
 ############################### EXECUTABLES ###############################
