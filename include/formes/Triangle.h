@@ -2,14 +2,27 @@
 #define TRIANGLE_H
 
 #include "formes/Forme.h"
-#include <sstream>
+#include <string>
+#include <ostream>
 
+using namespace std;
+
+/**
+ * @brief Classe représentant un triangle.
+ */
 class Triangle : public Forme
 {
 private:
-	Vecteur2D _p1, _p2, _p3;
+	Vecteur2D _p1, _p2, _p3; /**< Les trois points du triangle. */
 
 public:
+	/**
+	 * @brief Constructeur de la classe Triangle.
+	 * @param p1 Le premier point du triangle.
+	 * @param p2 Le deuxième point du triangle.
+	 * @param p3 Le troisième point du triangle.
+	 * @param couleur La couleur du triangle.
+	 */
 	Triangle(const Vecteur2D& p1, const Vecteur2D& p2, const Vecteur2D& p3, Couleur couleur = COULEUR_PAR_DEFAUT)
 		: Forme(couleur), _p1(p1), _p2(p2), _p3(p3) {}
 
@@ -36,6 +49,7 @@ public:
 
 inline double Triangle::aire() const
 {
+	// On calcule l'aire du triangle en utilisant le déterminant des points successifs
 	return abs((_p1 - _p3).determinant(_p2 - _p3)) / 2.0;
 }
 

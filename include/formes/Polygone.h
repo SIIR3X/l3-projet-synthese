@@ -2,21 +2,40 @@
 #define POLYGONE_H
 
 #include "formes/Forme.h"
+#include <string>
 #include <vector>
-#include <sstream>
+#include <ostream>
 #include <stdexcept>
 
+using namespace std;
+
+/**
+ * @brief Classe représentant un polygone.
+ */
 class Polygone : public Forme
 {
 private:
-	vector<Vecteur2D> _points;
+	vector<Vecteur2D> _points; /**< Les sommets du polygone. */
 
 public:
+	/**
+	 * @brief Constructeur de la classe Polygone.
+	 * @param couleur La couleur du polygone.
+	 */
+	Polygone(Couleur couleur = COULEUR_PAR_DEFAUT) 
+		: Forme(couleur) {}
+
+	/**
+	 * @brief Constructeur de la classe Polygone.
+	 * @param points Les sommets du polygone.
+	 * @param couleur La couleur du polygone.
+	 */
 	Polygone(const vector<Vecteur2D>& points, Couleur couleur = COULEUR_PAR_DEFAUT)
 		: Forme(couleur), _points(points) 
 	{
-		if (points.size() < 3)
-			throw std::invalid_argument("Un polygone doit avoir au moins 3 sommets.");
+		// Si le polygone a moins de 4 sommets, on lance une exception.
+		if (points.size() <= 3)
+			throw std::invalid_argument("Un polygone doit avoir au moins 4 sommets.");
 	}
 
 	Polygone* clone() const override { return new Polygone(*this); }
@@ -37,6 +56,18 @@ public:
 
 	const Vecteur2D& operator[](size_t index) const { return _points[index]; }
 
+	/**
+	 * @brief Ajoute un point au polygone.
+	 * @param point Le point à ajouter.
+	 */
+	void ajouterPoint(const Vecteur2D& point);
+
+	/**
+	 * @brief Retire un point du polygone.
+	 * @param index L'index du point à retirer.
+	 */
+	void retirerPoint(size_t index);
+
 	operator string() const override;
 
 	void accepter(VisiteurForme* visiteur) override { visiteur->visiter(this); }
@@ -46,14 +77,18 @@ inline double Polygone::aire() const
 {
 	double aire = 0.0;
 
+	// On parcours les sommets du polygone
 	for (size_t i = 0; i < _points.size(); ++i)
 	{
+		// Puis on récupère les points successifs
 		const Vecteur2D& p1 = _points[i];
 		const Vecteur2D& p2 = _points[(i + 1) % _points.size()];
 
+		// Et on ajoute le déterminant des points successifs à l'aire totale
 		aire += p1.determinant(p2);
 	}
 
+	// On retourne la valeur absolue de l'aire divisée par 2
 	return abs(aire) / 2.0;
 }
 
@@ -65,10 +100,35 @@ inline void Polygone::translation(const Vecteur2D& vt)
 
 inline const Vecteur2D& Polygone::point(size_t index) const
 {
-	if (index < _points.size())
-		return _points[index];
+	// Si l'index est hors limites, on lance une exception
+	if (index >= _points.size())
+		throw std::out_of_range("Index hors limites.");
 
-	throw std::out_of_range("Index hors limites.");
+	return _points[index];
+}
+
+inline void Polygone::ajouterPoint(const Vecteur2D& point)
+{
+	// On parcoure la liste des points du polygone
+	for (const Vecteur2D& p : _points)
+	{
+		// Si le point est déjà présent dans le polygone, on lance une exception
+		if (p == point)
+			throw std::invalid_argument("Le point est déjà présent dans le polygone.");
+	}
+
+	// On ajoute le point au polygone
+	_points.push_back(point);
+}
+
+inline void Polygone::retirerPoint(size_t index)
+{
+	// Si l'index est hors limites, on lance une exception
+	if (index >= _points.size())
+		throw std::out_of_range("Index hors limites.");
+
+	// On retire le point du polygone
+	_points.erase(_points.begin() + index);
 }
 
 inline Polygone::operator string() const

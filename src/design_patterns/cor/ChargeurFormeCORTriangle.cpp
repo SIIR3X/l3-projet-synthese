@@ -3,16 +3,20 @@
 
 inline Forme* ChargeurFormeCORTriangle::chargerTXT(const char* ligne) const
 {
+	// On récupère le nombre de points
 	int nbPoints = recupererNbPoints(ligne);
 
+	// Si le nombre de points est -1, alors on retourne nullptr
 	if (nbPoints == -1)
 		return nullptr;
 
+	// Si le nombre de points est différent de 3, alors on retourne nullptr
 	if (nbPoints != 3)
 		return nullptr;
 
 	double x1, y1, x2, y2, x3, y3;
 
+	// On récupère les coordonnées du triangle
 	if (sscanf(ligne, "%*d %*d ( %lf, %lf) ( %lf, %lf) ( %lf, %lf)", &x1, &y1, &x2, &y2, &x3, &y3) != 6)
 		throw invalid_argument("Erreur lors de la lecture des coordonnées du triangle.");
 

@@ -3,18 +3,19 @@
 
 void Cercle::homothetie(const Vecteur2D& centre, double k)
 {
-	_centre.x = centre.x + k * (_centre.x - centre.x);
-	_centre.y = centre.y + k * (_centre.y - centre.y);
+	// On applique l'homothétie au centre du cercle
+	appliquerHomothetie(_centre, centre, k);
+
+	// On multiplie le rayon par la valeur absolue du coefficient d'homothétie
 	_rayon *= abs(k);
 }
 
 void Cercle::rotation(const Vecteur2D& centre, double angle)
 {
+	// On calcule le cosinus et le sinus de l'angle
 	double cosA = cos(angle);
 	double sinA = sin(angle);
 
-	Vecteur2D temp(_centre.x - centre.x, _centre.y - centre.y);
-
-	_centre.x = centre.x + (temp.x * cosA) - (temp.y * sinA);
-	_centre.y = centre.y + (temp.x * sinA) + (temp.y * cosA);
+	// On applique la rotation au centre du cercle
+	appliquerRotation(_centre, centre, cosA, sinA);
 }

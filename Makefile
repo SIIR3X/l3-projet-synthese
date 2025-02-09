@@ -57,6 +57,7 @@ SRC_FILES = \
 	$(SRC_DIR)/design_patterns/cor/ChargeurFormeCORCercle.cpp \
 	$(SRC_DIR)/design_patterns/cor/ChargeurFormeCORPolygone.cpp \
 	$(SRC_DIR)/graphique/Viewport.cpp \
+	$(SRC_DIR)/utils/Utils.cpp \
 
 # Test files
 TEST_SRC_FILES = \

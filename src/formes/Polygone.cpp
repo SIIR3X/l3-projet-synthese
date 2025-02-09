@@ -2,23 +2,24 @@
 
 void Polygone::homothetie(const Vecteur2D& centre, double k)
 {
+	// On parcours tous les points du polygone
 	for (Vecteur2D& point : _points)
 	{
-		point.x = centre.x + k * (point.x - centre.x);
-		point.y = centre.y + k * (point.y - centre.y);
+		// On applique l'homothétie à chaque point
+		appliquerHomothetie(point, centre, k);
 	}
 }
 
 void Polygone::rotation(const Vecteur2D& centre, double angle)
 {
+	// On calcule le cosinus et le sinus de l'angle
 	double cosA = cos(angle);
 	double sinA = sin(angle);
 
+	// On parcours tous les points du polygone
 	for (Vecteur2D& point : _points)
 	{
-		Vecteur2D temp(point.x - centre.x, point.y - centre.y);
-
-		point.x = centre.x + (temp.x * cosA) - (temp.y * sinA);
-		point.y = centre.y + (temp.x * sinA) + (temp.y * cosA);
+		// On applique la rotation à chaque point
+		appliquerRotation(point, centre, cosA, sinA);
 	}
 }

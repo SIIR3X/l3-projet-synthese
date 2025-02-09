@@ -2,21 +2,34 @@
 #define CERCLE_H
 
 #include "formes/Forme.h"
-#include <sstream>
+#include <string>
+#include <ostream>
 #include <stdexcept>
+
+using namespace std;
 
 const double PI = 3.14159265358979323846;
 
+/**
+ * @brief Classe représentant un cercle.
+ */
 class Cercle : public Forme
 {
 private:
-	Vecteur2D _centre;
-	double _rayon;
+	Vecteur2D _centre; /**< Le centre du cercle. */
+	double _rayon; /**< Le rayon du cercle. */
 
 public:
+	/**
+	 * @brief Constructeur de la classe Cercle.
+	 * @param centre Le centre du cercle.
+	 * @param rayon Le rayon du cercle.
+	 * @param couleur La couleur du cercle.
+	 */
 	Cercle(const Vecteur2D& centre, double rayon, Couleur couleur = COULEUR_PAR_DEFAUT)
 		: Forme(couleur), _centre(centre), _rayon(rayon) 
 	{
+		// Si le rayon est négatif ou nul, on lance une exception.
 		if (_rayon <= 0)
 			throw invalid_argument("Le rayon doit être strictement positif.");
 	}

@@ -3,21 +3,41 @@
 
 #include "geometrie/Vecteur2D.h"
 #include "formes/Forme.h"
+#include <string>
+#include <ostream>
+#include <stdexcept>
 
+using namespace std;
+
+/**
+ * @brief Classe Viewport permettant de convertir des formes du monde en formes de l'écran.
+ */
 class Viewport
 {
 private:
-	Vecteur2D _coinMin;
-	Vecteur2D _coinMax;
-	int _largeurEcran, _hauteurEcran;
-	Vecteur2D _centreMonde;
-	double _echelleX;
-	double _echelleY;
-	double _facteurZoom;
+	Vecteur2D _coinMin; /**< Coin minimal du monde. */
+	Vecteur2D _coinMax; /**< Coin maximal du monde. */
+	int _largeurEcran, _hauteurEcran; /**< Dimensions de l'écran. */
+	Vecteur2D _centreMonde; /**< Centre du monde. */
+	double _echelleX; /**< Échelle en X. */
+	double _echelleY; /**< Échelle en Y. */
+	double _facteurZoom; /**< Facteur de zoom. */
 
 public:
+	/**
+	 * @brief Constructeur de la classe Viewport.
+	 * @param coinMin Coin minimal du monde.
+	 * @param coinMax Coin maximal du monde.
+	 * @param largeurEcran Largeur de l'écran.
+	 * @param hauteurEcran Hauteur de l'écran.
+	 */
 	Viewport(const Vecteur2D& coinMin, const Vecteur2D& coinMax, int largeurEcran, int hauteurEcran);
 
+	/**
+	 * @brief Convertit une forme du monde en une forme de l'écran.
+	 * @param forme Forme à convertir.
+	 * @return Pointeur vers la forme convertie.
+	 */
 	Forme* formeVersEcran(const Forme& forme) const;
 
 	Vecteur2D coinMin() const { return _coinMin; }
@@ -47,23 +67,40 @@ public:
 inline Viewport::Viewport(const Vecteur2D& coinMin, const Vecteur2D& coinMax, int largeurEcran, int hauteurEcran)
 	: _coinMin(coinMin), _coinMax(coinMax), _largeurEcran(largeurEcran), _hauteurEcran(hauteurEcran)
 {
+	// Si les coins du monde ne sont pas valides, on lance une exception
+	if (coinMin.x >= coinMax.x || coinMin.y >= coinMax.y)
+		throw invalid_argument("Les coins du monde ne sont pas valides.");
+
+	// Si les dimensions de l'écran ne sont pas valides, on lance une exception
+	if (largeurEcran <= 0 || hauteurEcran <= 0)
+		throw invalid_argument("Les dimensions de l'écran ne sont pas valides.");
+
+	// On commence par calculer le centre du monde
 	double centre = (coinMin.x + coinMax.y) / 2;
 
+	// On créé un vecteur 2D qui représente le centre du monde
 	_centreMonde = Vecteur2D(centre, centre);
 
+	// On calcule les échelles en X et en Y
 	_echelleX = _largeurEcran / (_coinMax.x - _coinMin.x);
 	_echelleY = _hauteurEcran / (_coinMax.y - _coinMin.y);
+
+	// On prend le minimum des deux échelles pour le facteur de zoom
 	_facteurZoom = min(_echelleX, _echelleY);
 }
 
 inline Forme* Viewport::formeVersEcran(const Forme& forme) const
 {
+	// On clone la forme
 	Forme* copie = forme.clone();
 
+	// On applique une translation pour centrer le monde
 	copie->translation(-_centreMonde);
 
+	// On applique une homothétie pour zoomer
 	copie->homothetie(Vecteur2D(0, 0), _facteurZoom);
 
+	// On applique une translation pour centrer l'écran
 	copie->translation(Vecteur2D(_largeurEcran / 2, _hauteurEcran / 2));
 
 	return copie;
