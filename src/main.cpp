@@ -5,7 +5,7 @@
 int main(void)
 {
 	// // TEST tcp/ip
-	// Client client;
+	// Client& client = Client::getInstance();
 
 	// client.connect_to_server();
 

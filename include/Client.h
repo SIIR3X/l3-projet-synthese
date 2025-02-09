@@ -32,7 +32,7 @@ private:
 		int x;
 		if ((x = WSAStartup(MAKEWORD(0x02, 0x00), &wsadata)))
 		{
-			error("WSAStartup a échoué.\n");
+			error("L'initialisation 'WSAStartup' a échoué.\n");
 		}
 	}
 
