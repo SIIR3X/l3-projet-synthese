@@ -1,5 +1,7 @@
 package src.model;
 
+import src.view.Fenetre;
+
 import java.awt.*;
 
 public class Cercle extends Forme {
@@ -13,7 +15,7 @@ public class Cercle extends Forme {
 	}
 
 	@Override
-	public void dessiner(Graphics g) {
-		g.fillOval(x - rayon, y - rayon, 2*rayon, 2*rayon);
+	public void appelDessin(Graphics g, Fenetre fenetre) {
+		fenetre.dessinerCercle(g, x, y, rayon);
 	}
 }

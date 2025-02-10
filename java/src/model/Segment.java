@@ -1,5 +1,7 @@
 package src.model;
 
+import src.view.Fenetre;
+
 import java.awt.*;
 
 public class Segment extends Forme {
@@ -14,7 +16,7 @@ public class Segment extends Forme {
 	}
 
 	@Override
-	public void dessiner(Graphics g) {
-		g.drawLine(x1, y1, x2, y2);
+	public void appelDessin(Graphics g, Fenetre fenetre) {
+		fenetre.dessinerSegment(g, x1, y1, x2, y2);
 	}
 }

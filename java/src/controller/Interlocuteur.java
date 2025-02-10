@@ -8,11 +8,14 @@ import java.io.PrintStream;
 import java.net.Socket;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Interlocuteur extends Thread {
 	PrintStream fluxSortant;
 	BufferedReader fluxEntrant;
 	int noClient;
+	Controleur controleur = new Controleur();
 
 	/**
 	 *
@@ -30,6 +33,11 @@ public class Interlocuteur extends Thread {
 	public void run() {
 		System.out.println("Interlocuteur prêt pour le client n°"+ this.noClient);
 		ArrayList<Forme> formes = new ArrayList<>();
+		Boolean premiere_ligne = true;
+
+		Pattern pattern = Pattern.compile("^\\d+ \\d+ [0-5]$");
+
+
 		while(!this.isInterrupted()) {
 			String requete = null;
 			try {
@@ -45,18 +53,26 @@ public class Interlocuteur extends Thread {
 			//Si groupe -> création d'un groupe et ajout des formes dedans
 			//Sinon rien
 
-			String id;
-			ParserFormeCOR Parser = null;
-			Parser = new ParserFormeCORPolygone(Parser);
-			Parser = new ParserFormeCORTriangle(Parser);
-			Parser = new ParserFormeCORCercle(Parser);
-
-			Forme f = Parser.toParse(requete);
-			if (f != null) {
-				formes.add(f);
+			if (premiere_ligne) {
+				Matcher matcher = pattern.matcher(requete);
+				if (!matcher.matches()) {
+					System.out.println("Format invalide pour la première ligne : " + requete);
+					break;
+				}
+				int width = Integer.parseInt(matcher.group(1));
+				int height = Integer.parseInt(matcher.group(2));
+				int color = Integer.parseInt(matcher.group(3));
+				controleur.setFenetre(width, height, color);
+				premiere_ligne = false;
 			}
-
-			Controleur controleur = new Controleur(1024, 768, f);
+			else {
+				Forme f = controleur.ParsingProcess(requete);
+				if (f == null) {
+					System.out.println("La forme n'a pas pu être reconnue");
+				}
+				controleur.ajouterForme(f);
+			}
 		}
+		controleur.afficherDessin();
 	}
 }

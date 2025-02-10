@@ -1,5 +1,7 @@
 package src.model;
 
+import src.view.Fenetre;
+
 import java.awt.*;
 
 public class Polygone extends Forme {
@@ -11,7 +13,7 @@ public class Polygone extends Forme {
 	}
 
 	@Override
-	public void dessiner(Graphics g) {
-		g.fillPolygon(xPoints, yPoints, xPoints.length);
+	public void appelDessin(Graphics g, Fenetre fenetre) {
+		fenetre.dessinerPolygone(g, xPoints, yPoints);
 	}
 }

@@ -1,5 +1,7 @@
 package src.model;
 
+import src.view.Fenetre;
+
 import java.awt.*;
 
 public class Triangle extends Forme {
@@ -11,7 +13,7 @@ public class Triangle extends Forme {
 	}
 
 	@Override
-	public void dessiner(Graphics g) {
-		g.fillPolygon(xPoints, yPoints, 3);
+	public void appelDessin(Graphics g, Fenetre fenetre) {
+		fenetre.dessinerTriangle(g, xPoints, yPoints);
 	}
 }
