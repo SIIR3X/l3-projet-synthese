@@ -8,52 +8,42 @@
 
 void VisiteurDessinerTCP::visiter(Cercle* c)
 {
-	_buffer << string(*c) << endl;
-
-	// Si on n'est pas dans un groupe, on envoie les données (évite les envois multiples)
-	if (!_dansGroupe)
-		envoyerDonnees();
+	envoyerFormeSimple(c);
 }
 
 void VisiteurDessinerTCP::visiter(Segment* s)
 {
-	_buffer << string(*s) << endl;
-
-	// Si on n'est pas dans un groupe, on envoie les données (évite les envois multiples)
-	if (!_dansGroupe)
-		envoyerDonnees();
+	envoyerFormeSimple(s);
 }
 
 void VisiteurDessinerTCP::visiter(Triangle* t)
 {
-	_buffer << string(*t) << endl;
-
-	// Si on n'est pas dans un groupe, on envoie les données (évite les envois multiples)
-	if (!_dansGroupe)
-		envoyerDonnees();
+	envoyerFormeSimple(t);
 }
 
 void VisiteurDessinerTCP::visiter(Polygone* p)
 {
-	_buffer << string(*p) << endl;
-
-	// Si on n'est pas dans un groupe, on envoie les données (évite les envois multiples)
-	if (!_dansGroupe)
-		envoyerDonnees();
+	envoyerFormeSimple(p);
 }
 
 void VisiteurDessinerTCP::visiter(Groupe* g)
 {
-	// On met le flag à true pour ne pas envoyer les données à chaque forme (évite les envois multiples)
+	// On se connecte au serveur
+	_client.connect_to_server();
+
+	// On commence par envoyer l'entête du groupe
+	envoyerPaquet(creerEntete(g->couleur()));
+
+	// On met le flag à true pour ne pas envoyer l'entête à chaque forme
 	_dansGroupe = true;
 
 	// On visite chaque forme du groupe
 	for (Forme* f : g->formes())
 		f->accepter(this);
 
-	// On remet le flag à false pour pouvoir envoyer les données
+	// On remet le flag à false
 	_dansGroupe = false;
 
-	// On envoie les données
-	envoyerDonnees();
+	// On se déconnecte du serveur
+	_client.shutdown_connection();
 }
