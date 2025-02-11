@@ -1,14 +1,15 @@
 package src.view;
 
-import src.model.Forme;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 
-public class Fenetre extends JFrame {
+public class Fenetre extends JFrame implements Runnable {
+	private ArrayList<Shape> shapes = new ArrayList<>();
+
 	private int width, height, color;
+
 	private static final Color[] COLORS = {
 			Color.BLACK,
 			Color.BLUE,
@@ -29,7 +30,7 @@ public class Fenetre extends JFrame {
 		this.color = color;
 	}
 
-	public void afficher (ArrayList<Forme> formes) {
+	public void afficher () {
 		try {
 			int numBuffers = 2;
 			createBufferStrategy(numBuffers);
@@ -41,8 +42,9 @@ public class Fenetre extends JFrame {
 			Graphics graphics = strategie.getDrawGraphics();
 			setColor(graphics, color);
 
-			for (Forme f : formes) {
-				f.appelDessin(graphics, this);
+			Graphics2D drawer = (Graphics2D)graphics;
+			for (Shape s : shapes) {
+				drawer.draw(s);
 			}
 
 			strategie.show();
@@ -58,19 +60,12 @@ public class Fenetre extends JFrame {
 		g.setColor((color >= 0 && color < COLORS.length) ? COLORS[color] : Color.BLACK);
 	}
 
-	public void dessinerSegment(Graphics g, int x1, int y1, int x2, int y2) {
-		g.drawLine(x1, y1, x2, y2);
+	public void setFormes(ArrayList<Shape> formes) {
+		this.shapes = formes;
 	}
 
-	public void dessinerPolygone(Graphics g, int[] xPoints, int[] yPoints) {
-		g.fillPolygon(xPoints, yPoints, xPoints.length);
-	}
-
-	public void dessinerTriangle(Graphics g, int[] xPoints, int[] yPoints) {
-		g.fillPolygon(xPoints, yPoints, xPoints.length);
-	}
-
-	public void dessinerCercle(Graphics g, int x, int y, int rayon) {
-		g.fillOval(x - rayon, y - rayon, 2*rayon, 2*rayon);
+	@Override
+	public void run() {
+		afficher();
 	}
 }

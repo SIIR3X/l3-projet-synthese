@@ -1,6 +1,6 @@
 package src.model.design_pattern_cor;
 
-import src.model.Forme;
+import java.awt.*;
 
 public interface ParserForme {
 
@@ -9,5 +9,5 @@ public interface ParserForme {
 	 * @param line
 	 * @return la forme exacte ou null si le texte n'est pas reconnu
 	 */
-	public Forme toParse(String line);
+	public Shape toParse(String line);
 }

@@ -1,7 +1,6 @@
 package src.controller;
 
-import src.model.Forme;
-
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
@@ -32,10 +31,9 @@ public class Interlocuteur extends Thread {
 	@Override
 	public void run() {
 		System.out.println("Interlocuteur prêt pour le client n°"+ this.noClient);
-		ArrayList<Forme> formes = new ArrayList<>();
 		Boolean premiere_ligne = true;
 
-		Pattern pattern = Pattern.compile("^\\d+ \\d+ [0-5]$");
+		Pattern pattern = Pattern.compile("^(\\d+) (\\d+) ([0-5])	$");
 
 
 		while(!this.isInterrupted()) {
@@ -50,9 +48,6 @@ public class Interlocuteur extends Thread {
 
 			//Gestion de la lecture et du COR
 
-			//Si groupe -> création d'un groupe et ajout des formes dedans
-			//Sinon rien
-
 			if (premiere_ligne) {
 				Matcher matcher = pattern.matcher(requete);
 				if (!matcher.matches()) {
@@ -66,13 +61,13 @@ public class Interlocuteur extends Thread {
 				premiere_ligne = false;
 			}
 			else {
-				Forme f = controleur.ParsingProcess(requete);
-				if (f == null) {
+				Shape forme = controleur.ParsingProcess(requete);
+				if (forme == null) {
 					System.out.println("La forme n'a pas pu être reconnue");
 				}
-				controleur.ajouterForme(f);
+				controleur.ajouterForme(forme);
 			}
 		}
-		controleur.afficherDessin();
+		//controleur.afficherDessin();
 	}
 }

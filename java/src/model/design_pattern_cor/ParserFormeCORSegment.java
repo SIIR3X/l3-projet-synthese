@@ -1,9 +1,8 @@
 package src.model.design_pattern_cor;
 
-import src.model.Cercle;
-import src.model.Forme;
-import src.model.Segment;
-
+import java.awt.*;
+import java.awt.geom.Line2D;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class ParserFormeCORSegment extends ParserFormeCOR {
@@ -11,7 +10,7 @@ public class ParserFormeCORSegment extends ParserFormeCOR {
 	/**
 	 * Un Segment est identifié par l'id 2
 	 */
-	private char id = '2';
+	private int id = 2;
 
 	public ParserFormeCORSegment(ParserFormeCOR next) {
 		super(next);
@@ -23,23 +22,21 @@ public class ParserFormeCORSegment extends ParserFormeCOR {
 	 * @return un composant forme Cercle si l'id correspond à l'id Cercle, sinon renvoie null
 	 */
 	@Override
-	Forme toParse1(String line) {
-		Scanner scanner = new Scanner(line);
-		int type = scanner.nextInt();
-		if (type != id) return null;
+	Shape toParse1(String line) {
+		try (Scanner scanner = new Scanner(line)) {
+			scanner.useLocale(Locale.US);
+			int type = scanner.nextInt();
+			if (type != id) return null;
 
-		int[] xPoints = new int[2];
-		int[] yPoints = new int[2];
+			double x1 = scanner.nextDouble();
+			double y1 = scanner.nextDouble();
+			double x2 = scanner.nextDouble();
+			double y2 = scanner.nextDouble();
 
-		for (int i = 0; i < 2; i++) {
-			scanner.next();
-			xPoints[i] = scanner.nextInt();
-			scanner.next();
-			yPoints[i] = scanner.nextInt();
-			scanner.next();
+			return new Line2D.Double(x1, y1, x2, y2);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
 		}
-
-		return new Segment(xPoints[0], yPoints[0], xPoints[1], yPoints[1]);
 
 	}
 }

@@ -1,8 +1,8 @@
 package src.model.design_pattern_cor;
 
-import src.model.Forme;
-import src.model.Triangle;
-
+import java.awt.*;
+import java.awt.geom.Path2D;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class ParserFormeCORTriangle extends ParserFormeCOR {
@@ -10,7 +10,7 @@ public class ParserFormeCORTriangle extends ParserFormeCOR {
 	/**
 	 * Un Triangle est identifié par l'id 3
 	 */
-	private char id = '3';
+	private int id = 3;
 
 	public ParserFormeCORTriangle(ParserFormeCOR next) {
 		super(next);
@@ -22,23 +22,21 @@ public class ParserFormeCORTriangle extends ParserFormeCOR {
 	 * @return un composant forme Triangle si l'id correspond à l'id Triangle, sinon renvoie null
 	 */
 	@Override
-	Forme toParse1(String line) {
-		Scanner scanner = new Scanner(line);
-		int type = scanner.nextInt();
-		if (type != id) return null;
+	Shape toParse1(String line) {
+		try (Scanner scanner = new Scanner(line)) {
+			scanner.useLocale(Locale.US);
+			int type = scanner.nextInt();
+			if (type != id) return null;
 
-		int[] xPoints = new int[3];
-		int[] yPoints = new int[3];
+			Path2D.Double triangle = new Path2D.Double();
+			triangle.moveTo(scanner.nextDouble(), scanner.nextDouble());
+			triangle.lineTo(scanner.nextDouble(), scanner.nextDouble());
+			triangle.lineTo(scanner.nextDouble(), scanner.nextDouble());
 
-		for (int i = 0; i < 3; i++) {
-			scanner.next();
-			xPoints[i] = scanner.nextInt();
-			scanner.next();
-			yPoints[i] = scanner.nextInt();
-			scanner.next();
+			return triangle;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
 		}
-
-		return new Triangle(xPoints, yPoints);
 
 	}
 }

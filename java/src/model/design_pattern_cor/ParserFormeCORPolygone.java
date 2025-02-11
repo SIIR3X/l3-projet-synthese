@@ -1,8 +1,8 @@
 package src.model.design_pattern_cor;
 
-import src.model.Forme;
-import src.model.Polygone;
-
+import java.awt.*;
+import java.awt.geom.Path2D;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class ParserFormeCORPolygone extends ParserFormeCOR {
@@ -10,7 +10,7 @@ public class ParserFormeCORPolygone extends ParserFormeCOR {
 	/**
 	 * Un Polygone est identifié par l'id 4 ou supérieur
 	 */
-	private char id = '4';
+	private int id = 4;
 
 	public ParserFormeCORPolygone(ParserFormeCOR next) {
 		super(next);
@@ -22,22 +22,23 @@ public class ParserFormeCORPolygone extends ParserFormeCOR {
 	 * @return un composant forme Polygone si l'id correspond à l'id Polygone, sinon renvoie null
 	 */
 	@Override
-	Forme toParse1(String line) {
-		Scanner scanner = new Scanner(line);
-		int type = scanner.nextInt();
-		if (type < id) return null;
+	Shape toParse1(String line) {
 
-		int[] xPoints = new int[type];
-		int[] yPoints = new int[type];
+		try (Scanner scanner = new Scanner(line);) {
+			scanner.useLocale(Locale.US);
+			int type = scanner.nextInt();
+			if (type < id) return null;
 
-		for (int i = 0; i < type; i++) {
-			scanner.next();
-			xPoints[i] = scanner.nextInt();
-			scanner.next();
-			yPoints[i] = scanner.nextInt();
-			scanner.next();
+			Path2D.Double polygone = new Path2D.Double();
+			polygone.moveTo(scanner.nextDouble(), scanner.nextDouble());
+
+			for (int i = 0; i < type; i++) {
+				polygone.lineTo(scanner.nextDouble(), scanner.nextDouble());
+			}
+
+			return polygone;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
 		}
-
-		return new Polygone(xPoints, yPoints);
 	}
 }

@@ -1,6 +1,6 @@
 package src.model.design_pattern_cor;
 
-import src.model.Forme;
+import java.awt.*;
 
 public abstract class ParserFormeCOR implements ParserForme {
 	ParserFormeCOR next;
@@ -10,8 +10,8 @@ public abstract class ParserFormeCOR implements ParserForme {
 	}
 
 	@Override
-	public Forme toParse (String line) {
-		Forme forme = this.toParse1(line);
+	public Shape toParse (String line) {
+		Shape forme = this.toParse1(line);
 
 		if (forme != null) {
 			return forme;
@@ -24,5 +24,5 @@ public abstract class ParserFormeCOR implements ParserForme {
 		}
 	}
 
-	abstract Forme toParse1(String line);
+	abstract Shape toParse1(String line);
 }
