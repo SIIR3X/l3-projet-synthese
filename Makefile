@@ -113,12 +113,14 @@ ifeq ($(OS),Windows_NT)
 	CLEAN_CMD = if exist "$(OBJ_DIR)" ($(RM) "$(OBJ_DIR)\*" > NUL 2>&1) && FOR /D %%p IN ("$(OBJ_DIR)\*") DO $(RM_DIR) %%p > NUL 2>&1 && if exist "$(JAVA_BIN_DIR)" $(RM) "$(JAVA_BIN_DIR)\*" > NUL 2>&1
 	DELETE_CMD = if exist "$(PROGRAM)" $(RM) "$(PROGRAM)" > NUL 2>&1
 	CLEANALL_CMD = if exist "$(OBJ_DIR)" $(RM_DIR) "$(OBJ_DIR)" > NUL 2>&1 && if exist "$(BIN_DIR)" $(RM_DIR) "$(BIN_DIR)" > NUL 2>&1 && if exist "$(JAVA_BIN_DIR)" $(RM_DIR) "$(JAVA_BIN_DIR)" > NUL 2>&1
+	LDFLAGS = -lws2_32
 else
 	MEMORYCHECK_CMD = valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes $(PROGRAM)
 	MEMORYCHECK_TEST_CMD = valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes $(TEST_PROGRAM)
 	CLEAN_CMD = $(RM_DIR) $(OBJ_DIR)/* $(JAVA_BIN_DIR)/*
 	DELETE_CMD = $(RM) $(PROGRAM)
 	CLEANALL_CMD = $(RM_DIR) $(OBJ_DIR) $(BIN_DIR) $(JAVA_BIN_DIR)
+	LDFLAGS =
 endif
 
 MKDIR_BIN = $(if $(filter Windows_NT, $(OS)), if not exist $(BIN_DIR) mkdir $(subst /,\\,$(BIN_DIR)), mkdir -p $(BIN_DIR))
@@ -156,7 +158,7 @@ $(OBJ_DIR)/$(TEST_DIR)/%.o: $(TEST_DIR)/%.cpp
 # Link the object files
 $(PROGRAM): $(SRC_OBJ_FILES) $(OBJ_DIR)/main.o
 	@$(MKDIR_BIN)
-	$(CXX) $^ -o $@ $(CXXFLAGS)
+	$(CXX) $^ -o $@ $(CXXFLAGS) $(LDFLAGS)
 
 # Link the test object files
 $(TEST_PROGRAM): $(SRC_OBJ_FILES) $(TEST_OBJ_FILES)

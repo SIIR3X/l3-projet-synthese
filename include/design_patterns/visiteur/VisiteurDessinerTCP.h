@@ -40,7 +40,7 @@ public:
 	 * @param v Viewport de dessin.
 	 */
 	VisiteurDessinerTCP(Viewport* v)
-		: _viewport(v), _client(Client::getInstance()) {}
+		: _client(Client::getInstance()), _viewport(v) {}
 
 	void setViewport(Viewport* v) { _viewport = v; }
 
@@ -53,10 +53,10 @@ public:
 
 inline const char* VisiteurDessinerTCP::creerEntete(Couleur couleur) const
 {
-	char entete[100];
+	char* entete = new char[100];
 
 	// On construit l'entête (largeur hauteur couleur)
-	sprintf(entete, "%d %d %d", _viewport->largeurEcran(), _viewport->hauteurEcran(), couleur);
+	sprintf(entete, "%d %d %d", _viewport->largeurEcran(), _viewport->hauteurEcran(), (int)couleur);
 
 	return entete;
 }
