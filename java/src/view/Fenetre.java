@@ -19,8 +19,6 @@ public class Fenetre extends JFrame implements Runnable {
 			Color.CYAN
 	};
 
-
-
 	public Fenetre(int width, int height, int color) {
 		setTitle("Serveur de dessin");
 		setSize(width, height);
@@ -40,6 +38,22 @@ public class Fenetre extends JFrame implements Runnable {
 		this.shapes.add(forme);
 	}
 
+	private void drawRepere(Graphics g) {
+		Graphics2D g2d = (Graphics2D) g;
+		g2d.setColor(Color.GRAY); // Couleur du repère
+		g2d.setStroke(new BasicStroke(1)); // Épaisseur des lignes
+
+		int midX = getWidth() / 2;
+		int midY = getHeight() / 2;
+
+		// Dessiner l'axe X
+		g2d.drawLine(0, midY, getWidth(), midY);
+
+		// Dessiner l'axe Y
+		g2d.drawLine(midX, 0, midX, getHeight());
+	}
+
+
 	@Override
 	public void run() {
 		try {
@@ -51,6 +65,7 @@ public class Fenetre extends JFrame implements Runnable {
 			while (true) {
 				Graphics graphics = strategie.getDrawGraphics();
 				graphics.clearRect(0, 0, getWidth(), getHeight()); // Efface l'ancien dessin
+				drawRepere(graphics);
 				setColor(graphics, color);
 
 				Graphics2D drawer = (Graphics2D) graphics;
