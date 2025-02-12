@@ -43,6 +43,12 @@ public class Interlocuteur extends Thread {
 			catch (IOException e) {
 				e.printStackTrace();
 			}
+			
+			if (requete == null) {
+				System.out.println("Le client n°" + noClient + " s'est déconnecté.");
+				break;
+			}
+
 			System.out.println("le client n°"+ noClient + " a envoyé " + requete);
 
 			//Gestion de la lecture et du COR
