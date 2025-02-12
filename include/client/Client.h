@@ -3,9 +3,6 @@
 #include <cstdlib>
 #include <string>
 #include <cstdint>
-#include <Ws2tcpip.h>
-
-#define L 256
 
 class Client
 {
@@ -15,134 +12,150 @@ private:
 	const char* server_address;
 	uint16_t server_port;
 	SOCKET sock;
-	char buffer[L];
 
-	void error(const char* msg)
+	/*inline*/ void error(const char* msg)
 	{
 		if (msg)
 		{
-			std::cerr << msg << std::endl;
-			fflush(NULL);
+			puts(msg);
+			// fflush(NULL);
 		}
 		exit(EXIT_FAILURE);
 	}
 
-	void init_WSA()
-	{
-		int x;
-		if ((x = WSAStartup(MAKEWORD(0x02, 0x00), &wsadata)))
-		{
-			error("L'initialisation 'WSAStartup' a échoué.\n");
-		}
-	}
+	void init_WSA();
 
-	void create_socket()
-	{
-		if ((sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP)) == INVALID_SOCKET)
-		{
-			const int socket_error_code = WSAGetLastError();
-			const char* socket_error_msg = "La création du socket a échoué, code d'erreur : ";
-			char socket_error_msg_code[55];
-			sprintf(socket_error_msg_code, "%s %d", socket_error_msg, socket_error_code);
-			error(socket_error_msg_code);
-		}
-	}
+	void create_socket();
 
-	void setup_connection()
-	{
-		sockaddr.sin_family = AF_INET;
-		sockaddr.sin_addr.s_addr = inet_addr(server_address);
-		sockaddr.sin_port = htons(server_port); // convertie l'octet dans l'ordre réseau
-	}
+	void setup_connection();
 
-	Client(const char* address = "127.0.0.1", const uint16_t port = 9119)
-		: server_address(address), server_port(port), sock(INVALID_SOCKET)
-	{
-		init_WSA();
-		create_socket();
-		setup_connection();
-	}
+	Client(const char* address = "127.0.0.1", const uint16_t port = 9119);
 
-	~Client()
-	{
-		if (sock != INVALID_SOCKET)
-		{
-			closesocket(sock);
-		}
-		WSACleanup();
-	}
+	~Client();
 
 	// Suppression du constructeur par copie et de l'assignement par l'opérateur =
 	Client(const Client&) = delete;
 	Client& operator =(const Client&) = delete;
 public:
 	// Singleton
-	static Client& getInstance()
-	{
-		// objet 'static' local : créée une seule fois
-		static Client instance;
-		return instance;
-	}
+	static Client& getInstance();
 
-	void connect_to_server()
-	{
-		int x;
-		if ((x = connect(sock, (SOCKADDR*)&sockaddr, sizeof(sockaddr))) == SOCKET_ERROR)
-		{
-			error("\nLa connexion a échoué !\n");
-		}
-	}
+	void connect_to_server();
 
-	void send_request(const char* src)
-	{
-		if (!src)
-		{
-			error("\nLa requête a envoyé est vide !\n");
-		}
+	void send_request(const char* src);
 
-		size_t src_len = strlen(src);
-		char* request = new char[src_len + 2];
-		
-		if (strncpy_s(request, src_len + 1, src, src_len))
-		{
-			error("\nLa copie de la requête dans le buffer local a échoué !\n");
-		}
-		strcat_s(request, src_len + 2, "\n\0");
-		
-		int x;
-		size_t l = strlen(request);
-		if ((x = send(sock, request, l, 0)) == SOCKET_ERROR)
-		{
-			error("\nL'envoi de la requête a échoué !\n");
-		}
-
-		delete[] request;
-	}
-
-	void receive_request()
-	{
-		int x;
-		if ((x = recv(sock, buffer, L - 1, 0)) == SOCKET_ERROR)
-		{
-			error("\nLa récéption de la requête a échoué !\n");
-		}
-
-		char* ptr = strchr(buffer, '\n'); // Renvoie un pointeur sur '\n'
-		if (ptr) {*ptr = '\0';}  // Remplace par fin de chaine '\0'
-	}
-
-	void shutdown_connection()
-	{
-		int x;
-		if ((x = shutdown(sock, SD_BOTH)) == SOCKET_ERROR)
-		{
-			error("\nL'arrêt de la connexion a échoué !\n");
-		}
-		
-	}
-
-	const char* get_buffer()
-	{
-		return buffer;
-	}
+	void shutdown_connection();
 };
+
+/*
+	PRIVATE METHODS
+*/
+
+void Client::init_WSA()
+{
+	int x;
+	if ((x = WSAStartup(MAKEWORD(0x02, 0x00), &wsadata)))
+	{
+		error("L'initialisation 'WSAStartup' a échoué.\n");
+	}
+}
+
+void Client::create_socket()
+{
+	if ((sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP)) == INVALID_SOCKET)
+	{
+		const int socket_error_code = WSAGetLastError();
+		const char* socket_error_msg = "La création du socket a échoué, code d'erreur : ";
+		char socket_error_msg_code[55];
+		sprintf(socket_error_msg_code, "%s %d", socket_error_msg, socket_error_code);
+		error(socket_error_msg_code);
+	}
+}
+
+inline void Client::setup_connection()
+{
+	sockaddr.sin_family = AF_INET;
+	sockaddr.sin_addr.s_addr = inet_addr(server_address);
+	sockaddr.sin_port = htons(server_port); // convertie l'octet dans l'ordre réseau
+}
+
+Client::Client(const char* address = "127.0.0.1", const uint16_t port = 9119)
+	: server_address(address), server_port(port), sock(INVALID_SOCKET)
+{
+	init_WSA();
+	create_socket();
+	setup_connection();
+}
+
+Client::~Client()
+{
+	if (sock != INVALID_SOCKET)
+	{
+		closesocket(sock);
+	}
+	WSACleanup();
+}
+
+/*
+	PUBLIC METHODS
+*/
+// Singleton (static)
+Client& Client::getInstance()
+{
+	// objet 'static' local : créée une seule fois
+	static Client instance;
+	return instance;
+}
+
+void Client::connect_to_server()
+{
+	int x;
+	if ((x = connect(sock, (SOCKADDR*)&sockaddr, sizeof(sockaddr))) == SOCKET_ERROR)
+	{
+		error("\nLa connexion a échoué !\n");
+	}
+}
+
+void Client::send_request(const char* src)
+{
+	if (!src)
+	{
+		error("\nLa requête a envoyé est vide !\n");
+	}
+
+	size_t src_len = strlen(src);
+	char* request = new char[src_len + 3]; // +2 pour '\r\n' , +1 pour '\0'
+	
+	if (strncpy_s(request, src_len + 3, src, src_len))
+	{
+		delete[] request;
+		error("\nLa copie de la requête dans le buffer local a échoué !\n");
+	}
+
+	// // assurer la terminaison null (pas necessaire car sizeof(dest) > sizeof(src))
+	// request[src_len] = '\0';
+
+	if (strcat_s(request, src_len + 3, "\r\n")) // terminaison standard pour serveur
+	{
+		delete[] request;
+		error("\nL'ajout de la terminaison null à la requête à échoué !\n");
+	}
+
+	int x;
+	size_t l = strlen(request);
+	if ((x = send(sock, request, l, 0)) == SOCKET_ERROR)
+	{
+		error("\nL'envoi de la requête a échoué !\n");
+	}
+
+	delete[] request;
+}
+
+inline void Client::shutdown_connection()
+{
+	int x;
+	if ((x = shutdown(sock, SD_BOTH)) == SOCKET_ERROR)
+	{
+		error("\nL'arrêt de la connexion a échoué !\n");
+	}
+}
