@@ -2,6 +2,7 @@
 #define FORME_H
 
 #include "geometrie/Vecteur2D.h"
+#include "geometrie/CalculsGeometriques.h"
 #include "design_patterns/visiteur/VisiteurForme.h"
 #include <string>
 #include <ostream>
@@ -89,6 +90,19 @@ public:
 	 */
 	virtual void rotation(const Vecteur2D& centre, double angle) = 0;
 
+	/**
+	 * @brief Retourne les bornes de la forme.
+	 * @param pmin Le point contenant les coordonnées minimales.
+	 * @param pmax Le point contenant les coordonnées maximales.
+	 */
+	virtual void bornes(Vecteur2D& pmin, Vecteur2D& pmax) const = 0;
+
+	/**
+	 * @brief Calcule le centre de la forme.
+	 * @return Le centre de la forme.
+	 */
+	virtual Vecteur2D calculerCentre() const = 0;
+
 	Groupe* groupe() const { return _groupe; }
 
 	void setGroupe(Groupe* groupe) { _groupe = groupe; }
@@ -108,5 +122,23 @@ public:
 	 */
 	virtual void accepter(VisiteurForme* visiteur) = 0;
 }; // class Forme
+
+inline void Forme::appliquerHomothetie(Vecteur2D& point, const Vecteur2D& centre, double k) const
+{
+	// Calcul des nouvelles coordonnées
+	point.x = CalculsGeometriques::calculerHomothetie(centre.x, point.x, k);
+	point.y = CalculsGeometriques::calculerHomothetie(centre.y, point.y, k);
+}
+
+inline void Forme::appliquerRotation(Vecteur2D& point, const Vecteur2D& centre, double cosA, double sinA) const
+{
+	// On sauvegarde les coordonnées originales du point
+	double originalX = point.x;
+	double originalY = point.y;
+
+	// Calcul des nouvelles coordonnées
+	point.x = CalculsGeometriques::calculerRotationX(centre.x, centre.y, originalX, originalY, cosA, sinA);
+	point.y = CalculsGeometriques::calculerRotationY(centre.x, centre.y, originalX, originalY, cosA, sinA);
+}
 
 #endif // FORME_H

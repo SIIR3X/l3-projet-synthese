@@ -4,6 +4,7 @@
 #include "formes/Forme.h"
 #include <string>
 #include <ostream>
+#include <algorithm>
 
 using namespace std;
 
@@ -36,6 +37,10 @@ public:
 
 	void rotation(const Vecteur2D& centre, double angle) override;
 
+	void bornes(Vecteur2D& pmin, Vecteur2D& pmax) const override;
+
+	Vecteur2D calculerCentre() const override;
+
 	const Vecteur2D& p1() const { return _p1; }
 
 	const Vecteur2D& p2() const { return _p2; }
@@ -58,6 +63,17 @@ inline void Triangle::translation(const Vecteur2D& vt)
 	_p1 += vt;
 	_p2 += vt;
 	_p3 += vt;
+}
+
+inline void Triangle::bornes(Vecteur2D& pmin, Vecteur2D& pmax) const
+{
+	pmin = Vecteur2D(min({ _p1.x, _p2.x, _p3.x }), min({ _p1.y, _p2.y, _p3.y }));
+	pmax = Vecteur2D(max({ _p1.x, _p2.x, _p3.x }), max({ _p1.y, _p2.y, _p3.y }));
+}
+
+inline Vecteur2D Triangle::calculerCentre() const
+{
+	return Vecteur2D((_p1.x + _p2.x + _p3.x) / 3, (_p1.y + _p2.y + _p3.y) / 3);
 }
 
 inline Triangle::operator string() const

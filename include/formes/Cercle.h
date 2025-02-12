@@ -44,6 +44,10 @@ public:
 
 	void rotation(const Vecteur2D& centre, double angle) override;
 
+	void bornes(Vecteur2D& pmin, Vecteur2D& pmax) const override;
+
+	Vecteur2D calculerCentre() const override { return _centre; }
+
 	const Vecteur2D& centre() const { return _centre; }
 
 	double rayon() const { return _rayon; }
@@ -56,6 +60,12 @@ public:
 inline void Cercle::translation(const Vecteur2D& vt)
 {
 	_centre += vt;
+}
+
+inline void Cercle::bornes(Vecteur2D& pmin, Vecteur2D& pmax) const
+{
+	pmin = _centre - Vecteur2D(_rayon, _rayon);
+	pmax = _centre + Vecteur2D(_rayon, _rayon);
 }
 
 inline Cercle::operator string() const

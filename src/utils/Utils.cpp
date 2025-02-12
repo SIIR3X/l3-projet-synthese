@@ -1,4 +1,5 @@
 #include "utils/Utils.h"
+#include "formes/Groupe.h"
 #include <fstream>
 
 vector<Forme*> Utils::chargerFormes(const string& nomFichier, ChargeurFormeCOR* chargeurFormeCOR)
@@ -14,10 +15,6 @@ vector<Forme*> Utils::chargerFormes(const string& nomFichier, ChargeurFormeCOR* 
 		throw runtime_error("Impossible d'ouvrir le fichier " + nomFichier);
 
 	string ligne;
-
-	// On lit le nombre de formes dans le fichier (ignore la première ligne)
-	if (!getline(fichier, ligne))
-		throw runtime_error("Impossible de lire le nombre de formes dans le fichier " + nomFichier);
 
 	// On lit le fichier ligne par ligne
 	while (getline(fichier, ligne))
@@ -36,17 +33,14 @@ vector<Forme*> Utils::chargerFormes(const string& nomFichier, ChargeurFormeCOR* 
 	return formes;
 }
 
-void Utils::sauvegarderFormes(ofstream* fichier, VisiteurForme* visiteurForme, const vector<Forme*>& formes)
+void Utils::sauvegarderFormes(const vector<Forme*>& formes, VisiteurForme* visiteurForme)
 {
-	// On sauvegarde le nombre de formes
-	*fichier << formes.size() << endl;
-
 	// On sauvegarde chaque forme dans le fichier
 	for (Forme* forme : formes)
 		forme->accepter(visiteurForme);
 }
 
-vector<Forme*> Utils::transformerFormesVersEcran(const Viewport& viewport, const vector<Forme*>& formes)
+vector<Forme*> Utils::transformerFormesVersEcran(const vector<Forme*>& formes, const Viewport& viewport)
 {
 	// On crée un vecteur de formes transformées
 	vector<Forme*> formesTransformees;
@@ -56,4 +50,16 @@ vector<Forme*> Utils::transformerFormesVersEcran(const Viewport& viewport, const
 		formesTransformees.push_back(viewport.formeVersEcran(*forme));
 
 	return formesTransformees;
+}
+
+void Utils::centrerGroupe(Groupe* groupe, const Vecteur2D& centre)
+{
+	// On récupère le centre du groupe
+	Vecteur2D centreGroupe = groupe->calculerCentre();
+
+	// On calcule le vecteur de translation
+	Vecteur2D translation(centre.x - centreGroupe.x, centre.y - centreGroupe.y);
+
+	// On centre le groupe
+	groupe->translation(translation);
 }

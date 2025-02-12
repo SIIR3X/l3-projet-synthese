@@ -50,6 +50,8 @@ public:
 
 	Vecteur2D centreMonde() const { return _centreMonde; }
 
+	Vecteur2D centreEcran() const { return Vecteur2D(_largeurEcran / 2, _hauteurEcran / 2); }
+
 	double echelleX() const { return _echelleX; }
 
 	double echelleY() const { return _echelleY; }

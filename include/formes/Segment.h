@@ -4,6 +4,7 @@
 #include "formes/Forme.h"
 #include <string>
 #include <ostream>
+#include <algorithm>
 
 using namespace std;
 
@@ -33,7 +34,11 @@ public:
 
 	void homothetie(const Vecteur2D& centre, double k) override;
 
-	void rotation(const Vecteur2D& centre, double angle) override; 
+	void rotation(const Vecteur2D& centre, double angle) override;
+
+	void bornes(Vecteur2D& pmin, Vecteur2D& pmax) const override;
+
+	Vecteur2D calculerCentre() const override;
 
 	const Vecteur2D& p1() const { return _p1; }
 
@@ -48,6 +53,17 @@ inline void Segment::translation(const Vecteur2D& vt)
 {
 	_p1 += vt;
 	_p2 += vt;
+}
+
+inline void Segment::bornes(Vecteur2D& pmin, Vecteur2D& pmax) const
+{
+	pmin = Vecteur2D(min(_p1.x, _p2.x), min(_p1.y, _p2.y));
+	pmax = Vecteur2D(max(_p1.x, _p2.x), max(_p1.y, _p2.y));
+}
+
+inline Vecteur2D Segment::calculerCentre() const
+{
+	return Vecteur2D((_p1.x + _p2.x) / 2, (_p1.y + _p2.y) / 2);
 }
 
 inline Segment::operator string() const

@@ -1,7 +1,7 @@
 #ifndef VISITEUR_DESSINER_TCP_H
 #define VISITEUR_DESSINER_TCP_H
 
-#include "Client.h"
+#include "client/Client.h"
 #include "graphique/Viewport.h"
 #include "design_patterns/visiteur/VisiteurForme.h"
 

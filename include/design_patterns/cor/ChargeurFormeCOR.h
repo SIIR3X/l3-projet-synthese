@@ -14,11 +14,11 @@ private:
 
 protected:
 	/**
-	 * @brief Récupère le nombre de points d'une forme à partir d'une chaîne de caractères.
+	 * @brief Récupère le nombre de points de la forme à partir d'une chaîne de caractères.
 	 * @param ligne Chaîne de caractères.
 	 * @return Nombre de points de la forme.
 	 */
-	int recupererNbPoints(const char* ligne) const;
+	int recupererNbPoints(char*& ligne) const;
 
 public:
 	/**
@@ -34,7 +34,7 @@ public:
 	{
 		delete _suivant;
 	}
-
+	
 	Forme* charger(const char* ligne) const override;
 
 	/**
@@ -59,13 +59,17 @@ inline Forme* ChargeurFormeCOR::charger(const char* ligne) const
 	return forme;
 }
 
-inline int ChargeurFormeCOR::recupererNbPoints(const char* ligne) const
+inline int ChargeurFormeCOR::recupererNbPoints(char*& ligne) const
 {
 	int nbPoints;
+	int offset = 0;
 
-	// On récupère le nombre de points de la forme
-	if (sscanf(ligne, "%*d %d", &nbPoints) != 1)
+	// On récupère le nombre de points de la forme à partir de %n qui donne le nombre de caractères lus
+	if (sscanf(ligne, "%d%n", &nbPoints, &offset) != 1)
 		return -1;
+
+	// On avance la ligne pour lire les points
+	ligne += offset;
 
 	return nbPoints;
 }

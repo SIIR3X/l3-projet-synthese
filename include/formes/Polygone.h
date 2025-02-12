@@ -6,6 +6,7 @@
 #include <vector>
 #include <ostream>
 #include <stdexcept>
+#include <algorithm>
 
 using namespace std;
 
@@ -35,7 +36,7 @@ public:
 	{
 		// Si le polygone a moins de 4 sommets, on lance une exception.
 		if (points.size() <= 3)
-			throw std::invalid_argument("Un polygone doit avoir au moins 4 sommets.");
+			throw invalid_argument("Un polygone doit avoir au moins 4 sommets.");
 	}
 
 	Polygone* clone() const override { return new Polygone(*this); }
@@ -47,6 +48,10 @@ public:
 	void homothetie(const Vecteur2D& centre, double k) override;
 
 	void rotation(const Vecteur2D& centre, double angle) override;
+
+	void bornes(Vecteur2D& pmin, Vecteur2D& pmax) const override;
+
+	Vecteur2D calculerCentre() const override;
 
 	size_t nbPoints() const { return _points.size(); }
 
@@ -96,6 +101,34 @@ inline void Polygone::translation(const Vecteur2D& vt)
 {
 	for (Vecteur2D& point : _points)
 		point += vt;
+}
+
+inline void Polygone::bornes(Vecteur2D& pmin, Vecteur2D& pmax) const
+{
+	// On commence par initialiser les bornes minimales et maximales avec le premier sommet
+	pmin = _points[0];
+	pmax = _points[0];
+
+	// On parcours ensuite les autres points du polygone
+	for (const Vecteur2D& point : _points)
+	{
+		// Et on met à jour les bornes minimales et maximales
+		pmin.x = min(pmin.x, point.x);
+		pmin.y = min(pmin.y, point.y);
+		pmax.x = max(pmax.x, point.x);
+		pmax.y = max(pmax.y, point.y);
+	}
+}
+
+inline Vecteur2D Polygone::calculerCentre() const
+{
+	Vecteur2D pmin, pmax;
+
+	// On commence par calculer les bornes du polygone
+	bornes(pmin, pmax);
+
+	// Puis on calcule le centre du polygone
+	return Vecteur2D((pmin.x + pmax.x) / 2, (pmin.y + pmax.y) / 2);
 }
 
 inline const Vecteur2D& Polygone::point(size_t index) const

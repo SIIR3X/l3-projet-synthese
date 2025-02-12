@@ -31,7 +31,19 @@ void VisiteurSauvegarderTXT::visiter(Polygone* p)
 
 void VisiteurSauvegarderTXT::visiter(Groupe* g)
 {
+	// On ouvre le fichier
+	ouvrirFichier();
+
+	// On met le flag à true pour indiquer qu'on est dans un groupe
+	_dansGroupe = true;
+
 	// Sauvegarde des formes du groupe
 	for (Forme* f : g->formes())
 		f->accepter(this);
+
+	// On remet le flag à false
+	_dansGroupe = false;
+
+	// On ferme le fichier
+	fermerFichier();
 }

@@ -6,6 +6,7 @@
 #include <vector>
 #include <ostream>
 #include <stdexcept>
+#include <algorithm>
 
 using namespace std;
 
@@ -47,6 +48,10 @@ public:
 	void homothetie(const Vecteur2D& centre, double k) override;
 
 	void rotation(const Vecteur2D& centre, double angle) override;
+
+	void bornes(Vecteur2D& pmin, Vecteur2D& pmax) const override;
+
+	Vecteur2D calculerCentre() const override;
 
 	size_t nbFormes() const { return _formes.size(); }
 
@@ -116,6 +121,37 @@ inline void Groupe::rotation(const Vecteur2D& centre, double angle)
 		forme->rotation(centre, angle);
 }
 
+inline void Groupe::bornes(Vecteur2D& pmin, Vecteur2D& pmax) const
+{
+	// On commence par initialiser les bornes minimales et maximales avec celles de la première forme
+	_formes[0]->bornes(pmin, pmax);
+
+	// On parcours ensuite les autres formes du groupe
+	for (size_t i = 1; i < _formes.size(); ++i)
+	{
+		// On récupère ensuite les bornes minimales et maximales de la forme courante
+		Vecteur2D pminForme, pmaxForme;
+		_formes[i]->bornes(pminForme, pmaxForme);
+
+		// Et on met à jour les bornes minimales et maximales
+		pmin.x = min(pmin.x, pminForme.x);
+		pmin.y = min(pmin.y, pminForme.y);
+		pmax.x = max(pmax.x, pmaxForme.x);
+		pmax.y = max(pmax.y, pmaxForme.y);
+	}
+}
+
+inline Vecteur2D Groupe::calculerCentre() const
+{
+	Vecteur2D pmin, pmax;
+
+	// On commence par calculer les bornes du groupe
+	bornes(pmin, pmax);
+
+	// Puis on calcule le centre du groupe
+	return Vecteur2D((pmin.x + pmax.x) / 2, (pmin.y + pmax.y) / 2);
+}
+
 inline const Forme* Groupe::forme(size_t index) const
 {
 	// Si l'index est hors limites, on lance une exception
@@ -155,7 +191,6 @@ inline Groupe::operator string() const
 {
 	ostringstream oss;
 
-	oss << nbFormes() << endl;
 	for (const Forme* forme : _formes)
 		oss << string(*forme) << endl;
 

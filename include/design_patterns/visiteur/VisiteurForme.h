@@ -13,6 +13,7 @@ class Groupe;
 class VisiteurForme
 {
 public:
+	virtual ~VisiteurForme() = default;
 	virtual void visiter(Cercle* c) = 0;
 	virtual void visiter(Segment* s) = 0;
 	virtual void visiter(Triangle* t) = 0;
