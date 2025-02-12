@@ -101,13 +101,13 @@ public:
 		}
 
 		size_t src_len = strlen(src);
-		char* request = new char[src_len + 1];
+		char* request = new char[src_len + 2];
 		
 		if (strncpy_s(request, src_len + 1, src, src_len))
 		{
 			error("\nLa copie de la requête dans le buffer local a échoué !\n");
 		}
-		strcat_s(request, src_len + 2, "\r\n"); // terminaison standard pour serveur
+		strcat_s(request, src_len + 2, "\n\0");
 		
 		int x;
 		size_t l = strlen(request);
@@ -138,6 +138,7 @@ public:
 		{
 			error("\nL'arrêt de la connexion a échoué !\n");
 		}
+		
 	}
 
 	const char* get_buffer()

@@ -10,225 +10,175 @@
 ################################ ARGUMENTS ################################
 ###########################################################################
 
+# Arguments pour l'exécution du programme
 MAIN_ARGS = 
 TEST_ARGS =
 
+
 ###########################################################################
-################################ LIBRARIES ################################
+################################ LIBRAIRIES ###############################
 ###########################################################################
 
 # Google Test
 GTEST_INCLUDE_DIR = "C:\Program Files\googletest\googletest\include"
 GTEST_LIB_DIR = "C:\Program Files\googletest\build\lib"
 
+
 ###########################################################################
-############################### DIRECTORIES ###############################
+############################## EXECUTABLES ################################
 ###########################################################################
 
-INCLUDE_DIR = include
+# Nom des exécutables
+MAIN_EXEC = projet-synthese.exe
+JAVA_EXEC = controller.serverManager
+TEST_EXEC = tests.exe
+
+
+###########################################################################
+############################### COMPILATEUR ###############################
+###########################################################################
+
+# Compilateur
+CXX = g++
+CXXFLAGS = -Wall -Wextra -std=c++11 -I$(INC_DIR)
+TEST_CXXFLAGS = -Wall -Wextra -std=c++14 -I$(INC_DIR) -I$(GTEST_INCLUDE_DIR)
+
+
+###########################################################################
+############################### OPTIONS ###################################
+###########################################################################
+
+# Flags de compilation
+LDFLAGS = -lws2_32
+LDLIBS =
+TEST_LDFLAGS = $(LDFLAGS) -L$(GTEST_LIB_DIR) -lgtest -lgtest_main
+
+
+###########################################################################
+################################ DOSSIERS #################################
+###########################################################################
+
+# Dossiers C++
 SRC_DIR = src
+INC_DIR = include
 OBJ_DIR = obj
 BIN_DIR = bin
-JAVA_SRC_DIR = java/src
-JAVA_BIN_DIR = java/bin
 TEST_DIR = tests
 
-###########################################################################
-################################## FILES ##################################
-###########################################################################
+# Dossiers Java
+JAVA_SRC_DIR = java/src
+JAVA_BIN_DIR = java/bin
 
-# Source files
-SRC_FILES = \
-	$(SRC_DIR)/main.cpp \
-	$(SRC_DIR)/geometrie/Vecteur2D.cpp \
-	$(SRC_DIR)/formes/Forme.cpp \
-	$(SRC_DIR)/formes/Segment.cpp \
-	$(SRC_DIR)/formes/Triangle.cpp \
-	$(SRC_DIR)/formes/Cercle.cpp \
-	$(SRC_DIR)/formes/Polygone.cpp \
-	$(SRC_DIR)/formes/Groupe.cpp \
-	$(SRC_DIR)/design_patterns/visiteur/VisiteurForme.cpp \
-	$(SRC_DIR)/design_patterns/visiteur/VisiteurDessinerTCP.cpp \
-	$(SRC_DIR)/design_patterns/visiteur/VisiteurSauvegarderTXT.cpp \
-	$(SRC_DIR)/design_patterns/cor/ChargeurForme.cpp \
-	$(SRC_DIR)/design_patterns/cor/ChargeurFormeCOR.cpp \
-	$(SRC_DIR)/design_patterns/cor/ChargeurFormeCORSegment.cpp \
-	$(SRC_DIR)/design_patterns/cor/ChargeurFormeCORTriangle.cpp \
-	$(SRC_DIR)/design_patterns/cor/ChargeurFormeCORCercle.cpp \
-	$(SRC_DIR)/design_patterns/cor/ChargeurFormeCORPolygone.cpp \
-	$(SRC_DIR)/graphique/Viewport.cpp \
-	$(SRC_DIR)/utils/Utils.cpp \
-
-# Test files
-TEST_SRC_FILES = \
-	$(TEST_DIR)/geometrie/Vecteur2DTest.cpp \
-	$(TEST_DIR)/formes/CercleTest.cpp \
-	$(TEST_DIR)/formes/SegmentTest.cpp \
-	$(TEST_DIR)/formes/TriangleTest.cpp \
-	$(TEST_DIR)/formes/PolygoneTest.cpp \
-	$(TEST_DIR)/formes/GroupeTest.cpp \
-	$(TEST_DIR)/graphique/ViewportTest.cpp \
 
 ###########################################################################
-############################### EXECUTABLES ###############################
+################################ FONCTIONS ################################
 ###########################################################################
 
-MAIN_EXEC = projet-synthese
-JAVA_EXEC = src.controller.serverManager
-TEST_EXEC = test-projet-synthese
+# Fonction permettant de récuperer tous les fichiers d'un dossier et de ses sous-dossiers
+rwildcard = $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2) $(filter $(subst *,%,$2),$d))
+
+# Fonction permettant de créer un dossier
+define MKDIR
+@if not exist "$(subst /,\,$(patsubst %/,%,$(1)))" mkdir "$(subst /,\,$(patsubst %/,%,$(1)))"
+endef
+
+# Fonction permettant de nettoyer un dossier
+define CLEAN_DIR
+@if exist "$(subst /,\,$(patsubst %/,%,$(1)))" ( \
+    del /q "$(subst /,\,$(patsubst %/,%,$(1)))\*" && \
+    for /d %%x in ("$(subst /,\,$(patsubst %/,%,$(1)))\*") do rd /s /q "%%x" )
+endef
+
+# Fonction permettant de supprimer un fichier
+define DELETE_FILE
+@if exist "$(subst /,\,$(patsubst %/,%,$(1)))" (del /q "$(subst /,\,$(patsubst %/,%,$(1)))")
+endef
 
 ###########################################################################
-############################ COMPILER AND FLAGS ###########################
+################################ FICHIERS #################################
 ###########################################################################
 
-CXX = g++
-CXXFLAGS = -Wall -Wextra -std=c++11 -I$(INCLUDE_DIR)
+# Fichiers C++
+SRC_FILES := $(call rwildcard,$(SRC_DIR)/,*.cpp)
+TEST_FILES := $(call rwildcard,$(TEST_DIR)/,*.cpp)
 
-TEST_CXXFLAGS = -Wall -Wextra -std=c++14 -I$(GTEST_INCLUDE_DIR) -I$(INCLUDE_DIR)
-TEST_LDFLAGS = -L$(GTEST_LIB_DIR) -lgtest_main -lgtest -lpthread
+# Fichiers Java
+JAVA_FILES := $(call rwildcard,$(JAVA_SRC_DIR)/,*.java)
 
-###########################################################################
-####################### OS DETECTION AND VARIABLES ########################
-###########################################################################
+# Chemins vers les exécutables
+MAIN_PROG = $(BIN_DIR)/$(MAIN_EXEC)
+TEST_PROG = $(BIN_DIR)/$(TEST_EXEC)
 
-# Detect the operating system
-ifeq ($(OS),Windows_NT)
-	RM = del /Q /S
-	RM_DIR = rmdir /Q /S
-	MKDIR = mkdir
-	PROGRAM = $(BIN_DIR)\$(MAIN_EXEC).exe
-	TEST_PROGRAM = $(BIN_DIR)\$(TEST_EXEC).exe
-else
-	RM = rm -f
-	RM_DIR = rm -rf
-	MKDIR = mkdir -p
-	PROGRAM = $(BIN_DIR)/$(MAIN_EXEC)
-	TEST_PROGRAM = $(BIN_DIR)/$(TEST_EXEC)
-endif
-
-# Commands
-ifeq ($(OS),Windows_NT)
-	MEMORYCHECK_CMD = @echo Memory check is not supported on Windows.
-	MEMORYCHECK_TEST_CMD = @echo Memory check is not supported on Windows.
-	CLEAN_CMD = if exist "$(OBJ_DIR)" ($(RM) "$(OBJ_DIR)\*" > NUL 2>&1) && FOR /D %%p IN ("$(OBJ_DIR)\*") DO $(RM_DIR) %%p > NUL 2>&1 && if exist "$(JAVA_BIN_DIR)" $(RM) "$(JAVA_BIN_DIR)\*" > NUL 2>&1
-	DELETE_CMD = if exist "$(PROGRAM)" $(RM) "$(PROGRAM)" > NUL 2>&1
-	CLEANALL_CMD = if exist "$(OBJ_DIR)" $(RM_DIR) "$(OBJ_DIR)" > NUL 2>&1 && if exist "$(BIN_DIR)" $(RM_DIR) "$(BIN_DIR)" > NUL 2>&1 && if exist "$(JAVA_BIN_DIR)" $(RM_DIR) "$(JAVA_BIN_DIR)" > NUL 2>&1
-	LDFLAGS = -lws2_32
-else
-	MEMORYCHECK_CMD = valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes $(PROGRAM)
-	MEMORYCHECK_TEST_CMD = valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes $(TEST_PROGRAM)
-	CLEAN_CMD = $(RM_DIR) $(OBJ_DIR)/* $(JAVA_BIN_DIR)/*
-	DELETE_CMD = $(RM) $(PROGRAM)
-	CLEANALL_CMD = $(RM_DIR) $(OBJ_DIR) $(BIN_DIR) $(JAVA_BIN_DIR)
-	LDFLAGS =
-endif
-
-MKDIR_BIN = $(if $(filter Windows_NT, $(OS)), if not exist $(BIN_DIR) mkdir $(subst /,\\,$(BIN_DIR)), mkdir -p $(BIN_DIR))
-MKDIR_OBJ = $(if $(filter Windows_NT, $(OS)), if not exist $(dir $@) mkdir $(subst /,\\,$(dir $@)), mkdir -p $(dir $@))
-MKDIR_JAVA_BIN = $(if $(filter Windows_NT, $(OS)), if not exist $(JAVA_BIN_DIR) mkdir $(subst /,\\\\,$(JAVA_BIN_DIR)), mkdir -p $(JAVA_BIN_DIR))
 
 ###########################################################################
-############################### OBJECT FILES ##############################
+################################# OBJETS ##################################
 ###########################################################################
 
-# Object files
-SRC_OBJ_FILES = $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(filter-out $(SRC_DIR)/main.cpp, $(SRC_FILES)))
+# Objets C++
+OBJS = $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SRC_FILES))
+TEST_OBJS = $(patsubst $(TEST_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(TEST_FILES))
 
-# Test object files
-TEST_OBJ_FILES = $(patsubst $(TEST_DIR)/%.cpp, $(OBJ_DIR)/$(TEST_DIR)/%.o, $(TEST_SRC_FILES))
-
-# Java source files
-rwildcard = $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2)) $(wildcard $1$2)
-JAVA_SOURCES := $(filter %.java, $(call rwildcard, $(JAVA_SRC_DIR)/, *.java))
 
 ###########################################################################
-################################## RULES ##################################
+############################### COMPILATION ###############################
 ###########################################################################
 
-# Compile the source files
+# Edition des liens des fichiers objets
+$(MAIN_PROG): $(OBJS)
+	$(call MKDIR, $(BIN_DIR))
+	$(CXX) $(CXXFLAGS) -o $@ $^ $(LDFLAGS) $(LDLIBS)
+
+# Compilation des fichiers objets
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
-	@$(MKDIR_OBJ)
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+	$(call MKDIR,$(dir $@))
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
-# Compile the test files
-$(OBJ_DIR)/$(TEST_DIR)/%.o: $(TEST_DIR)/%.cpp
-	@$(MKDIR_OBJ)
-	$(CXX) $(TEST_CXXFLAGS) -c $< -o $@
+# Edition des liens des fichiers objets de test
+$(TEST_PROG): $(OBJS) $(TEST_OBJS)
+	$(call MKDIR,$(BIN_DIR))
+	$(CXX) $(TEST_CXXFLAGS) -o $@ $(filter-out $(OBJ_DIR)/main.o, $^) $(TEST_LDFLAGS) $(LDLIBS)
 
-# Link the object files
-$(PROGRAM): $(SRC_OBJ_FILES) $(OBJ_DIR)/main.o
-	@$(MKDIR_BIN)
-	$(CXX) $^ -o $@ $(CXXFLAGS) $(LDFLAGS)
+# Compilation des fichiers objets de test
+$(OBJ_DIR)/%.o: $(TEST_DIR)/%.cpp
+	$(call MKDIR,$(dir $@))
+	$(CXX) $(TEST_CXXFLAGS) -c -o $@ $<
 
-# Link the test object files
-$(TEST_PROGRAM): $(SRC_OBJ_FILES) $(TEST_OBJ_FILES)
-	@$(MKDIR_BIN)
-	$(CXX) $^ -o $@ $(TEST_LDFLAGS)
 
 ###########################################################################
-################################ COMMANDS #################################
+################################ COMMANDES ################################
 ###########################################################################
 
-.PHONY: all run memorycheck test memorychecktest javac run-java clean delete cleanall doc help
+.PHONY: all rebuild clean cleanall
 
-# Default rule
-all: clean delete $(PROGRAM)
+all: $(MAIN_PROG) javac
 
-# Command to run the program
-run: clean $(PROGRAM)
-	$(PROGRAM) $(MAIN_ARGS)
+rebuild: clean all
 
-# Command to run the tests
-test: clean $(TEST_PROGRAM)
-	$(TEST_PROGRAM) $(TEST_ARGS)
+run:
+	$(MAIN_PROG) $(MAIN_ARGS)
 
-# Command to run the memory check on the program
-memorycheck: clean $(PROGRAM)
-	$(MEMORYCHECK_CMD) $(MAIN_ARGS)
+test: $(TEST_PROG)
+	$(TEST_PROG) $(TEST_ARGS)
 
-# Command to run the memory check on the tests
-memorychecktest: clean $(TEST_PROGRAM)
-	$(MEMORYCHECK_TEST_CMD) $(TEST_ARGS)
-
-# Command to compile the Java files
 javac:
-	@$(MKDIR_JAVA_BIN)
-	javac -d $(JAVA_BIN_DIR) $(JAVA_SOURCES)
+	$(call MKDIR,$(JAVA_BIN_DIR))
+	javac -d $(JAVA_BIN_DIR) $(JAVA_FILES)
 
-# Command to run the Java program
-run-java: javac
-	java -cp $(JAVA_BIN_DIR) $(JAVA_EXEC)
+run-java:
+	java -cp $(JAVA_BIN_DIR) src.$(JAVA_EXEC)
 
-# Command to clean the object files
 clean:
-	$(CLEAN_CMD)
+	$(call CLEAN_DIR, $(OBJ_DIR))
+	$(call CLEAN_DIR, $(BIN_DIR))
+	$(call CLEAN_DIR, $(JAVA_BIN_DIR))
 
-# Command to delete the program executable
 delete:
-	$(DELETE_CMD)
+	$(call DELETE_FILE, $(MAIN_PROG))
 
-# Command to clean all files
-cleanall:
-	$(CLEANALL_CMD)
+deletetest:
+	$(call DELETE_FILE, $(TEST_PROG))
 
-# Command to generate the documentation
+cleanall: clean
+
 doc:
 	doxygen Doxyfile
-
-# Command to display the help
-help:
-	@echo "Usage: make [command]"
-	@echo ""
-	@echo "Commands:"
-	@echo "  all              Compile the program"
-	@echo "  run              Run the program"
-	@echo "  test             Run the tests"
-	@echo "  memorycheck      Run the memory check on the program"
-	@echo "  memorychecktest  Run the memory check on the tests"
-	@echo "  javac            Compile the Java files"
-	@echo "  run-java         Run the Java program"
-	@echo "  clean            Clean the object files"
-	@echo "  delete           Delete the program executable"
-	@echo "  cleanall         Clean all files"
-	@echo "  docs             Generate the documentation"
-	@echo "  help             Display this help message"
