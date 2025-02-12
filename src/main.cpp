@@ -1,36 +1,34 @@
+#include <vector>
+#include <fstream>
 #include <iostream>
 
-#include "Client.h"
+#include "utils/Utils.h"
+
+#include "design_patterns/cor/ChargeurFormeCOR.h"
+#include "design_patterns/cor/ChargeurFormeCORCercle.h"
+#include "design_patterns/cor/ChargeurFormeCORSegment.h"
+#include "design_patterns/cor/ChargeurFormeCORTriangle.h"
+#include "design_patterns/cor/ChargeurFormeCORPolygone.h"
+
+#include "design_patterns/visiteur/VisiteurDessinerTCP.h"
+
+#include "graphique/Viewport.h"
+
+#include "formes/Groupe.h"
 
 int main(void)
 {
-	// // TEST tcp/ip
-	// Client& client = Client::getInstance();
+	string nomFichier = "data/tortue/faces.txt";
 
-	// client.connect_to_server();
+	ChargeurFormeCOR* chargeur = new ChargeurFormeCORCercle(new ChargeurFormeCORSegment(new ChargeurFormeCORTriangle(new ChargeurFormeCORPolygone(nullptr))));
+	vector<Forme*> formes = Utils::chargerFormes(nomFichier, chargeur);
 
-	// uint8_t continuer = 0;
+	Viewport viewport = Viewport(Vecteur2D(-5, -5), Vecteur2D(5, 5), 1000, 1000);
+	vector<Forme*> formesTransformees = Utils::transformerFormesVersEcran(viewport, formes);
+	Groupe* groupe = new Groupe(formesTransformees);
 
-	// do
-	// {
-	// 	// Send request
-	// 	char request[L];
-	// 	std::cout << "Ecrire votre requête ou \"quitter\" : ";
-	// 	std::cin.getline(request, L);
-	// 	continuer = strcmp(request, "quitter") != 0;
+	VisiteurDessinerTCP visiteur = VisiteurDessinerTCP(&viewport);
+	groupe->accepter(&visiteur);
 
-	// 	if (continuer)
-	// 	{
-	// 		client.send_request(request);
-
-	// 		// Receive request
-	// 		client.receive_request();
-	// 		std::cout << client.get_buffer() << "\n";
-	// 	}
-	// } while (continuer);
-
-	// client.shutdown_connection();
-	// std::cout << "Shutting down..." << std::endl;
-
-	// return EXIT_SUCCESS;
+	return 0;
 }

@@ -90,7 +90,7 @@ inline const Vecteur2D Vecteur2D::operator * (const Vecteur2D &u) const
 inline Vecteur2D::operator string() const
 {
 	ostringstream oss;
-	oss << "( " << x << ", " << y << ")";
+	oss << x << " " << y;
 	return oss.str();
 }
 
