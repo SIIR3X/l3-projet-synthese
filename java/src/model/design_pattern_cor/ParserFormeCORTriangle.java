@@ -33,6 +33,8 @@ public class ParserFormeCORTriangle extends ParserFormeCOR {
 			triangle.lineTo(scanner.nextDouble(), scanner.nextDouble());
 			triangle.lineTo(scanner.nextDouble(), scanner.nextDouble());
 
+			triangle.closePath();
+
 			return triangle;
 		} catch (Exception e) {
 			throw new RuntimeException(e);

@@ -32,9 +32,11 @@ public class ParserFormeCORPolygone extends ParserFormeCOR {
 			Path2D.Double polygone = new Path2D.Double();
 			polygone.moveTo(scanner.nextDouble(), scanner.nextDouble());
 
-			for (int i = 0; i < type; i++) {
+			for (int i = 1; i < type; i++) {
 				polygone.lineTo(scanner.nextDouble(), scanner.nextDouble());
 			}
+
+			polygone.closePath();
 
 			return polygone;
 		} catch (Exception e) {

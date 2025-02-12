@@ -32,7 +32,7 @@ public class Interlocuteur extends Thread {
 		System.out.println("Interlocuteur prêt pour le client n°"+ this.noClient);
 		Boolean premiere_ligne = true;
 
-		Pattern pattern = Pattern.compile("^(\\d+) (\\d+) ([0-5])	$");
+		Pattern pattern = Pattern.compile("^(\\d+) (\\d+) ([0-5])$");
 
 
 		while(!this.isInterrupted()) {
@@ -65,6 +65,7 @@ public class Interlocuteur extends Thread {
 					System.out.println("La forme n'a pas pu être reconnue");
 				}
 				controleur.ajouterForme(forme);
+				System.out.println("Forme ajoutée");
 			}
 		}
 		controleur.run();
