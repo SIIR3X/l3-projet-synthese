@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -68,6 +67,6 @@ public class Interlocuteur extends Thread {
 				controleur.ajouterForme(forme);
 			}
 		}
-		//controleur.afficherDessin();
+		controleur.run();
 	}
 }

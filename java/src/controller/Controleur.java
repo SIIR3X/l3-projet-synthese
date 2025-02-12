@@ -4,11 +4,9 @@ import src.model.design_pattern_cor.*;
 import src.view.Fenetre;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 public class Controleur {
 	private Fenetre fenetre;
-	private ArrayList<Shape> formesBuffer = new ArrayList<>();
 	private ParserFormeCOR Parser = null;
 
 	public Controleur() {}
@@ -26,11 +24,7 @@ public class Controleur {
 	}
 
 	public void ajouterForme (Shape s) {
-		this.formesBuffer.add(s);
-	}
-
-	public void majFormes () {
-		this.fenetre.setFormes(formesBuffer);
+		this.fenetre.ajouterForme(s);
 	}
 
 	public void run() {

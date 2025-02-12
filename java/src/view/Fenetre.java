@@ -24,48 +24,52 @@ public class Fenetre extends JFrame implements Runnable {
 	public Fenetre(int width, int height, int color) {
 		setTitle("Serveur de dessin");
 		setSize(width, height);
+		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBackground(Color.WHITE);
 		setIgnoreRepaint(true);
+		setVisible(true);
 		this.color = color;
-	}
-
-	public void afficher () {
-		try {
-			int numBuffers = 2;
-			createBufferStrategy(numBuffers);
-
-			Thread.sleep(150);
-
-			BufferStrategy strategie = getBufferStrategy();
-
-			Graphics graphics = strategie.getDrawGraphics();
-			setColor(graphics, color);
-
-			Graphics2D drawer = (Graphics2D)graphics;
-			for (Shape s : shapes) {
-				drawer.draw(s);
-			}
-
-			strategie.show();
-
-			graphics.dispose();
-			setVisible(true);
-		} catch (InterruptedException e) {
-			throw new RuntimeException(e);
-		}
 	}
 
 	public void setColor(Graphics g, int color) {
 		g.setColor((color >= 0 && color < COLORS.length) ? COLORS[color] : Color.BLACK);
 	}
 
-	public void setFormes(ArrayList<Shape> formes) {
-		this.shapes = formes;
+	public void ajouterForme(Shape forme) {
+		this.shapes.add(forme);
 	}
 
 	@Override
 	public void run() {
-		afficher();
+		try {
+			int numBuffers = 2;
+			createBufferStrategy(numBuffers);
+			Thread.sleep(150);
+			BufferStrategy strategie = getBufferStrategy();
+
+			while (true) {
+				Graphics graphics = strategie.getDrawGraphics();
+				graphics.clearRect(0, 0, getWidth(), getHeight()); // Efface l'ancien dessin
+				setColor(graphics, color);
+
+				Graphics2D drawer = (Graphics2D) graphics;
+				for (Shape s : shapes) {
+					drawer.draw(s);
+				}
+
+				strategie.show();
+				graphics.dispose();
+
+				try {
+					Thread.sleep(16); // Limite le framerate (~60 FPS)
+				} catch (InterruptedException e) {
+					Thread.currentThread().interrupt();
+					break;
+				}
+			}
+		} catch (InterruptedException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }
