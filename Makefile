@@ -19,9 +19,11 @@ TEST_ARGS =
 ################################ LIBRAIRIES ###############################
 ###########################################################################
 
-# Google Test
-GTEST_INCLUDE_DIR = "C:\Program Files\googletest\googletest\include"
-GTEST_LIB_DIR = "C:\Program Files\googletest\build\lib"
+# Winsock
+WINSOCK_LIB = -lws2_32
+
+# OpenGL
+OPENGL_LIB = lib/libglfw3dll.a -lopengl32
 
 
 ###########################################################################
@@ -40,7 +42,7 @@ TEST_EXEC = tests.exe
 
 # Compilateur
 CXX = g++
-CXXFLAGS = -Wall -Wextra -std=c++11 -I$(INC_DIR)
+CXXFLAGS = -Wall -Wextra -std=c++11 -I$(INC_DIR) -I$(OPENGL_INCLUDE_DIR)
 TEST_CXXFLAGS = -Wall -Wextra -std=c++14 -I$(INC_DIR) -I$(GTEST_INCLUDE_DIR)
 
 
@@ -49,8 +51,8 @@ TEST_CXXFLAGS = -Wall -Wextra -std=c++14 -I$(INC_DIR) -I$(GTEST_INCLUDE_DIR)
 ###########################################################################
 
 # Flags de compilation
-LDFLAGS = -lws2_32
-LDLIBS =
+LDFLAGS =
+LDLIBS = $(WINSOCK_LIB) $(OPENGL_LIB)
 TEST_LDFLAGS = $(LDFLAGS) -L$(GTEST_LIB_DIR) -lgtest -lgtest_main
 
 
@@ -69,6 +71,12 @@ TEST_DIR = tests
 JAVA_SRC_DIR = java/src
 JAVA_BIN_DIR = java/bin
 
+# Dossiers OpenGL
+OPENGL_INCLUDE_DIR = include/opengl
+
+# Dossiers Google Test
+GTEST_INCLUDE_DIR = "C:\Program Files\googletest\googletest\include"
+GTEST_LIB_DIR = "C:\Program Files\googletest\build\lib"
 
 ###########################################################################
 ################################ FONCTIONS ################################
@@ -118,13 +126,15 @@ TEST_PROG = $(BIN_DIR)/$(TEST_EXEC)
 OBJS = $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SRC_FILES))
 TEST_OBJS = $(patsubst $(TEST_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(TEST_FILES))
 
+# Objets C
+GLAD_OBJ = $(OBJ_DIR)/opengl/glad/glad.o
 
 ###########################################################################
 ############################### COMPILATION ###############################
 ###########################################################################
 
 # Edition des liens des fichiers objets
-$(MAIN_PROG): $(OBJS)
+$(MAIN_PROG): $(OBJS) $(GLAD_OBJ)
 	$(call MKDIR, $(BIN_DIR))
 	$(CXX) $(CXXFLAGS) -o $@ $^ $(LDFLAGS) $(LDLIBS)
 
@@ -143,6 +153,10 @@ $(OBJ_DIR)/%.o: $(TEST_DIR)/%.cpp
 	$(call MKDIR,$(dir $@))
 	$(CXX) $(TEST_CXXFLAGS) -c -o $@ $<
 
+# Compilation de glad
+$(GLAD_OBJ): $(SRC_DIR)/opengl/glad/glad.c
+	$(call MKDIR,$(dir $@))
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 ###########################################################################
 ################################ COMMANDES ################################
