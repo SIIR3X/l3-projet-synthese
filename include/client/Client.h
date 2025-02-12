@@ -4,6 +4,14 @@
 #include <string>
 #include <cstdint>
 
+
+/**
+ * @brief Classe permettant d'établir un client TCP/IP
+ * 
+ * Il est nécessaire d'appeler Client::getInstance pour créer un objet client
+ * 
+ * Port utilisé : 9119
+ */
 class Client
 {
 private:
@@ -13,6 +21,11 @@ private:
 	uint16_t server_port;
 	SOCKET sock;
 
+	/**
+	 * @brief Affiche une chaîne de caractère (ou pas) et quitte le programme avec le code 1
+	 * 
+	 * @param msg chaîne de caractère à afficher
+	 */
 	/*inline*/ void error(const char* msg)
 	{
 		if (msg)
@@ -23,17 +36,33 @@ private:
 		exit(EXIT_FAILURE);
 	}
 
+	/**
+	 * @brief Lance l'utilisation de la DLL Winsock par un processus.
+	 */
 	void init_WSA();
 
+	/**
+	 * @brief Créer un 'socket' avec les valeurs par defaut de `setup_connection`
+	 */
 	void create_socket();
 
+	/**
+	 * @brief Initialise des données membres pour `create_socket`.
+	 * 
+	 * Initialise une structure sockaddr nécessaire pour l'appel de la fonction winsock socket.
+	 * Pour le protocol TCP à l'adresse IP '127.0.0.1' et au port '9119'.
+	 */
 	void setup_connection();
 
+	/**
+	 * @brief Constructeur par défaut.
+	 */
 	Client(const char* address = "127.0.0.1", const uint16_t port = 9119);
 
 	~Client();
 
 	// Suppression du constructeur par copie et de l'assignement par l'opérateur =
+	// Afin d'assurer le DP Singleton
 	Client(const Client&) = delete;
 	Client& operator =(const Client&) = delete;
 public:
@@ -45,11 +74,13 @@ public:
 	void send_request(const char* src);
 
 	void shutdown_connection();
+
+	const uint16_t& get_port();
 };
 
-/*
-	PRIVATE METHODS
-*/
+/*****
+	METHODES PRIVÉES
+*****/
 
 void Client::init_WSA()
 {
@@ -66,7 +97,7 @@ void Client::create_socket()
 	{
 		const int socket_error_code = WSAGetLastError();
 		const char* socket_error_msg = "La création du socket a échoué, code d'erreur : ";
-		char socket_error_msg_code[55];
+		char socket_error_msg_code[50];
 		sprintf(socket_error_msg_code, "%s %d", socket_error_msg, socket_error_code);
 		error(socket_error_msg_code);
 	}
@@ -96,9 +127,10 @@ Client::~Client()
 	WSACleanup();
 }
 
-/*
-	PUBLIC METHODS
-*/
+/*****
+	METHODES PUBLIQUES
+*****/
+
 // Singleton (static)
 Client& Client::getInstance()
 {
@@ -158,4 +190,9 @@ inline void Client::shutdown_connection()
 	{
 		error("\nL'arrêt de la connexion a échoué !\n");
 	}
+}
+
+inline const uint16_t& Client::get_port()
+{
+	return server_port;
 }
