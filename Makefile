@@ -168,7 +168,7 @@ $(GLAD_OBJ): $(GLAD_FILE)
 ################################ COMMANDES ################################
 ###########################################################################
 
-.PHONY: all rebuild clean cleanall
+.PHONY: all rebuild run test javac run-java clean delete deletetest cleanall docs help
 
 all: $(MAIN_PROG) javac
 
@@ -200,5 +200,10 @@ deletetest:
 
 cleanall: clean
 
-doc:
+docs:
 	doxygen Doxyfile
+
+help:
+	@echo "Usage: make [all|rebuild|run|test|javac|run-java|clean|delete|deletetest|cleanall|docs]"
+
+###########################################################################
