@@ -1,3 +1,6 @@
+#ifndef CLIENT_H
+#define CLIENT_H
+
 #include <winsock2.h>
 #include <iostream>
 #include <cstdlib>
@@ -26,15 +29,7 @@ private:
 	 * 
 	 * @param msg chaîne de caractère à afficher
 	 */
-	/*inline*/ void error(const char* msg)
-	{
-		if (msg)
-		{
-			puts(msg);
-			// fflush(NULL);
-		}
-		exit(EXIT_FAILURE);
-	}
+	void error(const char* msg) const;
 
 	/**
 	 * @brief Lance l'utilisation de la DLL Winsock par un processus.
@@ -52,7 +47,7 @@ private:
 	 * Initialise une structure sockaddr nécessaire pour l'appel de la fonction winsock socket.
 	 * Pour le protocol TCP à l'adresse IP '127.0.0.1' et au port '9119'.
 	 */
-	void setup_connection();
+	inline void setup_connection();
 
 	/**
 	 * @brief Constructeur par défaut.
@@ -75,113 +70,8 @@ public:
 
 	void shutdown_connection();
 
-	const uint16_t& get_port();
+	const uint16_t& get_port() const;
 };
-
-/*****
-	METHODES PRIVÉES
-*****/
-
-void Client::init_WSA()
-{
-	int x;
-	if ((x = WSAStartup(MAKEWORD(0x02, 0x00), &wsadata)))
-	{
-		error("L'initialisation 'WSAStartup' a échoué.\n");
-	}
-}
-
-void Client::create_socket()
-{
-	if ((sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP)) == INVALID_SOCKET)
-	{
-		const int socket_error_code = WSAGetLastError();
-		const char* socket_error_msg = "La création du socket a échoué, code d'erreur : ";
-		char socket_error_msg_code[50];
-		sprintf(socket_error_msg_code, "%s %d", socket_error_msg, socket_error_code);
-		error(socket_error_msg_code);
-	}
-}
-
-inline void Client::setup_connection()
-{
-	sockaddr.sin_family = AF_INET;
-	sockaddr.sin_addr.s_addr = inet_addr(server_address);
-	sockaddr.sin_port = htons(server_port); // convertie l'octet dans l'ordre réseau
-}
-
-Client::Client(const char* address = "127.0.0.1", const uint16_t port = 9119)
-	: server_address(address), server_port(port), sock(INVALID_SOCKET)
-{
-	init_WSA();
-	create_socket();
-	setup_connection();
-}
-
-Client::~Client()
-{
-	if (sock != INVALID_SOCKET)
-	{
-		closesocket(sock);
-	}
-	WSACleanup();
-}
-
-/*****
-	METHODES PUBLIQUES
-*****/
-
-// Singleton (static)
-Client& Client::getInstance()
-{
-	// objet 'static' local : créée une seule fois
-	static Client instance;
-	return instance;
-}
-
-void Client::connect_to_server()
-{
-	int x;
-	if ((x = connect(sock, (SOCKADDR*)&sockaddr, sizeof(sockaddr))) == SOCKET_ERROR)
-	{
-		error("\nLa connexion a échoué !\n");
-	}
-}
-
-void Client::send_request(const char* src)
-{
-	if (!src)
-	{
-		error("\nLa requête a envoyé est vide !\n");
-	}
-
-	size_t src_len = strlen(src);
-	char* request = new char[src_len + 3]; // +2 pour '\r\n' , +1 pour '\0'
-	
-	if (strncpy_s(request, src_len + 3, src, src_len))
-	{
-		delete[] request;
-		error("\nLa copie de la requête dans le buffer local a échoué !\n");
-	}
-
-	// // assurer la terminaison null (pas necessaire car sizeof(dest) > sizeof(src))
-	// request[src_len] = '\0';
-
-	if (strcat_s(request, src_len + 3, "\r\n")) // terminaison standard pour serveur
-	{
-		delete[] request;
-		error("\nL'ajout de la terminaison null à la requête à échoué !\n");
-	}
-
-	int x;
-	size_t l = strlen(request);
-	if ((x = send(sock, request, l, 0)) == SOCKET_ERROR)
-	{
-		error("\nL'envoi de la requête a échoué !\n");
-	}
-
-	delete[] request;
-}
 
 inline void Client::shutdown_connection()
 {
@@ -192,7 +82,9 @@ inline void Client::shutdown_connection()
 	}
 }
 
-inline const uint16_t& Client::get_port()
+inline const uint16_t& Client::get_port() const
 {
 	return server_port;
 }
+
+#endif // CLIENT_H
