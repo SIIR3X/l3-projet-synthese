@@ -1,4 +1,6 @@
 #include "opengl/vue/FenetreOpenGL.h"
+#include <iostream>
+#include "opengl/controleur/ControleurFenetreOpenGL.h"
 
 bool FenetreOpenGL::initialiser()
 {
@@ -22,6 +24,21 @@ bool FenetreOpenGL::initialiser()
 
 	// On indique à GLFW que la fenêtre que l'on vient de créer est celle sur laquelle on va travailler
 	glfwMakeContextCurrent(_fenetre);
+	glClearColor(1.0f, 1.0f, 1.0f, 1.0f); // Fond blanc
+
+	glfwSetFramebufferSizeCallback(_fenetre, ControleurFenetreOpenGL::callback_taille);
+
+
+	// Dans votre fonction d'initialisation ou juste avant de dessiner
+	glViewport(0, 0, _largeur, _hauteur);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(0, _largeur, _hauteur, 0, -1, 1);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	
+
 
 	// Si on arrive ici, c'est que tout s'est bien passé
 	return true;

@@ -57,28 +57,6 @@ TEST_LDFLAGS = $(LDFLAGS) -L$(GTEST_LIB_DIR) -lgtest -lgtest_main
 
 
 ###########################################################################
-################################ DOSSIERS #################################
-###########################################################################
-
-# Dossiers C++
-SRC_DIR = src
-INC_DIR = include
-OBJ_DIR = obj
-BIN_DIR = bin
-TEST_DIR = tests
-
-# Dossiers Java
-JAVA_SRC_DIR = java/src
-JAVA_BIN_DIR = java/bin
-
-# Dossiers OpenGL
-OPENGL_INCLUDE_DIR = include/opengl
-
-# Dossiers Google Test
-GTEST_INCLUDE_DIR = "C:\Program Files\googletest\googletest\include"
-GTEST_LIB_DIR = "C:\Program Files\googletest\build\lib"
-
-###########################################################################
 ################################ FONCTIONS ################################
 ###########################################################################
 
@@ -102,6 +80,31 @@ define DELETE_FILE
 @if exist "$(subst /,\,$(patsubst %/,%,$(1)))" (del /q "$(subst /,\,$(patsubst %/,%,$(1)))")
 endef
 
+
+###########################################################################
+################################ DOSSIERS #################################
+###########################################################################
+
+# Dossiers C++
+SRC_DIR = src
+INC_DIR = include
+OBJ_DIR = obj
+BIN_DIR = bin
+TEST_DIR = tests
+
+# Dossiers Java
+JAVA_SRC_DIR = java/src
+JAVA_BIN_DIR = java/bin
+
+# Dossiers OpenGL
+OPENGL_INCLUDE_DIR = include/opengl/modele
+OPENGL_SRC_DIR = src/opengl/modele
+
+# Dossiers Google Test
+GTEST_INCLUDE_DIR = "C:\Program Files\googletest\googletest\include"
+GTEST_LIB_DIR = "C:\Program Files\googletest\build\lib"
+
+
 ###########################################################################
 ################################ FICHIERS #################################
 ###########################################################################
@@ -112,6 +115,9 @@ TEST_FILES := $(call rwildcard,$(TEST_DIR)/,*.cpp)
 
 # Fichiers Java
 JAVA_FILES := $(call rwildcard,$(JAVA_SRC_DIR)/,*.java)
+
+# Fichiers C
+GLAD_FILE = $(OPENGL_SRC_DIR)/glad/glad.c
 
 # Chemins vers les exécutables
 MAIN_PROG = $(BIN_DIR)/$(MAIN_EXEC)
@@ -127,7 +133,7 @@ OBJS = $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SRC_FILES))
 TEST_OBJS = $(patsubst $(TEST_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(TEST_FILES))
 
 # Objets C
-GLAD_OBJ = $(OBJ_DIR)/opengl/glad/glad.o
+GLAD_OBJ = $(OBJ_DIR)/opengl/modele/glad/glad.o
 
 ###########################################################################
 ############################### COMPILATION ###############################
@@ -154,7 +160,7 @@ $(OBJ_DIR)/%.o: $(TEST_DIR)/%.cpp
 	$(CXX) $(TEST_CXXFLAGS) -c -o $@ $<
 
 # Compilation de glad
-$(GLAD_OBJ): $(SRC_DIR)/opengl/glad/glad.c
+$(GLAD_OBJ): $(GLAD_FILE)
 	$(call MKDIR,$(dir $@))
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 

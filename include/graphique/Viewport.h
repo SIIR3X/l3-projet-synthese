@@ -23,6 +23,8 @@ private:
 	double _echelleY; /**< Échelle en Y. */
 	double _facteurZoom; /**< Facteur de zoom. */
 
+	void calculerEchelles();
+
 public:
 	/**
 	 * @brief Constructeur de la classe Viewport.
@@ -48,6 +50,13 @@ public:
 
 	int hauteurEcran() const { return _hauteurEcran; }
 
+	void setDimensionsEcran(int largeur, int hauteur)
+	{
+		_largeurEcran = largeur;
+		_hauteurEcran = hauteur;
+		calculerEchelles();
+	}
+
 	Vecteur2D centreMonde() const { return _centreMonde; }
 
 	Vecteur2D centreEcran() const { return Vecteur2D(_largeurEcran / 2, _hauteurEcran / 2); }
@@ -66,6 +75,22 @@ public:
 	}
 }; // class Viewport
 
+inline void Viewport::calculerEchelles()
+{
+	// On commence par calculer le centre du monde
+	double centre = (_coinMin.x + _coinMax.y) / 2;
+
+	// On créé un vecteur 2D qui représente le centre du monde
+	_centreMonde = Vecteur2D(centre, centre);
+
+	// On calcule les échelles en X et en Y
+	_echelleX = _largeurEcran / (_coinMax.x - _coinMin.x);
+	_echelleY = _hauteurEcran / (_coinMax.y - _coinMin.y);
+
+	// On prend le minimum des deux échelles pour le facteur de zoom
+	_facteurZoom = min(_echelleX, _echelleY);
+}
+
 inline Viewport::Viewport(const Vecteur2D& coinMin, const Vecteur2D& coinMax, int largeurEcran, int hauteurEcran)
 	: _coinMin(coinMin), _coinMax(coinMax), _largeurEcran(largeurEcran), _hauteurEcran(hauteurEcran)
 {
@@ -77,18 +102,7 @@ inline Viewport::Viewport(const Vecteur2D& coinMin, const Vecteur2D& coinMax, in
 	if (largeurEcran <= 0 || hauteurEcran <= 0)
 		throw invalid_argument("Les dimensions de l'écran ne sont pas valides.");
 
-	// On commence par calculer le centre du monde
-	double centre = (coinMin.x + coinMax.y) / 2;
-
-	// On créé un vecteur 2D qui représente le centre du monde
-	_centreMonde = Vecteur2D(centre, centre);
-
-	// On calcule les échelles en X et en Y
-	_echelleX = _largeurEcran / (_coinMax.x - _coinMin.x);
-	_echelleY = _hauteurEcran / (_coinMax.y - _coinMin.y);
-
-	// On prend le minimum des deux échelles pour le facteur de zoom
-	_facteurZoom = min(_echelleX, _echelleY);
+	calculerEchelles();
 }
 
 inline Forme* Viewport::formeVersEcran(const Forme& forme) const

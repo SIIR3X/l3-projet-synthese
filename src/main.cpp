@@ -18,6 +18,9 @@
 
 #include "formes/Groupe.h"
 
+#include "opengl/vue/FenetreOpenGL.h"
+#include "opengl/controleur/ControleurFenetreOpenGL.h"
+
 int main(void)
 {
 	string nomFichier = "data/serpent/faces.txt";
@@ -26,18 +29,39 @@ int main(void)
 	vector<Forme*> formes = Utils::chargerFormes(nomFichier, chargeur);
 
 	Viewport viewport = Viewport(Vecteur2D(-5, -5), Vecteur2D(5, 5), 1000, 1000);
-	vector<Forme*> formesTransformees = Utils::transformerFormesVersEcran(formes, viewport);
-	Groupe* groupe = new Groupe(formesTransformees);
+	//vector<Forme*> formesTransformees = Utils::transformerFormesVersEcran(formes, viewport);
+	Groupe* groupe = new Groupe(formes);
 
-	Utils::centrerGroupe(groupe, viewport.centreEcran());
+	//Utils::centrerGroupe(groupe, viewport.centreEcran());
 
 	//cout << *groupe << endl;
 
-	VisiteurSauvegarderTXT v = VisiteurSauvegarderTXT("data/tortue/faces_sauvegarde.txt");
-	groupe->accepter(&v);
+	ControleurFenetreOpenGL controleur = ControleurFenetreOpenGL(*groupe, &viewport);
+	controleur.initialiserFenetre(1000, 1000, "OpenGL");
+	controleur.setGroupeFenetre();
+	controleur.runFenetre();
 
-	VisiteurDessinerTCP visiteur = VisiteurDessinerTCP(&viewport);
-	groupe->accepter(&visiteur);
+	// FenetreOpenGL fenetre = FenetreOpenGL(1000, 1000, "OpenGL");
+	// fenetre.setGroupe(groupe);
+	// fenetre.initialiser();
+	// fenetre.run();
+
+
+
+	// cout << *groupe << endl;
+
+	// ControleurFenetreOpenGL controleur = ControleurFenetreOpenGL();
+	// controleur.initialiserFenetre(1000, 1000, "OpenGL");
+	// controleur.setGroupeFenetre(groupe);
+	// controleur.runFenetre();
+
+	//cout << *groupe << endl;
+
+	// VisiteurSauvegarderTXT v = VisiteurSauvegarderTXT("data/tortue/faces_sauvegarde.txt");
+	// groupe->accepter(&v);
+
+	// VisiteurDessinerTCP visiteur = VisiteurDessinerTCP(&viewport);
+	// groupe->accepter(&visiteur);
 
 	return 0;
 }
