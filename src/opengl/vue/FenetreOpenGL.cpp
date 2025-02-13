@@ -1,8 +1,8 @@
 #include "opengl/vue/FenetreOpenGL.h"
-#include <iostream>
 #include "opengl/controleur/ControleurFenetreOpenGL.h"
+#include <iostream>
 
-bool FenetreOpenGL::initialiser()
+bool FenetreOpenGL::initialiser(int largeur, int hauteur)
 {
 	// On commence par initialiser GLFW (Graphics Library Framework, la bibliothèque qui gère les fenêtres et les contextes OpenGL)
 	if (!glfwInit())
@@ -12,7 +12,7 @@ bool FenetreOpenGL::initialiser()
 	}
 
 	// On crée ensuite une fenêtre
-	_fenetre = glfwCreateWindow(_largeur, _hauteur, _titre.c_str(), nullptr, nullptr);
+	_fenetre = glfwCreateWindow(largeur, hauteur, _titre.c_str(), nullptr, nullptr);
 
 	// Si la fenêtre n'a pas pu être créée, on arrête tout
 	if (!_fenetre)
@@ -24,21 +24,15 @@ bool FenetreOpenGL::initialiser()
 
 	// On indique à GLFW que la fenêtre que l'on vient de créer est celle sur laquelle on va travailler
 	glfwMakeContextCurrent(_fenetre);
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f); // Fond blanc
 
+	// On défini la couleur de fond de la fenêtre OpenGL (blanc)
+	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+
+	// On indique à GLFW que l'on veut appeler la fonction callback_taille lorsque la fenêtre est redimensionnée (une sorte de "listener" en Java)
 	glfwSetFramebufferSizeCallback(_fenetre, ControleurFenetreOpenGL::callback_taille);
 
-
-	// Dans votre fonction d'initialisation ou juste avant de dessiner
-	glViewport(0, 0, _largeur, _hauteur);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrtho(0, _largeur, _hauteur, 0, -1, 1);
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-
-	
-
+	// On défini les paramètres OpenGL
+	definirParametresOpenGL(largeur, hauteur);
 
 	// Si on arrive ici, c'est que tout s'est bien passé
 	return true;

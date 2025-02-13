@@ -3,13 +3,8 @@
 
 #include "design_patterns/visiteur/VisiteurForme.h"
 
-class FenetreOpenGL;
-
 class VisiteurDessinerOpenGL : public VisiteurForme
 {
-private:
-	FenetreOpenGL* _fenetre;
-
 public:
 	virtual void visiter(Cercle* c) override;
 	virtual void visiter(Segment* s) override;

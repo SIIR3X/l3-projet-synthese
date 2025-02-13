@@ -30,7 +30,7 @@ int main(void)
 
 	Viewport viewport = Viewport(Vecteur2D(-5, -5), Vecteur2D(5, 5), 1000, 1000);
 	//vector<Forme*> formesTransformees = Utils::transformerFormesVersEcran(formes, viewport);
-	Groupe* groupe = new Groupe(formes);
+	Groupe* groupe = new Groupe(formes, Couleur::CYAN);
 
 	//Utils::centrerGroupe(groupe, viewport.centreEcran());
 

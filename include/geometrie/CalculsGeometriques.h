@@ -1,13 +1,6 @@
 #ifndef CALCULS_GEOMETRIQUES_H
 #define CALCULS_GEOMETRIQUES_H
 
-#include <vector>
-
-using namespace std;
-
-class Forme;
-class Vecteur2D;
-
 /**
  * @brief Classe contenant des méthodes de calculs géométriques.
  */

@@ -24,8 +24,7 @@ public:
 	 * @param formes Les formes du groupe.
 	 * @param couleur La couleur du groupe.
 	 */
-	Groupe(const vector<Forme*>& formes, Couleur couleur = COULEUR_PAR_DEFAUT)
-		: Forme(couleur), _formes(formes) {}
+	Groupe(const vector<Forme*>& formes, Couleur couleur = COULEUR_PAR_DEFAUT);
 
 	/**
 	 * @brief Constructeur par copie de la classe Groupe.
@@ -77,6 +76,13 @@ public:
 
 	void accepter(VisiteurForme* visiteur) override { visiteur->visiter(this); }
 }; // class Groupe
+
+inline Groupe::Groupe(const vector<Forme*>& formes, Couleur couleur)
+	: Forme(couleur), _formes(formes)
+{
+	for (Forme* forme : _formes)
+		forme->setGroupe(this);
+}
 
 inline Groupe::Groupe(const Groupe& groupe)
 	: Forme(groupe)

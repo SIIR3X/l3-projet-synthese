@@ -23,6 +23,9 @@ private:
 	double _echelleY; /**< Échelle en Y. */
 	double _facteurZoom; /**< Facteur de zoom. */
 
+	/**
+	 * @brief Calcule les échelles en X et en Y ainsi que le facteur de zoom.
+	 */
 	void calculerEchelles();
 
 public:
@@ -50,12 +53,7 @@ public:
 
 	int hauteurEcran() const { return _hauteurEcran; }
 
-	void setDimensionsEcran(int largeur, int hauteur)
-	{
-		_largeurEcran = largeur;
-		_hauteurEcran = hauteur;
-		calculerEchelles();
-	}
+	void setDimensionsEcran(int largeur, int hauteur);
 
 	Vecteur2D centreMonde() const { return _centreMonde; }
 
@@ -102,6 +100,7 @@ inline Viewport::Viewport(const Vecteur2D& coinMin, const Vecteur2D& coinMax, in
 	if (largeurEcran <= 0 || hauteurEcran <= 0)
 		throw invalid_argument("Les dimensions de l'écran ne sont pas valides.");
 
+	// On calcule ensuite les échelles
 	calculerEchelles();
 }
 
@@ -120,6 +119,20 @@ inline Forme* Viewport::formeVersEcran(const Forme& forme) const
 	copie->translation(Vecteur2D(_largeurEcran / 2, _hauteurEcran / 2));
 
 	return copie;
+}
+
+inline void Viewport::setDimensionsEcran(int largeur, int hauteur)
+{
+	// Si les dimensions de l'écran ne sont pas valides, on lance une exception
+	if (largeur <= 0 || hauteur <= 0)
+		throw invalid_argument("Les dimensions de l'écran ne sont pas valides.");
+
+	// On met à jour les dimensions de l'écran
+	_largeurEcran = largeur;
+	_hauteurEcran = hauteur;
+
+	// On recalcule ensuite les échelles
+	calculerEchelles();
 }
 
 inline Viewport::operator string() const

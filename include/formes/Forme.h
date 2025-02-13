@@ -105,7 +105,7 @@ public:
 
 	Groupe* groupe() const { return _groupe; }
 
-	void setGroupe(Groupe* groupe) { _groupe = groupe; }
+	void setGroupe(Groupe* groupe);
 
 	Couleur couleur() const { return _couleur; }
 
