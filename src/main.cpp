@@ -64,7 +64,7 @@ int main(int argc, char* argv[])
 	vector<Forme*> formes = Utils::chargerFormes(nomFichier, chargeur);
 
 	// On crée un viewport
-	Viewport viewport = Viewport(Vecteur2D(-5, -5), Vecteur2D(5, 5), largeur, hauteur);
+	Viewport viewport = Viewport(Vecteur2D(-4, -4), Vecteur2D(4, 4), largeur, hauteur);
 
 	if (mode == 0)
 		opengl(formes, viewport);
