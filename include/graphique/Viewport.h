@@ -124,7 +124,7 @@ inline Forme* Viewport::formeVersEcran(const Forme& forme) const
 inline void Viewport::setDimensionsEcran(int largeur, int hauteur)
 {
 	// Si les dimensions de l'écran ne sont pas valides, on lance une exception
-	if (largeur <= 0 || hauteur <= 0)
+	if (largeur < 0 || hauteur < 0)
 		throw invalid_argument("Les dimensions de l'écran ne sont pas valides.");
 
 	// On met à jour les dimensions de l'écran

@@ -134,7 +134,7 @@ inline Vecteur2D Polygone::calculerCentre() const
 inline const Vecteur2D& Polygone::point(size_t index) const
 {
 	// Si l'index est hors limites, on lance une exception
-	if (index >= _points.size())
+	if (index >= nbPoints())
 		throw std::out_of_range("Index hors limites.");
 
 	return _points[index];
@@ -157,7 +157,7 @@ inline void Polygone::ajouterPoint(const Vecteur2D& point)
 inline void Polygone::retirerPoint(size_t index)
 {
 	// Si l'index est hors limites, on lance une exception
-	if (index >= _points.size())
+	if (index >= nbPoints())
 		throw std::out_of_range("Index hors limites.");
 
 	// On retire le point du polygone

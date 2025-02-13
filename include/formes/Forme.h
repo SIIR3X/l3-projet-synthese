@@ -109,6 +109,8 @@ public:
 
 	Couleur couleur() const { return _couleur; }
 
+	void setCouleur(Couleur couleur) { _couleur = couleur; }
+
 	virtual operator string() const = 0;
 
 	friend ostream& operator<<(ostream& os, const Forme& forme)

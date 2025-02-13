@@ -47,11 +47,7 @@ public:
 	 * @brief Destructeur de la classe VisiteurSauvegarderTXT.
 	 * Ferme le fichier si ce n'est pas déjà fait.
 	 */
-	virtual ~VisiteurSauvegarderTXT() override
-	{
-		// On ferme le fichier si ce n'est pas déjà fait
-		fermerFichier();
-	}
+	virtual ~VisiteurSauvegarderTXT() { fermerFichier(); }
 
 	void setNomFichier (const string& nomFichier) { _nomFichier = nomFichier; }
 

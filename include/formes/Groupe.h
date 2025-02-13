@@ -5,8 +5,8 @@
 #include <string>
 #include <vector>
 #include <ostream>
-#include <stdexcept>
 #include <algorithm>
+#include <stdexcept>
 
 using namespace std;
 
@@ -88,7 +88,10 @@ inline Groupe::Groupe(const Groupe& groupe)
 	: Forme(groupe)
 {
 	for (Forme* forme : groupe._formes)
+	{
 		_formes.push_back(forme->clone());
+		_formes.back()->setGroupe(this);
+	}
 }
 
 inline Groupe::~Groupe()
@@ -133,7 +136,7 @@ inline void Groupe::bornes(Vecteur2D& pmin, Vecteur2D& pmax) const
 	_formes[0]->bornes(pmin, pmax);
 
 	// On parcours ensuite les autres formes du groupe
-	for (size_t i = 1; i < _formes.size(); ++i)
+	for (size_t i = 1; i < nbFormes(); ++i)
 	{
 		// On récupère ensuite les bornes minimales et maximales de la forme courante
 		Vecteur2D pminForme, pmaxForme;
@@ -161,7 +164,7 @@ inline Vecteur2D Groupe::calculerCentre() const
 inline const Forme* Groupe::forme(size_t index) const
 {
 	// Si l'index est hors limites, on lance une exception
-	if (index >= _formes.size())
+	if (index >= nbFormes())
 		throw out_of_range("Index hors limites.");
 
 	return _formes[index];
@@ -169,21 +172,19 @@ inline const Forme* Groupe::forme(size_t index) const
 
 inline void Groupe::ajouterForme(Forme& forme)
 {
-	// Si la forme appartient déjà à un groupe, on lance une exception
+	// Si la forme est déjà dans un groupe, on lance une exception
 	if (forme.groupe() != nullptr)
-		throw invalid_argument("La forme appartient déjà à un groupe.");
+		throw invalid_argument("La forme est déjà dans un groupe.");
 
-	// On met à jour le groupe de la forme
+	// On ajoute la forme au vecteur et on met à jour son groupe et sa couleur
+	_formes.push_back(&forme);
 	forme.setGroupe(this);
-
-	// Puis on ajoute la forme au vecteur
-	_formes.push_back(forme.clone());
 }
 
 inline void Groupe::retirerForme(size_t index)
 {
 	// Si l'index est hors limites, on lance une exception
-	if (index >= _formes.size())
+	if (index >= nbFormes())
 		throw out_of_range("Index hors limites.");
 	
 	// On supprime la forme à l'index donné

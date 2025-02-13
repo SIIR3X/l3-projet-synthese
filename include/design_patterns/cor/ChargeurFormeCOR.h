@@ -2,7 +2,6 @@
 #define CHARTEUR_FORME_COR_H
 
 #include "design_patterns/cor/ChargeurForme.h"
-#include <sstream>
 
 /**
  * @brief Classe abstraite ChargeurFormeCOR permettant de charger une forme à partir d'une chaîne de caractères.

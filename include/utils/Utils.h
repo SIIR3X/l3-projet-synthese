@@ -6,7 +6,6 @@
 #include "design_patterns/visiteur/VisiteurForme.h"
 #include "graphique/Viewport.h"
 #include <vector>
-#include <ostream>
 
 using namespace std;
 

@@ -1,67 +1,75 @@
-#include <vector>
-#include <fstream>
-#include <iostream>
-
 #include "utils/Utils.h"
-
+#include "formes/Groupe.h"
+#include "graphique/Viewport.h"
+#include "opengl/vue/FenetreOpenGL.h"
+#include "opengl/controleur/ControleurFenetreOpenGL.h"
 #include "design_patterns/cor/ChargeurFormeCOR.h"
 #include "design_patterns/cor/ChargeurFormeCORCercle.h"
 #include "design_patterns/cor/ChargeurFormeCORSegment.h"
 #include "design_patterns/cor/ChargeurFormeCORTriangle.h"
 #include "design_patterns/cor/ChargeurFormeCORPolygone.h"
-
 #include "design_patterns/visiteur/VisiteurDessinerTCP.h"
-
-#include "design_patterns/visiteur/VisiteurSauvegarderTXT.h"
-
-#include "graphique/Viewport.h"
-
-#include "formes/Groupe.h"
-
-#include "opengl/vue/FenetreOpenGL.h"
 #include "opengl/controleur/ControleurFenetreOpenGL.h"
 
-int main(void)
+void java(const vector<Forme*>& formes, Viewport& viewport)
 {
-	string nomFichier = "data/serpent/faces.txt";
+	VisiteurDessinerTCP visiteur = VisiteurDessinerTCP(&viewport);
 
-	ChargeurFormeCOR* chargeur = new ChargeurFormeCORCercle(new ChargeurFormeCORSegment(new ChargeurFormeCORTriangle(new ChargeurFormeCORPolygone(nullptr))));
-	vector<Forme*> formes = Utils::chargerFormes(nomFichier, chargeur);
+	// On crée un groupe avec les formes transformées
+	Groupe* groupe = new Groupe(Utils::transformerFormesVersEcran(formes, viewport), Couleur::RED);
 
-	Viewport viewport = Viewport(Vecteur2D(-5, -5), Vecteur2D(5, 5), 1000, 1000);
-	//vector<Forme*> formesTransformees = Utils::transformerFormesVersEcran(formes, viewport);
-	Groupe* groupe = new Groupe(formes, Couleur::CYAN);
+	// On dessine les formes
+	groupe->accepter(&visiteur);
 
-	//Utils::centrerGroupe(groupe, viewport.centreEcran());
+	delete groupe;
+}
 
-	//cout << *groupe << endl;
+void opengl(const vector<Forme*>& formes, Viewport& viewport)
+{
+	VisiteurDessinerOpenGL visiteur = VisiteurDessinerOpenGL();
 
+	// On crée un groupe avec les formes NON transformées (la classe ControleurFenetreOpenGL s'en charge)
+	Groupe* groupe = new Groupe(formes, Couleur::RED);
+
+	// On crée le controleur de la fenêtre OpenGL
 	ControleurFenetreOpenGL controleur = ControleurFenetreOpenGL(*groupe, &viewport);
-	controleur.initialiserFenetre(1000, 1000, "OpenGL");
+	controleur.initialiserFenetre(viewport.largeurEcran(), viewport.hauteurEcran(), "OpenGL");
 	controleur.setGroupeFenetre();
 	controleur.runFenetre();
 
-	// FenetreOpenGL fenetre = FenetreOpenGL(1000, 1000, "OpenGL");
-	// fenetre.setGroupe(groupe);
-	// fenetre.initialiser();
-	// fenetre.run();
+	delete groupe;
+}
 
+int main(int argc, char* argv[])
+{
+	if (argc != 5)
+	{
+		cerr << "Usage: " << argv[0] << " <largeur> <hauteur> <nom_fichier> <mode>" << endl;
+		return 1;
+	}
 
+	const int largeur = stoi(argv[1]);
+	const int hauteur = stoi(argv[2]);
+	const string nomFichier = argv[3];
+	const int mode = stoi(argv[4]);
 
-	// cout << *groupe << endl;
+	if (mode != 0 && mode != 1)
+	{
+		cerr << "Le mode doit être 0 ou 1." << endl;
+		return 1;
+	}
 
-	// ControleurFenetreOpenGL controleur = ControleurFenetreOpenGL();
-	// controleur.initialiserFenetre(1000, 1000, "OpenGL");
-	// controleur.setGroupeFenetre(groupe);
-	// controleur.runFenetre();
+	// On charge les formes
+	ChargeurFormeCOR* chargeur = new ChargeurFormeCORPolygone(new ChargeurFormeCORTriangle(new ChargeurFormeCORSegment(new ChargeurFormeCORCercle(nullptr))));
+	vector<Forme*> formes = Utils::chargerFormes(nomFichier, chargeur);
 
-	//cout << *groupe << endl;
+	// On crée un viewport
+	Viewport viewport = Viewport(Vecteur2D(-5, -5), Vecteur2D(5, 5), largeur, hauteur);
 
-	// VisiteurSauvegarderTXT v = VisiteurSauvegarderTXT("data/tortue/faces_sauvegarde.txt");
-	// groupe->accepter(&v);
-
-	// VisiteurDessinerTCP visiteur = VisiteurDessinerTCP(&viewport);
-	// groupe->accepter(&visiteur);
+	if (mode == 0)
+		opengl(formes, viewport);
+	else
+		java(formes, viewport);
 
 	return 0;
 }

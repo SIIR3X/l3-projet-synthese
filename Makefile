@@ -11,7 +11,7 @@
 ###########################################################################
 
 # Arguments pour l'exécution du programme
-MAIN_ARGS = 
+MAIN_ARGS = 800 600 data/serpent/faces.txt 0
 TEST_ARGS =
 
 
