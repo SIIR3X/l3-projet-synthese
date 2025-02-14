@@ -12,4 +12,4 @@ public:
 	Forme* chargerTXT(const char* ligne) const override;
 }; // class ChargeurFormeCORCercle
 
-#endif // CHARTEUR_FORME_COR_CERCLE_H
+#endif // CHARGEUR_FORME_COR_CERCLE_H

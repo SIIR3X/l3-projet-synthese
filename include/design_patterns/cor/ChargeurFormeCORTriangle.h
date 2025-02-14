@@ -12,4 +12,4 @@ public:
 	Forme* chargerTXT(const char* ligne) const override;
 }; // class ChargeurFormeCORTriangle
 
-#endif // CHARTEUR_FORME_COR_TRIANGLE_H
+#endif // CHARGEUR_FORME_COR_TRIANGLE_H

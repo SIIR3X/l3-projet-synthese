@@ -12,4 +12,4 @@ public:
 	Forme* chargerTXT(const char* ligne) const override;
 }; // class ChargeurFormeCORPolygone
 
-#endif // CHARTEUR_FORME_COR_POLYGONE_H
+#endif // CHARGEUR_FORME_COR_POLYGONE_H

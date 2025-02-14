@@ -73,4 +73,4 @@ inline int ChargeurFormeCOR::recupererNbPoints(char*& ligne) const
 	return nbPoints;
 }
 
-#endif // CHARTEUR_FORME_COR_H
+#endif // CHARGEUR_FORME_COR_H
