@@ -29,7 +29,7 @@ void opengl(const vector<Forme*>& formes, Viewport& viewport)
 	VisiteurDessinerOpenGL visiteur = VisiteurDessinerOpenGL();
 
 	// On crée un groupe avec les formes NON transformées (la classe ControleurFenetreOpenGL s'en charge)
-	Groupe* groupe = new Groupe(formes, Couleur::RED);
+	Groupe* groupe = new Groupe(formes, Couleur::BLUE);
 
 	// On crée le controleur de la fenêtre OpenGL
 	ControleurFenetreOpenGL controleur = ControleurFenetreOpenGL(*groupe, &viewport);
