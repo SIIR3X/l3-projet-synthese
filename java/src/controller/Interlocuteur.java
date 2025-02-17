@@ -1,5 +1,6 @@
 package src.controller;
 
+import javax.swing.*;
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -48,11 +49,7 @@ public class Interlocuteur extends Thread {
 			}
 			
 			if (requete == null) {
-				controleur.run();
 				System.out.println("Le client n°" + noClient + " s'est déconnecté.");
-				while (!controleur.getFenetre().getDessinFini()) {
-
-				}
 				break;
 			}
 
@@ -81,5 +78,14 @@ public class Interlocuteur extends Thread {
 				System.out.println("Forme ajoutée");
 			}
 		}
+		// Utilisation de SwingWorker pour exécuter `controleur.run()` de manière asynchrone
+		SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+			@Override
+			protected Void doInBackground() throws Exception {
+				controleur.run();
+				return null;
+			}
+		};
+		worker.execute();  // Exécuter l'action longue en arrière-plan
 	}
 }
