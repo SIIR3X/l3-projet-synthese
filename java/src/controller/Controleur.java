@@ -15,6 +15,10 @@ public class Controleur {
 		fenetre = new Fenetre(width, height, color);
 	}
 
+	public ParserFormeCOR getParser () {
+		return Parser;
+	}
+
 	public Shape ParsingProcess (String line) {
 		this.Parser = new ParserFormeCORPolygone(this.Parser);
 		this.Parser = new ParserFormeCORTriangle(this.Parser);

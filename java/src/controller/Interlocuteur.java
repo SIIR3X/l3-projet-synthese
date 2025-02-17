@@ -44,7 +44,8 @@ public class Interlocuteur extends Thread {
 				e.printStackTrace();
 			}
 			
-			if (requete == null) {
+			if (requete == null && controleur.getParser() != null) {
+				controleur.run();
 				System.out.println("Le client n°" + noClient + " s'est déconnecté.");
 				break;
 			}
@@ -74,6 +75,5 @@ public class Interlocuteur extends Thread {
 				System.out.println("Forme ajoutée");
 			}
 		}
-		controleur.run();
 	}
 }
