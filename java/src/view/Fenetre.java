@@ -23,7 +23,7 @@ public class Fenetre extends JFrame implements Runnable {
 		setTitle("Serveur de dessin");
 		setSize(width, height);
 		setLocationRelativeTo(null);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBackground(Color.WHITE);
 		setIgnoreRepaint(true);
 		setVisible(true);
