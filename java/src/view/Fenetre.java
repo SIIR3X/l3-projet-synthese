@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Fenetre extends JFrame implements Runnable {
 	private ArrayList<Shape> shapes = new ArrayList<>();
-
+	private boolean dessinFini = false;
 	private int width, height, color;
 
 	private static final Color[] COLORS = {
@@ -28,6 +28,10 @@ public class Fenetre extends JFrame implements Runnable {
 		setIgnoreRepaint(true);
 		setVisible(true);
 		this.color = color;
+	}
+
+	public boolean getDessinFini() {
+		return dessinFini;
 	}
 
 	public void setColor(Graphics g, int color) {
@@ -83,6 +87,7 @@ public class Fenetre extends JFrame implements Runnable {
 					break;
 				}
 			}
+			dessinFini = true;
 		} catch (InterruptedException e) {
 			throw new RuntimeException(e);
 		}

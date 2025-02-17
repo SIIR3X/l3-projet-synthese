@@ -15,6 +15,10 @@ public class Controleur {
 		fenetre = new Fenetre(width, height, color);
 	}
 
+	public Fenetre getFenetre() {
+		return fenetre;
+	}
+
 	public ParserFormeCOR getParser () {
 		return Parser;
 	}

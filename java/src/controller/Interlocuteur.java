@@ -27,6 +27,9 @@ public class Interlocuteur extends Thread {
 		this.noClient = noClient;
 	}
 
+	/**
+	 *
+	 */
 	@Override
 	public void run() {
 		System.out.println("Interlocuteur prêt pour le client n°"+ this.noClient);
@@ -44,34 +47,37 @@ public class Interlocuteur extends Thread {
 				e.printStackTrace();
 			}
 			
-			if (requete == null && controleur.getParser() != null) {
+			if (requete == null) {
 				controleur.run();
 				System.out.println("Le client n°" + noClient + " s'est déconnecté.");
+				while (!controleur.getFenetre().getDessinFini()) {
+
+				}
 				break;
 			}
 
 			System.out.println("le client n°"+ noClient + " a envoyé " + requete);
 
-			//Gestion de la lecture et du COR
+			// Gestion de la lecture et du COR
 
-			if (premiere_ligne) {
+			if (premiere_ligne) { // La première ligne correspond aux paramètres utiles pour le dessin
 				Matcher matcher = pattern.matcher(requete);
 				if (!matcher.matches()) {
 					System.out.println("Format invalide pour la première ligne : " + requete);
 					break;
 				}
-				int width = Integer.parseInt(matcher.group(1));
-				int height = Integer.parseInt(matcher.group(2));
-				int color = Integer.parseInt(matcher.group(3));
-				controleur.setFenetre(width, height, color);
+				int width = Integer.parseInt(matcher.group(1)); // On récupère la largeur de la fenêtre
+				int height = Integer.parseInt(matcher.group(2)); // On récupère la hauteur de la fenêtre
+				int color = Integer.parseInt(matcher.group(3)); // On récupère la couleur du dessin
+				controleur.setFenetre(width, height, color); // On initialise la fenêtre
 				premiere_ligne = false;
 			}
-			else {
+			else { //On traite toutes les formes envoyées avec le DP COR
 				Shape forme = controleur.ParsingProcess(requete);
 				if (forme == null) {
 					System.out.println("La forme n'a pas pu être reconnue");
 				}
-				controleur.ajouterForme(forme);
+				controleur.ajouterForme(forme); // On ajoute la forme à dessiner
 				System.out.println("Forme ajoutée");
 			}
 		}
