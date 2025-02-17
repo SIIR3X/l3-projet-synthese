@@ -74,6 +74,6 @@ public class Interlocuteur extends Thread {
 				System.out.println("Forme ajoutée");
 			}
 		}
-		controleur.run();
+		new Thread(() -> controleur.run()).start();
 	}
 }
