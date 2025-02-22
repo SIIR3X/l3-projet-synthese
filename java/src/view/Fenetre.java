@@ -2,13 +2,16 @@ package src.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 
 public class Fenetre extends JFrame implements Runnable {
 	private ArrayList<Shape> shapes = new ArrayList<>();
 	private boolean dessinFini = false;
-	private int width, height, color;
+	private int color;
+	private int lastX, lastY;
 
 	private static final Color[] COLORS = {
 			Color.BLACK,
@@ -28,6 +31,56 @@ public class Fenetre extends JFrame implements Runnable {
 		setIgnoreRepaint(true);
 		setVisible(true);
 		this.color = color;
+
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentMoved(ComponentEvent e) {
+				// Récupère la position actuelle
+				int newX = getLocation().x;
+				int newY = getLocation().y;
+
+				// Calcule le décalage
+				int dx = newX - lastX;
+				int dy = newY - lastY;
+
+				// Met à jour la position
+				lastX = newX;
+				lastY = newY;
+
+				// Applique la translation au rendu
+				appliquerTransformation(dx, dy);
+			}
+		});
+
+	}
+
+	private void appliquerTransformation(int dx, int dy) {
+		if (dx != 0 || dy != 0) {
+			int numBuffers = 2;
+			createBufferStrategy(numBuffers);
+			try {
+				Thread.sleep(150);
+			} catch (InterruptedException e) {
+				throw new RuntimeException(e);
+			}
+			BufferStrategy strategie = getBufferStrategy();
+			if (strategie == null) return;
+
+			Graphics2D graphics = (Graphics2D) strategie.getDrawGraphics();
+			graphics.translate(dx, dy); // Décale tout le dessin
+
+			// Efface et redessine tout
+			graphics.clearRect(0, 0, getWidth(), getHeight());
+			drawRepere(graphics);
+			setColor(graphics, color);
+
+			for (Shape s : shapes) {
+				graphics.draw(s);
+			}
+
+			strategie.show();
+			graphics.dispose();
+		}
 	}
 
 	public boolean getDessinFini() {
@@ -66,7 +119,7 @@ public class Fenetre extends JFrame implements Runnable {
 			Thread.sleep(150);
 			BufferStrategy strategie = getBufferStrategy();
 
-			while (true) {
+			while (isDisplayable()) {
 				Graphics graphics = strategie.getDrawGraphics();
 				graphics.clearRect(0, 0, getWidth(), getHeight()); // Efface l'ancien dessin
 				drawRepere(graphics);
