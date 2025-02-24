@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class ParserFormeCORPolygone extends ParserFormeCOR {
 
 	/**
-	 * Un Polygone est identifié par l'id 4 ou supérieur
+	 * Un Polygone est identifié par l'id 4 ou supérieur (Nombre de points nécessaires)
 	 */
 	private int id = 4;
 
@@ -18,12 +18,11 @@ public class ParserFormeCORPolygone extends ParserFormeCOR {
 
 	/**
 	 *
-	 * @param line la ligne à analyser
-	 * @return un composant forme Polygone si l'id correspond à l'id Polygone, sinon renvoie null
+	 * @param line String : la ligne à analyser
+	 * @return un composant Shape représentant un Polygone si l'id correspond à l'id Polygone (4), sinon renvoie null
 	 */
 	@Override
 	Shape toParse1(String line) {
-
 		try (Scanner scanner = new Scanner(line);) {
 			scanner.useLocale(Locale.US);
 			int type = scanner.nextInt();
@@ -35,9 +34,7 @@ public class ParserFormeCORPolygone extends ParserFormeCOR {
 			for (int i = 1; i < type; i++) {
 				polygone.lineTo(scanner.nextDouble(), scanner.nextDouble());
 			}
-
 			polygone.closePath();
-
 			return polygone;
 		} catch (Exception e) {
 			throw new RuntimeException(e);

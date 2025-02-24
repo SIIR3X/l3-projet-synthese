@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Classe qui va "écouter" ce que le client lui envoie
+ */
 public class Interlocuteur extends Thread {
 	PrintStream fluxSortant;
 	BufferedReader fluxEntrant;
@@ -17,10 +20,10 @@ public class Interlocuteur extends Thread {
 	Controleur controleur = new Controleur();
 
 	/**
-	 *
-	 * @param client
-	 * @param noClient
-	 * @throws IOException
+	 * Constructeur de Interlocuteur
+	 * @param client Socket
+	 * @param noClient int
+	 * @throws IOException Exception
 	 */
 	public Interlocuteur(Socket client, int noClient) throws IOException {
 		this.fluxSortant = new PrintStream(client.getOutputStream());
@@ -29,13 +32,14 @@ public class Interlocuteur extends Thread {
 	}
 
 	/**
-	 *
+	 * Thread permettant de recevoir et instancier les formes pour les dessiner
 	 */
 	@Override
 	public void run() {
 		System.out.println("Interlocuteur prêt pour le client n°"+ this.noClient);
 		Boolean premiere_ligne = true;
 
+		// regex permettant de collecter les informations de base nécessaires à la vue (largeur et longueur de la fenêtre + couleur des formes)
 		Pattern pattern = Pattern.compile("^(\\d+) (\\d+) ([0-5])$");
 
 
@@ -48,16 +52,14 @@ public class Interlocuteur extends Thread {
 				e.printStackTrace();
 			}
 			
-			if (requete == null) {
+			if (requete == null) { // Il n'y a plus rien à lire
 				System.out.println("Le client n°" + noClient + " s'est déconnecté.");
 				break;
 			}
 
 			System.out.println("le client n°"+ noClient + " a envoyé " + requete);
 
-			// Gestion de la lecture et du COR
-
-			if (premiere_ligne) { // La première ligne correspond aux paramètres utiles pour le dessin
+			if (premiere_ligne) { // On lit la ligne contenant les informations nécessaires à la création de la fenêtre
 				Matcher matcher = pattern.matcher(requete);
 				if (!matcher.matches()) {
 					System.out.println("Format invalide pour la première ligne : " + requete);

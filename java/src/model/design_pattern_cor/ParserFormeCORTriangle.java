@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class ParserFormeCORTriangle extends ParserFormeCOR {
 
 	/**
-	 * Un Triangle est identifié par l'id 3
+	 * Un Triangle est identifié par l'id 3 (Nombre de points nécessaires)
 	 */
 	private int id = 3;
 
@@ -18,8 +18,8 @@ public class ParserFormeCORTriangle extends ParserFormeCOR {
 
 	/**
 	 *
-	 * @param line la ligne à analyser
-	 * @return un composant forme Triangle si l'id correspond à l'id Triangle, sinon renvoie null
+	 * @param line String : la ligne à analyser
+	 * @return un composant Shape représentant un Triangle si l'id correspond à l'id Triangle (3), sinon renvoie null
 	 */
 	@Override
 	Shape toParse1(String line) {
@@ -39,6 +39,5 @@ public class ParserFormeCORTriangle extends ParserFormeCOR {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-
 	}
 }

@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class ParserFormeCORCercle extends ParserFormeCOR {
 
 	/**
-	 * Un Cercle est identifié par l'id 1
+	 * Un Cercle est identifié par l'id 1 (Nombre de points nécessaires)
 	 */
 	private int id = 1;
 
@@ -18,8 +18,8 @@ public class ParserFormeCORCercle extends ParserFormeCOR {
 
 	/**
 	 *
-	 * @param line la ligne à analyser
-	 * @return un composant forme Cercle si l'id correspond à l'id Cercle, sinon renvoie null
+	 * @param line String : la ligne à analyser
+	 * @return un composant Shape représentant un Cercle si l'id correspond à l'id Cercle (1), sinon renvoie null
 	 */
 	@Override
 	Shape toParse1(String line) {

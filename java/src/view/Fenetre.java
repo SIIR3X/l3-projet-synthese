@@ -13,6 +13,9 @@ public class Fenetre extends JFrame implements Runnable {
 	private int color;
 	private int lastX, lastY;
 
+	/**
+	 * Tableau des couleurs possibles pour les formes
+	 */
 	private static final Color[] COLORS = {
 			Color.BLACK,
 			Color.BLUE,
@@ -22,6 +25,12 @@ public class Fenetre extends JFrame implements Runnable {
 			Color.CYAN
 	};
 
+	/**
+	 * Constructeur de Fenetre
+	 * @param width int
+	 * @param height int
+	 * @param color int
+	 */
 	public Fenetre(int width, int height, int color) {
 		setTitle("Serveur de dessin");
 		setSize(width, height);
@@ -54,6 +63,11 @@ public class Fenetre extends JFrame implements Runnable {
 
 	}
 
+	/**
+	 * Gère le déplacement de la fenetre en recalculant les points des formes
+	 * @param dx int
+	 * @param dy int
+	 */
 	private void appliquerTransformation(int dx, int dy) {
 		if (dx != 0 || dy != 0) {
 			int numBuffers = 2;
@@ -83,18 +97,27 @@ public class Fenetre extends JFrame implements Runnable {
 		}
 	}
 
-	public boolean getDessinFini() {
-		return dessinFini;
-	}
-
+	/**
+	 * Attribue la couleur donnée au dessin (par défaut noir)
+	 * @param g
+	 * @param color
+	 */
 	public void setColor(Graphics g, int color) {
 		g.setColor((color >= 0 && color < COLORS.length) ? COLORS[color] : Color.BLACK);
 	}
 
+	/**
+	 * Ajoute la Shape donnée à la liste shapes de la Fenetre
+	 * @param forme Shape
+	 */
 	public void ajouterForme(Shape forme) {
 		this.shapes.add(forme);
 	}
 
+	/**
+	 * Dessine un repère centré sur la Fenetre
+	 * @param g Graphics
+	 */
 	private void drawRepere(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setColor(Color.GRAY); // Couleur du repère
@@ -110,7 +133,9 @@ public class Fenetre extends JFrame implements Runnable {
 		g2d.drawLine(midX, 0, midX, getHeight());
 	}
 
-
+	/**
+	 * Dessine les Shape contenues dans la liste shapes
+	 */
 	@Override
 	public void run() {
 		try {
@@ -140,7 +165,6 @@ public class Fenetre extends JFrame implements Runnable {
 					break;
 				}
 			}
-			dessinFini = true;
 		} catch (InterruptedException e) {
 			throw new RuntimeException(e);
 		}

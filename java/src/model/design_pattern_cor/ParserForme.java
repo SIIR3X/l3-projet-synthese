@@ -6,8 +6,8 @@ public interface ParserForme {
 
 	/**
 	 *
-	 * @param line
+	 * @param line String : la ligne à analyser
 	 * @return la forme exacte ou null si le texte n'est pas reconnu
 	 */
-	public Shape toParse(String line);
+	Shape toParse(String line);
 }

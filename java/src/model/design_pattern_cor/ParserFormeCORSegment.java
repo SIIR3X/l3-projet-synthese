@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class ParserFormeCORSegment extends ParserFormeCOR {
 
 	/**
-	 * Un Segment est identifié par l'id 2
+	 * Un Segment est identifié par l'id 2 (Nombre de points nécessaires)
 	 */
 	private int id = 2;
 
@@ -18,8 +18,8 @@ public class ParserFormeCORSegment extends ParserFormeCOR {
 
 	/**
 	 *
-	 * @param line la ligne à analyser
-	 * @return un composant forme Cercle si l'id correspond à l'id Cercle, sinon renvoie null
+	 * @param line String : la ligne à analyser
+	 * @return un composant Shape repr"sentant un Segment si l'id correspond à l'id Segment (2), sinon renvoie null
 	 */
 	@Override
 	Shape toParse1(String line) {
@@ -37,6 +37,5 @@ public class ParserFormeCORSegment extends ParserFormeCOR {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-
 	}
 }
