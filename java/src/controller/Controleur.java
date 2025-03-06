@@ -28,7 +28,7 @@ public class Controleur {
 	}
 
 	/**
-	 *
+	 * Getter permettant de récupérer le composant Fenetre
 	 * @return Fenetre
 	 */
 	public Fenetre getFenetre() {
@@ -36,7 +36,7 @@ public class Controleur {
 	}
 
 	/**
-	 *
+	 * Getter permettant de récupérer le composant ParserFormeCOR
 	 * @return ParserFormeCOR
 	 */
 	public ParserFormeCOR getParser () {
@@ -44,8 +44,8 @@ public class Controleur {
 	}
 
 	/**
-	 *
-	 * @param line le String à lire
+	 * Mise en place du Design Patern Chain-of-Responsibility, qui va trouver le bon handler
+	 * @param line la ligne qui contient les points d'une forme
 	 * @return un composant Shape si un Parser a répondu favorablement, sinon null
 	 */
 	public Shape ParsingProcess (String line) {

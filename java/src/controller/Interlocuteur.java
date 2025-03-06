@@ -11,7 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Classe qui va "écouter" ce que le client lui envoie
+ * Classe qui va "écouter" et traiter ce que le client lui envoie
  */
 public class Interlocuteur extends Thread {
 	PrintStream fluxSortant;
@@ -37,7 +37,7 @@ public class Interlocuteur extends Thread {
 	@Override
 	public void run() {
 		System.out.println("Interlocuteur prêt pour le client n°"+ this.noClient);
-		Boolean premiere_ligne = true;
+		boolean premiere_ligne = true;
 
 		// regex permettant de collecter les informations de base nécessaires à la vue (largeur et longueur de la fenêtre + couleur des formes)
 		Pattern pattern = Pattern.compile("^(\\d+) (\\d+) ([0-5])$");

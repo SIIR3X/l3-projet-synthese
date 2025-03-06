@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * Classe Main pour lancer le serveur multi-client
+ */
 public class Main {
 	private static final int portServeur = 9119;
 	private static int noClient = -1;
