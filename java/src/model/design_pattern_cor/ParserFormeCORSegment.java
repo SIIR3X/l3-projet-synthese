@@ -5,10 +5,13 @@ import java.awt.geom.Line2D;
 import java.util.Locale;
 import java.util.Scanner;
 
+/**
+ * Classe permettant de construire une forme (Shape) Segment si les conditions sont vérifiées
+ */
 public class ParserFormeCORSegment extends ParserFormeCOR {
 
 	/**
-	 * Un Segment est identifié par l'id 2 (Nombre de points nécessaires)
+	 * Un Segment est identifié par l'id 2 (Nombre de sommets nécessaires)
 	 */
 	private int id = 2;
 
@@ -17,7 +20,7 @@ public class ParserFormeCORSegment extends ParserFormeCOR {
 	}
 
 	/**
-	 *
+	 * Méthode spécifique qui construit la forme seulement si c'est la bonne forme lue correspondante
 	 * @param line String : la ligne à analyser
 	 * @return un composant Shape repr"sentant un Segment si l'id correspond à l'id Segment (2), sinon renvoie null
 	 */

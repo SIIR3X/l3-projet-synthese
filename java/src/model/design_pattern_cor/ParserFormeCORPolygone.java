@@ -5,10 +5,13 @@ import java.awt.geom.Path2D;
 import java.util.Locale;
 import java.util.Scanner;
 
+/**
+ * Classe permettant de construire une forme (Shape) Polygone si les conditions sont vérifiées
+ */
 public class ParserFormeCORPolygone extends ParserFormeCOR {
 
 	/**
-	 * Un Polygone est identifié par l'id 4 ou supérieur (Nombre de points nécessaires)
+	 * Un Polygone est identifié par l'id 4 ou supérieur (Nombre de sommets nécessaires)
 	 */
 	private int id = 4;
 
@@ -17,7 +20,7 @@ public class ParserFormeCORPolygone extends ParserFormeCOR {
 	}
 
 	/**
-	 *
+	 * Méthode spécifique qui construit la forme seulement si c'est la bonne forme lue correspondante
 	 * @param line String : la ligne à analyser
 	 * @return un composant Shape représentant un Polygone si l'id correspond à l'id Polygone (4), sinon renvoie null
 	 */

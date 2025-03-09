@@ -2,6 +2,9 @@ package src.model.design_pattern_cor;
 
 import java.awt.*;
 
+/**
+ * Interface pour gérer le COR
+ */
 public interface ParserForme {
 
 	/**

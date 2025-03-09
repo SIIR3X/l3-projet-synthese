@@ -13,7 +13,6 @@ import java.util.ArrayList;
  */
 public class Fenetre extends JFrame implements Runnable {
 	private ArrayList<Shape> shapes = new ArrayList<>();
-	private boolean dessinFini = false;
 	private int color;
 	private double scaleX = 1.0, scaleY = 1.0; // Facteurs d'échelle
 	private int baseWidth, baseHeight; // Taille initiale de la fenêtre

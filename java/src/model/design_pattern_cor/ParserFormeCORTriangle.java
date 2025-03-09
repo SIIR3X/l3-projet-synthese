@@ -5,10 +5,13 @@ import java.awt.geom.Path2D;
 import java.util.Locale;
 import java.util.Scanner;
 
+/**
+ * Classe permettant de construire une forme (Shape) Triangle si les conditions sont vérifiées
+ */
 public class ParserFormeCORTriangle extends ParserFormeCOR {
 
 	/**
-	 * Un Triangle est identifié par l'id 3 (Nombre de points nécessaires)
+	 * Un Triangle est identifié par l'id 3 (Nombre de sommets nécessaires)
 	 */
 	private int id = 3;
 
@@ -17,7 +20,7 @@ public class ParserFormeCORTriangle extends ParserFormeCOR {
 	}
 
 	/**
-	 *
+	 * Méthode spécifique qui construit la forme seulement si c'est la bonne forme lue correspondante
 	 * @param line String : la ligne à analyser
 	 * @return un composant Shape représentant un Triangle si l'id correspond à l'id Triangle (3), sinon renvoie null
 	 */

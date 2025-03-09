@@ -5,10 +5,13 @@ import java.awt.geom.Ellipse2D;
 import java.util.Locale;
 import java.util.Scanner;
 
+/**
+ * Classe permettant de construire une forme (Shape) Cercle si les conditions sont vérifiées
+ */
 public class ParserFormeCORCercle extends ParserFormeCOR {
 
 	/**
-	 * Un Cercle est identifié par l'id 1 (Nombre de points nécessaires)
+	 * Un Cercle est identifié par l'id 1 (Nombre de sommets nécessaires)
 	 */
 	private int id = 1;
 
@@ -17,7 +20,7 @@ public class ParserFormeCORCercle extends ParserFormeCOR {
 	}
 
 	/**
-	 *
+	 * Méthode spécifique qui construit la forme seulement si c'est la bonne forme lue correspondante
 	 * @param line String : la ligne à analyser
 	 * @return un composant Shape représentant un Cercle si l'id correspond à l'id Cercle (1), sinon renvoie null
 	 */

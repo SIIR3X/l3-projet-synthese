@@ -14,19 +14,17 @@ import java.util.regex.Pattern;
  * Classe qui va "écouter" et traiter ce que le client lui envoie
  */
 public class Interlocuteur extends Thread {
-	PrintStream fluxSortant;
 	BufferedReader fluxEntrant;
 	int noClient;
 	Controleur controleur = new Controleur();
 
 	/**
-	 * Constructeur de Interlocuteur
+	 * Constructeur de Interlocuteur : récupère à partir du socket les informations envoyées par le client
 	 * @param client Socket
 	 * @param noClient int
 	 * @throws IOException Exception
 	 */
 	public Interlocuteur(Socket client, int noClient) throws IOException {
-		this.fluxSortant = new PrintStream(client.getOutputStream());
 		this.fluxEntrant = new BufferedReader(new InputStreamReader(client.getInputStream()));
 		this.noClient = noClient;
 	}
@@ -39,7 +37,7 @@ public class Interlocuteur extends Thread {
 		System.out.println("Interlocuteur prêt pour le client n°"+ this.noClient);
 		boolean premiere_ligne = true;
 
-		// regex permettant de collecter les informations de base nécessaires à la vue (largeur et longueur de la fenêtre + couleur des formes)
+		// regex permettant de collecter les informations de base nécessaires à la vue (largeur et hauteur de la fenêtre + couleur des formes)
 		Pattern pattern = Pattern.compile("^(\\d+) (\\d+) ([0-5])$");
 
 

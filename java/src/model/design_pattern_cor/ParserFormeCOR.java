@@ -2,6 +2,9 @@ package src.model.design_pattern_cor;
 
 import java.awt.*;
 
+/**
+ * Classe abstraite permettant de construire les différents chaînons et leur méthodes abstraites spécifiques
+ */
 public abstract class ParserFormeCOR implements ParserForme {
 	ParserFormeCOR next;
 
