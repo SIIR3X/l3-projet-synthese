@@ -48,24 +48,23 @@ void VisiteurDessinerOpenGL::visiter(Segment* s)
 
 void VisiteurDessinerOpenGL::visiter(Triangle* t)
 {
-    // -- 1) Dessin du remplissage --
-    // Appliquer la couleur du triangle (avec ou sans transparence).
-    FenetreOpenGL::appliquerCouleur(t->couleur());
+	// On applique la couleur du triangle
+	FenetreOpenGL::appliquerCouleur(t->couleur());
 
-    glBegin(GL_TRIANGLES);
-        glVertex2f(t->p1().x, t->p1().y);
-        glVertex2f(t->p2().x, t->p2().y);
-        glVertex2f(t->p3().x, t->p3().y);
-    glEnd();
+	// On dessine le triangle
+	glBegin(GL_TRIANGLES);
+	glVertex2f(t->p1().x, t->p1().y);
+	glVertex2f(t->p2().x, t->p2().y);
+	glVertex2f(t->p3().x, t->p3().y);
+	glEnd();
 
-    // -- 2) Dessin du contour --
-    // Dessiner le contour du triangle (par exemple, en noir opaque).
-    glColor4f(0.0f, 0.0f, 0.0f, 1.0f); // ou glColor3f(0.0f, 0.0f, 0.0f)
-    glBegin(GL_LINE_LOOP);
-        glVertex2f(t->p1().x, t->p1().y);
-        glVertex2f(t->p2().x, t->p2().y);
-        glVertex2f(t->p3().x, t->p3().y);
-    glEnd();
+	// On dessine ensuite les contours du triangle
+	glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
+	glBegin(GL_LINE_LOOP);
+	glVertex2f(t->p1().x, t->p1().y);
+	glVertex2f(t->p2().x, t->p2().y);
+	glVertex2f(t->p3().x, t->p3().y);
+	glEnd();
 }
 
 void VisiteurDessinerOpenGL::visiter(Polygone* p)
@@ -73,23 +72,20 @@ void VisiteurDessinerOpenGL::visiter(Polygone* p)
 	// On applique la couleur du polygone
 	FenetreOpenGL::appliquerCouleur(p->couleur());
 
-	// On passe en mode dessin de polygones
-	glBegin(GL_POLYGON);
 
-	// On dessine le polygone
+	glBegin(GL_POLYGON);
 	for (const auto& point : p->points())
 		glVertex2f(point.x, point.y);
-
-	// On indique que l'on a fini de dessiner
 	glEnd();
 
-    glColor4f(0.0f, 0.0f, 0.0f, 1.0f); // ou glColor3f(0.0f, 0.0f, 0.0f) si vous n'utilisez pas l'alpha
-    glBegin(GL_LINE_LOOP);
-    for (const auto& point : p->points())
-    {
-        glVertex2f(point.x, point.y);
-    }
-    glEnd();
+	// On dessine ensuite les contours du polygone
+	glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
+	glBegin(GL_LINE_LOOP);
+	for (const auto& point : p->points())
+	{
+		glVertex2f(point.x, point.y);
+	}
+	glEnd();
 }
 
 void VisiteurDessinerOpenGL::visiter(Groupe* g)
