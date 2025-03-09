@@ -32,7 +32,7 @@ OPENGL_LIB = lib/libglfw3dll.a -lopengl32
 
 # Nom des exécutables
 MAIN_EXEC = projet-synthese.exe
-JAVA_EXEC = controller.serverManager
+JAVA_EXEC = Main
 TEST_EXEC = tests.exe
 
 

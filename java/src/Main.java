@@ -1,4 +1,6 @@
-package src.controller;
+package src;
+
+import src.controller.Interlocuteur;
 
 import java.io.IOException;
 import java.net.ServerSocket;
